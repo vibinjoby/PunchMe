@@ -29,11 +29,7 @@ export default AppNavigator = () => (
       component={HomeScreen}
       options={{
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons
-            name="calendar-blank-outline"
-            size={size}
-            color={color}
-          />
+          <MaterialCommunityIcons name="history" size={size} color={color} />
         )
       }}
     />

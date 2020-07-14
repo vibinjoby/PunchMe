@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Alert } from "react-native";
-import Screens from "../components/Screens";
 import TimerComponent from "../components/home/TimerComponent";
 import { MemoizedPunchInTimeComp } from "../components/home/PunchInComponent";
 import { MemoizedDetailsComponent } from "../components/home/DetailsComponent";
