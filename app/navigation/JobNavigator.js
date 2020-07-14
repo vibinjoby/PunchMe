@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Image, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import HomeScreen from "../app/screens/HomeScreen";
-import Screens from "../app/components/Screens";
+import HomeScreen from "../screens/HomeScreen";
+import Screens from "../components/Screens";
 
 const Tab = createMaterialTopTabNavigator();
 export default function JobNavigator({ navigation }) {
