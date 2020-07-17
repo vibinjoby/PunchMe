@@ -4,7 +4,9 @@ import TimerComponent from "../components/home/TimerComponent";
 import { MemoizedPunchInTimeComp } from "../components/home/PunchInComponent";
 import { MemoizedDetailsComponent } from "../components/home/DetailsComponent";
 import PunchButtonComponent from "../components/home/PunchButtonComponent";
-import moment from "moment";
+
+import JobContext from "../context/JobContext";
+import utils from "../helpers/utils";
 
 export default function HomeScreen() {
   const [punchDetails, setPunchDetails] = useState([]);
@@ -23,27 +25,27 @@ export default function HomeScreen() {
   const [punchTimerObj, setPunchTimerObj] = useState();
   const [breakTimerObj, setBreakTimerObj] = useState();
 
-  const prefixZero = number => {
-    return parseInt(number) < 10 ? `0${number}` : number;
-  };
+  const handlePunchIn = (isResuming, context) => {
+    //When there is a active job started in another tab do not start a new one
+    if (context && context.isJobActive)
+      return Alert.alert(
+        "Cannot Start Job!!",
+        "You have already started a job, End the active job to start a new one"
+      );
+    context && context.onJobStart(true);
 
-  const getCurrentTime = () => {
-    return moment(new Date()).format("hh:mm A");
-  };
-
-  const handlePunchIn = isResuming => {
     setIsPunchedIn(true);
     const timer = setInterval(() => {
       timerTime.seconds = parseInt(timerTime.seconds) + 1;
-      timerTime.seconds = prefixZero(timerTime.seconds);
+      timerTime.seconds = utils.prefixZero(timerTime.seconds);
       if (parseInt(timerTime.seconds) === 60) {
         timerTime.minute = parseInt(timerTime.minute) + 1;
-        timerTime.minute = prefixZero(timerTime.minute);
+        timerTime.minute = utils.prefixZero(timerTime.minute);
         timerTime.seconds = 0;
       }
       if (parseInt(timerTime.minute) === 60) {
         timerTime.hour = (parseInt(timerTime.hour) + 1).toString();
-        timerTime.hour = prefixZero(timerTime.hour);
+        timerTime.hour = utils.prefixZero(timerTime.hour);
         timerTime.minute = 0;
       }
       setTimerTime({
@@ -54,17 +56,23 @@ export default function HomeScreen() {
     }, 1000);
     setPunchTimerObj(timer);
     updatePunchDetails(
-      `${isResuming ? "Resuming" : "Started"} shift at ${getCurrentTime()}`,
+      `${
+        isResuming ? "Resuming" : "Started"
+      } shift at ${utils.getCurrentTime()}`,
       true
     );
   };
 
-  const handlePunchOut = () => {
+  const handlePunchOut = context => {
+    // Remove the flag in the context when the job ends
+    context && context.onJobStart(false);
+
     setIsPunchedIn(false);
+    setIsBreak(false);
 
     clearInterval(punchTimerObj);
     clearInterval(breakTimerObj);
-    updatePunchDetails(`Ending shift at ${getCurrentTime()}`);
+    updatePunchDetails(`Ending shift at ${utils.getCurrentTime()}`);
   };
 
   const updatePunchDetails = (message, inTime) => {
@@ -72,7 +80,7 @@ export default function HomeScreen() {
     newPunchDetails.push({
       id: punchDetails.length + 1,
       message,
-      ...(inTime && { punchInTime: getCurrentTime() })
+      ...(inTime && { punchInTime: utils.getCurrentTime() })
     });
     setPunchDetails(newPunchDetails);
   };
@@ -88,15 +96,15 @@ export default function HomeScreen() {
     clearInterval(punchTimerObj);
     const timer = setInterval(() => {
       breakTime.seconds = parseInt(breakTime.seconds) + 1;
-      breakTime.seconds = prefixZero(breakTime.seconds);
+      breakTime.seconds = utils.prefixZero(breakTime.seconds);
       if (parseInt(breakTime.seconds) === 60) {
         breakTime.minute = parseInt(breakTime.minute) + 1;
-        breakTime.minute = prefixZero(breakTime.minute);
+        breakTime.minute = utils.prefixZero(breakTime.minute);
         breakTime.seconds = 0;
       }
       if (parseInt(breakTime.minute) === 60) {
         breakTime.hour = (parseInt(breakTime.hour) + 1).toString();
-        breakTime.hour = prefixZero(breakTime.hour);
+        breakTime.hour = utils.prefixZero(breakTime.hour);
         breakTime.minute = 0;
       }
       setBreakTime({
@@ -107,7 +115,7 @@ export default function HomeScreen() {
     }, 1000);
     setBreakTimerObj(timer);
 
-    updatePunchDetails(`Break at ${getCurrentTime()}`);
+    updatePunchDetails(`Break at ${utils.getCurrentTime()}`);
   };
 
   const handleResume = () => {
@@ -127,33 +135,27 @@ export default function HomeScreen() {
         <MemoizedDetailsComponent data={punchDetails} />
       </View>
       <View style={styles.componentSpacing}>
-        <PunchButtonComponent
-          onPunchIn={() => handlePunchIn(false)}
-          onPunchOut={handlePunchOut}
-          onBreak={handleBreak}
-          onResume={handleResume}
-          isBreak={isBreak}
-          isPunchedIn={isPunchedIn}
-        />
+        <JobContext.Consumer>
+          {context => (
+            <PunchButtonComponent
+              onPunchIn={() => handlePunchIn(false, context)}
+              onPunchOut={() => handlePunchOut(context)}
+              onBreak={handleBreak}
+              onResume={handleResume}
+              isBreak={isBreak}
+              isPunchedIn={isPunchedIn}
+            />
+          )}
+        </JobContext.Consumer>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "black",
-    flexDirection: "row",
-    width: "100%"
-  },
   container: {
     flex: 1,
     justifyContent: "space-around"
-  },
-  addJob: {
-    color: "#fff",
-    fontSize: 50,
-    textAlign: "right"
   },
   componentSpacing: {
     marginVertical: 10

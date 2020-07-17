@@ -23,9 +23,7 @@ export default function HeaderComponent({ navigation }) {
 }
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "black",
-    flexDirection: "row",
-    width: "100%"
+    flexDirection: "row"
   },
   addJob: {
     color: "#fff",

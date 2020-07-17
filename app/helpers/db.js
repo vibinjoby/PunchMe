@@ -2,11 +2,15 @@ import * as SQLite from "expo-sqlite";
 import moment from "moment";
 
 import constants from "../config/dbConstants";
+import utils from "../helpers/utils";
 
 const db = SQLite.openDatabase("punchme.db");
 
 //Initialize the database by creating two tables for jobs and activites if not exists
 export const init = () => {
+  //If the table is created return immediately else continue
+  if (utils.getDbInitialData()) return;
+
   let promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
       tx.executeSql(
@@ -35,6 +39,7 @@ export const init = () => {
 };
 
 export const addJobs = (jobName, hourlyPay, notes) => {
+  init();
   const timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
   const promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
@@ -61,6 +66,7 @@ export const addActivity = (
   punchInTime,
   punchOutTime
 ) => {
+  init();
   const timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
   const promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
@@ -121,4 +127,12 @@ export const fetchActivities = () => {
     });
   });
   return promise;
+};
+
+export default {
+  init,
+  addJobs,
+  addActivity,
+  fetchJobs,
+  fetchActivities
 };
