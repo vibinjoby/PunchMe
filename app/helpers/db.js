@@ -7,9 +7,10 @@ import utils from "../helpers/utils";
 const db = SQLite.openDatabase("punchme.db");
 
 //Initialize the database by creating two tables for jobs and activites if not exists
-export const init = () => {
+export const init = async () => {
   //If the table is created return immediately else continue
-  if (utils.getDbInitialData()) return;
+  const result = await utils.getDbInitialData();
+  if (result) return;
 
   let promise = new Promise((resolve, reject) => {
     db.transaction(tx => {

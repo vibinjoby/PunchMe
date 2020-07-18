@@ -126,7 +126,11 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.componentSpacing}>
-        <TimerComponent timerTime={timerTime} breakTime={breakTime} />
+        <TimerComponent
+          timerTime={timerTime}
+          breakTime={breakTime}
+          isBreak={isBreak}
+        />
       </View>
       <View style={styles.componentSpacing}>
         <MemoizedPunchInTimeComp data={punchDetails} />
