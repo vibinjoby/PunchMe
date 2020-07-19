@@ -12,6 +12,12 @@ const Tab = createMaterialTopTabNavigator();
 export default function JobNavigator({ route, navigation }) {
   const [jobsArr, setJobsArr] = useState([]);
   const [isJobActive, setIsJobActive] = useState(false);
+  const [hourlyPay, setHourlyPay] = useState();
+  const [jobTitle, setJobTitle] = useState();
+
+  const HomeComponent = () => (
+    <HomeScreen jobTitle={jobTitle} hourlyPay={hourlyPay} />
+  );
 
   const handleActiveJobs = () => {
     setIsJobActive(!isJobActive);
@@ -21,7 +27,9 @@ export default function JobNavigator({ route, navigation }) {
     //Append the data from db to jobs array state to re-render the component with data
     if (data && data.rows._array) {
       const jobsDataArr = [];
-      data.rows._array.forEach(e => jobsDataArr.push({ name: e.job_name }));
+      data.rows._array.forEach(e =>
+        jobsDataArr.push({ name: e.job_name, hourlyPay: e.hourly_pay })
+      );
       setJobsArr(jobsDataArr);
     }
   };
@@ -46,11 +54,18 @@ export default function JobNavigator({ route, navigation }) {
           <Tab.Navigator
             tabBarOptions={{
               style: { backgroundColor: "black" },
-              indicatorStyle: { backgroundColor: colors.white }
+              indicatorStyle: { backgroundColor: colors.white },
+              scrollEnabled: true,
+              labelStyle: { fontSize: 15, fontWeight: "bold" }
             }}
           >
             {jobsArr.map((job, index) => (
-              <Tab.Screen name={job.name} component={HomeScreen} key={index} />
+              <Tab.Screen
+                name={job.name}
+                component={HomeScreen}
+                key={index}
+                initialParams={{ title: job.name, hourlyPay: job.hourly_pay }}
+              />
             ))}
           </Tab.Navigator>
         </JobContext.Provider>

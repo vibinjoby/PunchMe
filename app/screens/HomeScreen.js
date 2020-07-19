@@ -7,8 +7,13 @@ import PunchButtonComponent from "../components/home/PunchButtonComponent";
 
 import JobContext from "../context/JobContext";
 import utils from "../helpers/utils";
+import db from "../helpers/db";
 
-export default function HomeScreen() {
+export default function HomeScreen({ route }) {
+  //Fetch the route params for job title and hourly pay for saving in the activity log after user punches out
+  const jobTitle = route.params && route.params.title;
+  const jobEarning = route.params && route.params.hourlyPay;
+
   const [punchDetails, setPunchDetails] = useState([]);
   const [timerTime, setTimerTime] = useState({
     hour: "00",
@@ -25,7 +30,11 @@ export default function HomeScreen() {
   const [punchTimerObj, setPunchTimerObj] = useState();
   const [breakTimerObj, setBreakTimerObj] = useState();
 
+  let jobActivityDetails = {};
+
   const handlePunchIn = (isResuming, context) => {
+    const punchInTime = utils.getCurrentTime();
+
     //When there is a active job started in another tab do not start a new one
     if (context && context.isJobActive)
       return Alert.alert(
@@ -56,14 +65,16 @@ export default function HomeScreen() {
     }, 1000);
     setPunchTimerObj(timer);
     updatePunchDetails(
-      `${
-        isResuming ? "Resuming" : "Started"
-      } shift at ${utils.getCurrentTime()}`,
+      `${isResuming ? "Resuming" : "Started"} shift at ${punchInTime}`,
       true
     );
+
+    //Add the punch in time to activity log
+    jobActivityDetails.punchIn = punchInTime;
   };
 
   const handlePunchOut = context => {
+    const punchOutTime = utils.getCurrentTime();
     // Remove the flag in the context when the job ends
     context && context.onJobStart(false);
 
@@ -72,7 +83,28 @@ export default function HomeScreen() {
 
     clearInterval(punchTimerObj);
     clearInterval(breakTimerObj);
-    updatePunchDetails(`Ending shift at ${utils.getCurrentTime()}`);
+    updatePunchDetails(`Ending shift at ${punchOutTime}`);
+
+    // Add the punch out time,break time and total hours worked to activity log
+    jobActivityDetails.punchOut = punchOutTime;
+    jobActivityDetails.breakTime = `${breakTime.minute} minutes`;
+    jobActivityDetails.totalHours = `${timerTime.hour} hours ${timerTime.minute} minutes`;
+
+    // Save the activity details to DB after punching out
+    db.addActivity(
+      jobTitle,
+      jobActivityDetails.totalHours,
+      jobActivityDetails.breakTime,
+      jobEarning,
+      jobActivityDetails.punchIn,
+      jobActivityDetails.punchOut
+    )
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const updatePunchDetails = (message, inTime) => {
