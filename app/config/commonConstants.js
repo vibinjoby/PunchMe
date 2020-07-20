@@ -27,4 +27,30 @@ export default Object.freeze({
       imgUri: require("../assets/contact.png"),
     },
   ],
+  ONBOARDING_DATA: [
+    {
+      id: 1,
+      header: "Easy To Use!",
+      subHeader:
+        "Get all the updates instantly without missing Experience a rich UI for your comfort",
+      imageUri: require("../assets/onboardingScreen.png"),
+      buttonTxt: "Next",
+    },
+    {
+      id: 2,
+      header: "Easy To Use!",
+      subHeader:
+        "Get all the updates instantly without missing Experience a rich UI for your comfort",
+      imageUri: require("../assets/onboardingScreen.png"),
+      buttonTxt: "Next",
+    },
+    {
+      id: 3,
+      header: "Easy To Use!",
+      subHeader:
+        "Get all the updates instantly without missing Experience a rich UI for your comfort",
+      imageUri: require("../assets/onboardingScreen.png"),
+      buttonTxt: "Start",
+    },
+  ],
 });
