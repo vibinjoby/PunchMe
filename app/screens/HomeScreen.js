@@ -18,12 +18,12 @@ export default function HomeScreen({ route }) {
   const [timerTime, setTimerTime] = useState({
     hour: "00",
     minute: "00",
-    seconds: "00"
+    seconds: "00",
   });
   const [breakTime, setBreakTime] = useState({
     hour: "00",
     minute: "00",
-    seconds: "00"
+    seconds: "00",
   });
   const [isBreak, setIsBreak] = useState(false);
   const [isPunchedIn, setIsPunchedIn] = useState(false);
@@ -60,7 +60,7 @@ export default function HomeScreen({ route }) {
       setTimerTime({
         hour: timerTime.hour,
         minute: timerTime.minute,
-        seconds: timerTime.seconds
+        seconds: timerTime.seconds,
       });
     }, 1000);
     setPunchTimerObj(timer);
@@ -112,7 +112,7 @@ export default function HomeScreen({ route }) {
     newPunchDetails.push({
       id: punchDetails.length + 1,
       message,
-      ...(inTime && { punchInTime: utils.getCurrentTime() })
+      ...(inTime && { punchInTime: utils.getCurrentTime() }),
     });
     setPunchDetails(newPunchDetails);
   };
@@ -142,7 +142,7 @@ export default function HomeScreen({ route }) {
       setBreakTime({
         hour: breakTime.hour,
         minute: breakTime.minute,
-        seconds: breakTime.seconds
+        seconds: breakTime.seconds,
       });
     }, 1000);
     setBreakTimerObj(timer);
@@ -172,7 +172,7 @@ export default function HomeScreen({ route }) {
       </View>
       <View style={styles.componentSpacing}>
         <JobContext.Consumer>
-          {context => (
+          {(context) => (
             <PunchButtonComponent
               onPunchIn={() => handlePunchIn(false, context)}
               onPunchOut={() => handlePunchOut(context)}
@@ -191,9 +191,9 @@ export default function HomeScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   componentSpacing: {
-    marginVertical: 10
-  }
+    marginVertical: 10,
+  },
 });

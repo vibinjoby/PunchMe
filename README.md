@@ -1,4 +1,5 @@
 # PunchMe
+
 ## Never Lose track of your hours and get paid for what you deserve
 
 See the design of the app here
@@ -15,6 +16,7 @@ https://xd.adobe.com/view/cd3c7cd4-b577-40d8-5a76-a035431b1361-bb0d/
 - Finally after the shift is done the user punch Out.
 - All the past shift details and hours worked will be shown in the logs tab.
 - Users can add schedule for the upcoming shifts in the schedule section therefore depending on the schedule for the shift the user is been updated for starting the shift. (the scheduled shift will be shown in home page)
-- Users can view the weekly , bi-weekly or monthly history of hours worked and the payment  respectively.
+- Users can view the weekly , bi-weekly or monthly history of hours worked and the payment respectively.
 
 ![punchme](PunchMe.png)
+![activity](Activity.PNG)
