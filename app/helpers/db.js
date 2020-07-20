@@ -13,7 +13,7 @@ export const init = async () => {
   if (result) return;
 
   let promise = new Promise((resolve, reject) => {
-    db.transaction(tx => {
+    db.transaction((tx) => {
       tx.executeSql(
         constants.CREATE_JOBS_TABLE,
         [],
@@ -40,10 +40,9 @@ export const init = async () => {
 };
 
 export const addJobs = (jobName, hourlyPay, notes) => {
-  init();
   const timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
   const promise = new Promise((resolve, reject) => {
-    db.transaction(tx => {
+    db.transaction((tx) => {
       tx.executeSql(
         constants.INSERT_INTO_JOBS,
         [jobName, hourlyPay, notes, timestamp],
@@ -67,10 +66,9 @@ export const addActivity = (
   punchInTime,
   punchOutTime
 ) => {
-  init();
   const timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
   const promise = new Promise((resolve, reject) => {
-    db.transaction(tx => {
+    db.transaction((tx) => {
       tx.executeSql(
         constants.INSERT_INTO_ACTIVITIES,
         [
@@ -80,7 +78,7 @@ export const addActivity = (
           earningDesc,
           punchInTime,
           punchOutTime,
-          timestamp
+          timestamp,
         ],
         (_, result) => {
           resolve(result);
@@ -95,8 +93,9 @@ export const addActivity = (
 };
 
 export const fetchJobs = () => {
+  init();
   const promise = new Promise((resolve, reject) => {
-    db.transaction(tx => {
+    db.transaction((tx) => {
       tx.executeSql(
         constants.SELECT_ALL_JOBS,
         [],
@@ -114,7 +113,7 @@ export const fetchJobs = () => {
 
 export const fetchActivities = () => {
   const promise = new Promise((resolve, reject) => {
-    db.transaction(tx => {
+    db.transaction((tx) => {
       tx.executeSql(
         constants.SELECT_ALL_ACTIVIES,
         [],
@@ -135,5 +134,5 @@ export default {
   addJobs,
   addActivity,
   fetchJobs,
-  fetchActivities
+  fetchActivities,
 };

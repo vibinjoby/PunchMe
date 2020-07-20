@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 
 export default function Termsandsconditions() {
   const i = 10;
