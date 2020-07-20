@@ -3,58 +3,8 @@ import { StyleSheet, View, Text, SectionList, Image } from "react-native";
 import FontLoad from "./FontLoad";
 import { AppLoading } from "expo";
 
-const LOGS = [
-  {
-    log_id: 1,
-    date: "Today",
-    data: [
-      {
-        id: 1,
-        activity_title: "Foodland Job",
-        work_description: "Worked for 8 hours 31 minutes",
-        break_description: "Break 30 minutes",
-        earning_description: "You earned CAD 116.34",
-        punch_in: "PUNCH IN : 09:59 AM",
-        punch_out: "PUNCH OUT : 06:32 PM",
-      },
-      {
-        id: 2,
-        activity_title: "Security Job",
-        work_description: "Worked for 5 hours 30 minutes",
-        break_description: "Break 30 minutes",
-        earning_description: "You earned CAD 116.34",
-        punch_in: "PUNCH IN : 09:59 AM",
-        punch_out: "PUNCH OUT : 06:32 PM",
-      },
-    ],
-  },
-  {
-    log_id: 2,
-    date: "Yesterday",
-    data: [
-      {
-        id: 1,
-        activity_title: "Foodland Job",
-        work_description: "Worked for 8 hours 31 minutes",
-        break_description: "Break 30 minutes",
-        earning_description: "You earned CAD 116.34",
-        punch_in: "PUNCH IN : 09:59 AM",
-        punch_out: "PUNCH OUT : 06:32 PM",
-      },
-      {
-        id: 2,
-        activity_title: "Security Job",
-        work_description: "Worked for 5 hours 30 minutes",
-        break_description: "Break 30 minutes",
-        earning_description: "You earned CAD 116.34",
-        punch_in: "PUNCH IN : 09:59 AM",
-        punch_out: "PUNCH OUT : 06:32 PM",
-      },
-    ],
-  },
-];
-
 function getItemLayout(item) {
+  console.log("========== getItemLayout ========= " + item);
   return (
     <View style={styles.itemContainer}>
       <View style={styles.itemInnerContainer}>
@@ -70,9 +20,11 @@ function getItemLayout(item) {
             {item.earning_description}
           </Text>
           <View style={styles.punch_time_container}>
-            <Text style={styles.punch_time}>{item.punch_in}</Text>
+            <Text style={styles.punch_time}>
+              {"PUNCH IN : " + item.punch_in}
+            </Text>
             <Text style={[styles.punch_time, styles.padding_sm]}>
-              {item.punch_out}
+              {"PUNCH OUT : " + item.punch_out}
             </Text>
           </View>
         </View>
@@ -91,14 +43,16 @@ function getHeaderLayout(title) {
   );
 }
 
-export default function RecyclerView() {
+export default function RecyclerView(props) {
   const [fontLoaded, setFontLoaded] = useState(false);
+  const data = props.data;
 
   if (!fontLoaded) {
     return (
       <AppLoading
         startAsync={FontLoad}
         onFinish={() => {
+          console.log(" ========= RecyclerView ======= " + data);
           setFontLoaded(true);
         }}
       />
@@ -107,7 +61,7 @@ export default function RecyclerView() {
 
   return (
     <SectionList
-      sections={LOGS}
+      sections={data}
       keyExtractor={(item, index) => {
         return index;
       }}
@@ -115,7 +69,7 @@ export default function RecyclerView() {
         return getItemLayout(item);
       }}
       renderSectionHeader={({ section }) => {
-        return getHeaderLayout(section.date);
+        return getHeaderLayout(section.title);
       }}
     ></SectionList>
   );

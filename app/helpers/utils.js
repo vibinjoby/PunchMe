@@ -1,7 +1,7 @@
 import moment from "moment";
 import AsyncStorage from "@react-native-community/async-storage";
 
-const prefixZero = number => {
+const prefixZero = (number) => {
   return parseInt(number) < 10 ? `0${number}` : number;
 };
 
@@ -29,9 +29,19 @@ const getDbInitialData = async () => {
   }
 };
 
+const getFormattedDate = (date) => {
+  console.log(date);
+  let formattedDate = moment(date, "MMMM Do YYYY, h:mm:ss a").format(
+    "DD/MM/yyyy"
+  );
+  formattedDate = moment(formattedDate, "DD/MM/yyyy").calendar();
+  return formattedDate.split(" ")[0];
+};
+
 export default {
   prefixZero,
   getCurrentTime,
   getDbInitialData,
-  storeAsyncStorageData
+  storeAsyncStorageData,
+  getFormattedDate,
 };
