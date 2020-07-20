@@ -6,6 +6,7 @@ import routes from "./routes";
 import HomeScreen from "../screens/HomeScreen";
 import ActivityScreen from "../screens/ActivityScreen";
 import HomeStackNavigator from "./HomeStackNavigator";
+import SettingsStackNavigator from "./SettingsStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +37,7 @@ export default AppNavigator = () => (
     />
     <Tab.Screen
       name={routes.SETTINGS}
-      component={HomeScreen}
+      component={SettingsStackNavigator}
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="settings" size={size} color={color} />

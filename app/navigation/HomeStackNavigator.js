@@ -36,7 +36,6 @@ export default function HomeStackNavigator() {
             }
           ]
         );
-        console.log(data);
       })
       .catch(err => alert(`something went wrong in the DB ${err}`));
   };
