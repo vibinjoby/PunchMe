@@ -1,6 +1,7 @@
+import React from "react";
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 
-export default function Termsandsconditions() {
+export default function TAndCScreen() {
   const i = 10;
   return (
     <SafeAreaView>

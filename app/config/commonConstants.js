@@ -15,6 +15,7 @@ export default Object.freeze({
       id: 3,
       title: "Terms and Policies",
       imgUri: require("../assets/terms.png"),
+      targetScreenName: "TermsAndConditions",
     },
     {
       id: 4,
