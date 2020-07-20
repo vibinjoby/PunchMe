@@ -70,6 +70,13 @@ export default function HomeScreen({ route }) {
       true
     );
 
+    //If the user is not coming back from break and punching in do not show notification
+    !isResuming &&
+      utils.registerAndSendPushNotifications(
+        `${jobTitle} PUNCH IN!!`,
+        `You have punched in at ${punchInTime}`
+      );
+
     //Add the punch in time to activity log
     jobActivityDetails.punchIn = punchInTime;
   };
@@ -106,6 +113,12 @@ export default function HomeScreen({ route }) {
       .catch((err) => {
         console.log(err);
       });
+
+    //If the user is punching out send a notification
+    utils.registerAndSendPushNotifications(
+      `${jobTitle} PUNCH OUT!!`,
+      `You have punched out at ${punchOutTime}`
+    );
   };
 
   const updatePunchDetails = (message, inTime) => {
