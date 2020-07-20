@@ -5,7 +5,7 @@ import colors from "../config/colors";
 import routes from "./routes";
 import HomeScreen from "../screens/HomeScreen";
 import HomeStackNavigator from "./HomeStackNavigator";
-import Settings from "../screens/Settings";
+import SettingsStackNavigator from "./SettingsStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -13,7 +13,7 @@ export default AppNavigator = () => (
   <Tab.Navigator
     tabBarOptions={{
       activeTintColor: colors.primary,
-      inactiveTintColor: "#eee",
+      inactiveTintColor: "#eee"
     }}
   >
     <Tab.Screen
@@ -22,7 +22,7 @@ export default AppNavigator = () => (
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="home" size={size} color={color} />
-        ),
+        )
       }}
     />
     <Tab.Screen
@@ -31,16 +31,16 @@ export default AppNavigator = () => (
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="history" size={size} color={color} />
-        ),
+        )
       }}
     />
     <Tab.Screen
       name={routes.SETTINGS}
-      component={Settings}
+      component={SettingsStackNavigator}
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="settings" size={size} color={color} />
-        ),
+        )
       }}
     />
   </Tab.Navigator>
