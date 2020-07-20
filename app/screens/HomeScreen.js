@@ -8,6 +8,7 @@ import PunchButtonComponent from "../components/home/PunchButtonComponent";
 import JobContext from "../context/JobContext";
 import utils from "../helpers/utils";
 import db from "../helpers/db";
+import commons from "../config/commonConstants";
 
 export default function HomeScreen({ route }) {
   //Fetch the route params for job title and hourly pay for saving in the activity log after user punches out
@@ -16,14 +17,14 @@ export default function HomeScreen({ route }) {
 
   const [punchDetails, setPunchDetails] = useState([]);
   const [timerTime, setTimerTime] = useState({
-    hour: "00",
-    minute: "00",
-    seconds: "00",
+    hour: commons.CLOCK_INITIAL_ZERO,
+    minute: commons.CLOCK_INITIAL_ZERO,
+    seconds: commons.CLOCK_INITIAL_ZERO,
   });
   const [breakTime, setBreakTime] = useState({
-    hour: "00",
-    minute: "00",
-    seconds: "00",
+    hour: commons.CLOCK_INITIAL_ZERO,
+    minute: commons.CLOCK_INITIAL_ZERO,
+    seconds: commons.CLOCK_INITIAL_ZERO,
   });
   const [isBreak, setIsBreak] = useState(false);
   const [isPunchedIn, setIsPunchedIn] = useState(false);
@@ -73,7 +74,7 @@ export default function HomeScreen({ route }) {
     jobActivityDetails.punchIn = punchInTime;
   };
 
-  const handlePunchOut = context => {
+  const handlePunchOut = (context) => {
     const punchOutTime = utils.getCurrentTime();
     // Remove the flag in the context when the job ends
     context && context.onJobStart(false);
@@ -99,10 +100,10 @@ export default function HomeScreen({ route }) {
       jobActivityDetails.punchIn,
       jobActivityDetails.punchOut
     )
-      .then(data => {
+      .then((data) => {
         console.log(data);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
