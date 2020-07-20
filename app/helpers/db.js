@@ -40,7 +40,6 @@ export const init = async () => {
 };
 
 export const addJobs = (jobName, hourlyPay, notes) => {
-  init();
   const timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -67,7 +66,6 @@ export const addActivity = (
   punchInTime,
   punchOutTime
 ) => {
-  init();
   const timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -95,6 +93,7 @@ export const addActivity = (
 };
 
 export const fetchJobs = () => {
+  init();
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(

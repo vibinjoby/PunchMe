@@ -22,7 +22,7 @@ export default function HomeStackNavigator() {
 
     //Save the job to DB if the inputs are non empty
     db.addJobs(title, hourlyPay, notes)
-      .then(data => {
+      .then((data) => {
         Alert.alert(
           "New Job Added!!!",
           "You have successfully added a new Job",
@@ -31,13 +31,13 @@ export default function HomeStackNavigator() {
               text: "OK",
               onPress: () =>
                 navigation.navigate("JobNavigator", {
-                  jobName: "Loblaws"
-                })
-            }
+                  jobName: "Loblaws",
+                }),
+            },
           ]
         );
       })
-      .catch(err => alert(`something went wrong in the DB ${err}`));
+      .catch((err) => alert(`something went wrong in the DB ${err}`));
   };
   return (
     <Stack.Navigator>
@@ -52,7 +52,7 @@ export default function HomeStackNavigator() {
         options={({ route, navigation }) => ({
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Cancel",
-          headerLeft: props => (
+          headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
           ),
           headerRight: () => (
@@ -63,7 +63,7 @@ export default function HomeStackNavigator() {
               title="Save"
               color={colors.yellow}
             />
-          )
+          ),
         })}
       />
     </Stack.Navigator>
