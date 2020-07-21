@@ -101,10 +101,12 @@ const getFormattedDate = date => {
 
 const calculateEarnings = (hourlyPay, totalHours, totalMinutes) => {
   let earnings = hourlyPay * totalHours;
-  earnings = hourlyPay * (totalMinutes / 60);
+  earnings += totalMinutes / 60;
   //Round off to two decimal places
   return Math.floor(earnings * 100) / 100;
 };
+
+calculateEarnings(15, 1, 1);
 
 export default {
   prefixZero,
