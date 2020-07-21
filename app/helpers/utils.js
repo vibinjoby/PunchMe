@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import * as Permissions from "expo-permissions";
 import * as Notifications from "expo-notifications";
 
-const prefixZero = number => {
+const prefixZero = (number) => {
   return parseInt(number) < 10 ? `0${number}` : number;
 };
 
@@ -19,7 +19,7 @@ const storeAsyncStorageData = async (key, value) => {
   }
 };
 
-const fetchAsyncStorageData = async key => {
+const fetchAsyncStorageData = async (key) => {
   try {
     const value = await AsyncStorage.getItem(key);
     return value;
@@ -28,7 +28,7 @@ const fetchAsyncStorageData = async key => {
   }
 };
 
-const removeAsyncStorageData = async key => {
+const removeAsyncStorageData = async (key) => {
   try {
     AsyncStorage.removeItem(key);
   } catch (error) {
@@ -55,7 +55,7 @@ const registerAndSendPushNotifications = async (title, body) => {
 
     // Fetch the storage token from Async storage for notifications
     const storageToken = fetchAsyncStorageData("notification_token");
-    storageToken.then(async token => {
+    storageToken.then(async (token) => {
       if (!token) {
         //If the token is not available get a new token and store it in Async storage
         token = await Notifications.getExpoPushTokenAsync();
@@ -75,7 +75,7 @@ function sendPushNotification(token, title, body) {
     sound: "default",
     title,
     body,
-    data: { _displayInForeground: true }
+    data: { _displayInForeground: true },
   };
 
   fetch("https://exp.host/--/api/v2/push/send", {
@@ -84,13 +84,13 @@ function sendPushNotification(token, title, body) {
       Accept: "application/json",
       "Content-Type": "application/json",
       "accept-encoding": "gzip, deflate",
-      host: "exp.host"
+      host: "exp.host",
     },
-    body: JSON.stringify(message)
+    body: JSON.stringify(message),
   });
 }
 
-const getFormattedDate = date => {
+const getFormattedDate = (date) => {
   console.log(date);
   let formattedDate = moment(date, "MMMM Do YYYY, h:mm:ss a").format(
     "DD/MM/yyyy"
@@ -101,7 +101,7 @@ const getFormattedDate = date => {
 
 const calculateEarnings = (hourlyPay, totalHours, totalMinutes) => {
   let earnings = hourlyPay * totalHours;
-  earnings += totalMinutes / 60;
+  earnings += (totalMinutes / 60) * hourlyPay;
   //Round off to two decimal places
   return Math.floor(earnings * 100) / 100;
 };
@@ -117,5 +117,5 @@ export default {
   getFormattedDate,
   fetchAsyncStorageData,
   registerAndSendPushNotifications,
-  calculateEarnings
+  calculateEarnings,
 };
