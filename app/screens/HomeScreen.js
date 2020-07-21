@@ -95,8 +95,12 @@ export default function HomeScreen({ route }) {
 
     // Add the punch out time,break time and total hours worked to activity log
     jobActivityDetails.punchOut = punchOutTime;
-    jobActivityDetails.breakTime = `Break ${breakTime.minute} minutes`;
-    jobActivityDetails.totalHours = `Worked for ${timerTime.hour} hours ${timerTime.minute} minutes`;
+    jobActivityDetails.breakTime = `Break ${parseInt(
+      breakTime.minute
+    )} minutes`;
+    jobActivityDetails.totalHours = `Worked for ${parseInt(
+      timerTime.hour
+    )} hours ${parseInt(timerTime.minute)} minutes`;
 
     //Calculate the total earnings based on the hourly pay and the hours worked
     const totalEarnings = utils.calculateEarnings(
