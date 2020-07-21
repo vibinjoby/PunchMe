@@ -44,9 +44,10 @@ export default Object.freeze({
     },
     {
       id: 2,
-      header: "Easy To Use!",
+      header: "Calculate your Payment!",
       subHeader:
         "Get all the updates instantly without missing Experience a rich UI for your comfort",
+<<<<<<< HEAD
       imageUri: require("../assets/onboardingScreen.png"),
       buttonTxt: "Next",
     },
@@ -59,4 +60,15 @@ export default Object.freeze({
       buttonTxt: "Start",
     },
   ],
+=======
+      imageUri: require("../assets/onboardingScreen2.png"),
+      buttonTxt: "Start"
+    }
+  ],
+  DEFAULT_TIMER: {
+    hour: "00",
+    minute: "00",
+    seconds: "00"
+  }
+>>>>>>> 55bc1997a2154535af8f38292dacad52bb7e6455
 });
