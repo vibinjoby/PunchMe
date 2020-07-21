@@ -47,28 +47,13 @@ export default Object.freeze({
       header: "Calculate your Payment!",
       subHeader:
         "Get all the updates instantly without missing Experience a rich UI for your comfort",
-<<<<<<< HEAD
-      imageUri: require("../assets/onboardingScreen.png"),
-      buttonTxt: "Next",
-    },
-    {
-      id: 3,
-      header: "Easy To Use!",
-      subHeader:
-        "Get all the updates instantly without missing Experience a rich UI for your comfort",
-      imageUri: require("../assets/onboardingScreen.png"),
+      imageUri: require("../assets/onboardingScreen2.png"),
       buttonTxt: "Start",
     },
-  ],
-=======
-      imageUri: require("../assets/onboardingScreen2.png"),
-      buttonTxt: "Start"
-    }
   ],
   DEFAULT_TIMER: {
     hour: "00",
     minute: "00",
-    seconds: "00"
-  }
->>>>>>> 55bc1997a2154535af8f38292dacad52bb7e6455
+    seconds: "00",
+  },
 });
