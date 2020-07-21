@@ -43,7 +43,7 @@ function getItemLayout(item) {
 function getHeaderLayout(title) {
   return (
     <View>
-      <Text numberOfLines={1} style={styles.header}>
+      <Text numberOfLines={1} style={styles.headerText}>
         {title.toUpperCase()}
       </Text>
     </View>
@@ -97,14 +97,20 @@ export default function RecyclerView(props) {
 }
 
 const styles = StyleSheet.create({
-  header: {
+  headerText: {
+    color: "#FFFFFF",
     fontSize: 16,
-    color: "#7D7D7D",
+    padding: 6,
     alignSelf: "center",
-    paddingTop: 18,
-    paddingBottom: 18,
     fontFamily: "ProximaNovaAltLight",
-    backgroundColor: "#1A1A1A",
+    marginTop: 22,
+    marginBottom: 7,
+    borderRadius: 8,
+    borderColor: "#000000",
+    borderStyle: "solid",
+    borderWidth: 3,
+    backgroundColor: "#000000",
+    overflow: "hidden",
   },
   itemContainer: {
     backgroundColor: "#000000",
