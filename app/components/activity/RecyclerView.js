@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, SectionList, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  SectionList,
+  Image,
+  RefreshControl,
+} from "react-native";
 import FontLoad from "./FontLoad";
 import { AppLoading } from "expo";
 
@@ -73,11 +80,18 @@ export default function RecyclerView(props) {
       renderSectionHeader={({ section }) => {
         return getHeaderLayout(section.title);
       }}
-      onRefresh={() => {
-        setRefreshing(true);
-        props.onRefresh();
-      }}
-      refreshing={refreshing}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={() => {
+            setRefreshing(true);
+            setTimeout(() => {
+              props.onRefresh();
+            }, 1000);
+          }}
+          colors="#FFAA20"
+        ></RefreshControl>
+      }
     ></SectionList>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import { StyleSheet, View, Image, Text, Button } from "react-native";
 import { AppLoading } from "expo";
 import FontLoad from "./FontLoad";
 
@@ -25,6 +25,7 @@ export default function EmptyActivity(props) {
         style={styles.icon}
       />
       <Text style={styles.message}>{props.message}</Text>
+      <Button style={styles.refresh}>Refresh</Button>
     </View>
   );
 }
@@ -45,5 +46,10 @@ const styles = StyleSheet.create({
     color: "#959698",
     fontSize: 18,
     paddingTop: 20,
+  },
+  refresh: {
+    margin: 10,
+    paddingTop: 20,
+    fontFamily: "ProximaNovaAltLight",
   },
 });

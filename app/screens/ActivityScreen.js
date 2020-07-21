@@ -15,7 +15,6 @@ import util from "../helpers/utils";
 function getActivitiesFromDB(callback) {
   console.log("inside");
   db.fetchActivities().then((data) => {
-    console.log("======== fetchActivities " + new Date() + " ==========");
     callback(data);
   });
 }
