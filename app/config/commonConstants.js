@@ -40,18 +40,10 @@ export default Object.freeze({
     },
     {
       id: 2,
-      header: "Easy To Use!",
+      header: "Calculate your Payment!",
       subHeader:
         "Get all the updates instantly without missing Experience a rich UI for your comfort",
-      imageUri: require("../assets/onboardingScreen.png"),
-      buttonTxt: "Next"
-    },
-    {
-      id: 3,
-      header: "Easy To Use!",
-      subHeader:
-        "Get all the updates instantly without missing Experience a rich UI for your comfort",
-      imageUri: require("../assets/onboardingScreen.png"),
+      imageUri: require("../assets/onboardingScreen2.png"),
       buttonTxt: "Start"
     }
   ]
