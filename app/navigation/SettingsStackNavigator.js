@@ -1,7 +1,9 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import SettingsScreen from "../screens/SettingsScreen";
-import Termsandsconditions from "../screens/Termsandconditions";
+import TermsandconditionsScreen from "../screens/TermsandconditionsScreen";
+import colors from "../config/colors";
+import { HeaderBackButton } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
@@ -14,8 +16,8 @@ export default function SettingsStackNavigator() {
         options={{ headerShown: true }}
       />
       <Stack.Screen
-        name="TermsAndConditiosn"
-        component={Termsandsconditions}
+        name="TermsAndConditions"
+        component={TermsandconditionsScreen}
         options={({ navigation }) => ({
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Cancel",

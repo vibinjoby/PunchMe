@@ -1,14 +1,24 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import Screens from "../components/Screens";
-import { FlatList } from "react-native-gesture-handler";
+import {
+  FlatList,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 
-export default function Settings() {
-  const SettingsComponent = (linkText, imgUri) => (
+export default function Settings({ navigation }) {
+  const SettingsComponent = (linkText, imgUri, navigateScreenName) => (
     <View style={styles.Section}>
       <Image style={styles.img} source={imgUri} />
       <Text style={styles.text}>{linkText}</Text>
-      <Image style={styles.next} source={require("../assets/next.png")} />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          console.log("clicked");
+          navigateScreenName && navigation.navigate(navigateScreenName);
+        }}
+      >
+        <Image style={styles.next} source={require("../assets/next.png")} />
+      </TouchableWithoutFeedback>
     </View>
   );
   const settingsLinks = [
@@ -26,6 +36,7 @@ export default function Settings() {
       id: 3,
       title: "Terms and Policies",
       imgUri: require("../assets/terms.png"),
+      navigateScreenName: "TermsAndConditions",
     },
     {
       id: 4,
@@ -42,7 +53,9 @@ export default function Settings() {
     <Screens style={styles.container}>
       <FlatList
         data={settingsLinks}
-        renderItem={({ item }) => SettingsComponent(item.title, item.imgUri)}
+        renderItem={({ item }) =>
+          SettingsComponent(item.title, item.imgUri, item.navigateScreenName)
+        }
         keyExtractor={(item) => item.title}
       />
     </Screens>
