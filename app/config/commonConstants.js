@@ -48,12 +48,12 @@ export default Object.freeze({
       subHeader:
         "Get all the updates instantly without missing Experience a rich UI for your comfort",
       imageUri: require("../assets/onboardingScreen2.png"),
-      buttonTxt: "Start"
-    }
+      buttonTxt: "Start",
+    },
   ],
   DEFAULT_TIMER: {
     hour: "00",
     minute: "00",
-    seconds: "00"
-  }
+    seconds: "00",
+  },
 });

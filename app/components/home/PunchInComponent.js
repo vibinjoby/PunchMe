@@ -5,9 +5,7 @@ export function PunchInComponent({ data }) {
   return (
     <View style={styles.container}>
       <Text style={styles.punchTxt}>PUNCH IN TIME : </Text>
-      <Text style={styles.punchTxt}>
-        {data[0] && data[data.length - 1].punchInTime}
-      </Text>
+      <Text style={styles.punchTxt}>{data}</Text>
     </View>
   );
 }

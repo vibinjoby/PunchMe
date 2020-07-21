@@ -6,12 +6,12 @@ export default function TermsandsconditionsScreen() {
   return (
     <Screens>
       <Text style={styles.container}>
-        If you are an owner of an account on this website, you are solely
-        responsible for maintaining the confidentiality of your private user
-        details (username and password). You are responsible for all activities
-        that occur under your account or password. We reserve all rights to
-        terminate accounts, edit or remove content and cancel orders in their
-        sole discretion.
+        We reserve the right to amend these terms and conditions at any time. If
+        you disagree with any of these Terms and Conditions of Use, you must
+        immediately discontinue your access to the Punch Me and your use of the
+        services offered on this application. Continued use of Punch Me will
+        constitute acceptance of these Terms and Conditions of Use, as may be
+        amended from time to time.
       </Text>
     </Screens>
   );

@@ -12,6 +12,7 @@ import commons from "../config/commonConstants";
 
 export default function HomeScreen({ route }) {
   //Fetch the route params for job title and hourly pay for saving in the activity log after user punches out
+  const [punchInTime, setPunchInTime] = useState();
   const jobTitle = route.params && route.params.title;
   const jobEarning = route.params && route.params.hourlyPay;
 
@@ -19,22 +20,22 @@ export default function HomeScreen({ route }) {
   const [timerTime, setTimerTime] = useState({
     hour: commons.CLOCK_INITIAL_ZERO,
     minute: commons.CLOCK_INITIAL_ZERO,
-    seconds: commons.CLOCK_INITIAL_ZERO
+    seconds: commons.CLOCK_INITIAL_ZERO,
   });
   const [breakTime, setBreakTime] = useState({
     hour: commons.CLOCK_INITIAL_ZERO,
     minute: commons.CLOCK_INITIAL_ZERO,
-    seconds: commons.CLOCK_INITIAL_ZERO
+    seconds: commons.CLOCK_INITIAL_ZERO,
   });
   const [isBreak, setIsBreak] = useState(false);
   const [isPunchedIn, setIsPunchedIn] = useState(false);
   const [punchTimerObj, setPunchTimerObj] = useState();
   const [breakTimerObj, setBreakTimerObj] = useState();
 
-  let jobActivityDetails = { punchIn: null };
+  let jobActivityDetails = {};
 
   const handlePunchIn = (isResuming, context) => {
-    const punchInTime = utils.getCurrentTime();
+    !isResuming && setPunchInTime(utils.getCurrentTime());
 
     //When there is a active job started in another tab do not start a new one
     if (context && context.isJobActive)
@@ -51,22 +52,24 @@ export default function HomeScreen({ route }) {
       if (parseInt(timerTime.seconds) === 60) {
         timerTime.minute = parseInt(timerTime.minute) + 1;
         timerTime.minute = utils.prefixZero(timerTime.minute);
-        timerTime.seconds = 0;
+        timerTime.seconds = commons.CLOCK_INITIAL_ZERO;
       }
       if (parseInt(timerTime.minute) === 60) {
         timerTime.hour = (parseInt(timerTime.hour) + 1).toString();
         timerTime.hour = utils.prefixZero(timerTime.hour);
-        timerTime.minute = 0;
+        timerTime.minute = commons.CLOCK_INITIAL_ZERO;
       }
       setTimerTime({
         hour: timerTime.hour,
         minute: timerTime.minute,
-        seconds: timerTime.seconds
+        seconds: timerTime.seconds,
       });
     }, 1000);
     setPunchTimerObj(timer);
     updatePunchDetails(
-      `${isResuming ? "Resuming" : "Started"} shift at ${punchInTime}`,
+      `${
+        isResuming ? "Resuming" : "Started"
+      } shift at ${utils.getCurrentTime()}`,
       true
     );
 
@@ -74,14 +77,13 @@ export default function HomeScreen({ route }) {
     !isResuming &&
       utils.registerAndSendPushNotifications(
         `${jobTitle} PUNCH IN!!`,
-        `You have punched in at ${punchInTime}`
+        `You have punched in at ${utils.getCurrentTime()}`
       );
-
-    //Add the punch in time to activity log
-    jobActivityDetails.punchIn = punchInTime;
   };
 
-  const handlePunchOut = context => {
+  const handlePunchOut = (context) => {
+    //reset the punchintime to empty
+    setPunchInTime();
     const punchOutTime = utils.getCurrentTime();
     // Remove the flag in the context when the job ends
     context && context.onJobStart(false);
@@ -95,8 +97,12 @@ export default function HomeScreen({ route }) {
 
     // Add the punch out time,break time and total hours worked to activity log
     jobActivityDetails.punchOut = punchOutTime;
-    jobActivityDetails.breakTime = `Break ${breakTime.minute} minutes`;
-    jobActivityDetails.totalHours = `Worked for ${timerTime.hour} hours ${timerTime.minute} minutes`;
+    jobActivityDetails.breakTime = `Break ${parseInt(
+      breakTime.minute
+    )} minutes`;
+    jobActivityDetails.totalHours = `Worked for ${parseInt(
+      timerTime.hour
+    )} hours ${parseInt(timerTime.minute)} minutes`;
 
     //Calculate the total earnings based on the hourly pay and the hours worked
     const totalEarnings = utils.calculateEarnings(
@@ -112,13 +118,13 @@ export default function HomeScreen({ route }) {
         jobActivityDetails.totalHours,
         jobActivityDetails.breakTime,
         `You Earned ${totalEarnings} CAD`,
-        punchDetails[punchDetails.length - 1].punchInTime,
+        punchInTime,
         jobActivityDetails.punchOut
       )
-        .then(data => {
+        .then((data) => {
           console.log(data);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     } catch (error) {
@@ -135,12 +141,12 @@ export default function HomeScreen({ route }) {
     setBreakTime({
       hour: commons.CLOCK_INITIAL_ZERO,
       minute: commons.CLOCK_INITIAL_ZERO,
-      seconds: commons.CLOCK_INITIAL_ZERO
+      seconds: commons.CLOCK_INITIAL_ZERO,
     });
     setTimerTime({
       hour: commons.CLOCK_INITIAL_ZERO,
       minute: commons.CLOCK_INITIAL_ZERO,
-      seconds: commons.CLOCK_INITIAL_ZERO
+      seconds: commons.CLOCK_INITIAL_ZERO,
     });
   };
 
@@ -149,7 +155,7 @@ export default function HomeScreen({ route }) {
     newPunchDetails.push({
       id: punchDetails.length + 1,
       message,
-      ...(inTime && { punchInTime: utils.getCurrentTime() })
+      ...(inTime && { punchInTime: utils.getCurrentTime() }),
     });
     setPunchDetails(newPunchDetails);
   };
@@ -179,7 +185,7 @@ export default function HomeScreen({ route }) {
       setBreakTime({
         hour: breakTime.hour,
         minute: breakTime.minute,
-        seconds: breakTime.seconds
+        seconds: breakTime.seconds,
       });
     }, 1000);
     setBreakTimerObj(timer);
@@ -202,14 +208,14 @@ export default function HomeScreen({ route }) {
         />
       </View>
       <View style={styles.componentSpacing}>
-        <MemoizedPunchInTimeComp data={punchDetails} />
+        <MemoizedPunchInTimeComp data={punchInTime} />
       </View>
       <View style={styles.componentSpacing}>
         <MemoizedDetailsComponent data={punchDetails} />
       </View>
       <View style={styles.componentSpacing}>
         <JobContext.Consumer>
-          {context => (
+          {(context) => (
             <PunchButtonComponent
               onPunchIn={() => handlePunchIn(false, context)}
               onPunchOut={() => handlePunchOut(context)}
@@ -228,9 +234,9 @@ export default function HomeScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   componentSpacing: {
-    marginVertical: 10
-  }
+    marginVertical: 10,
+  },
 });
