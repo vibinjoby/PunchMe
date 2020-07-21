@@ -5,29 +5,33 @@ export default Object.freeze({
     {
       id: 1,
       title: "Help Center",
-      imgUri: require("../assets/helpCenter.png")
+      imgUri: require("../assets/helpCenter.png"),
+      targetScreenName: "TermsAndConditions",
     },
     {
       id: 2,
       title: "Report a Problem",
-      imgUri: require("../assets/report.png")
+      imgUri: require("../assets/report.png"),
+      targetScreenName: "TermsAndConditions",
     },
     {
       id: 3,
       title: "Terms and Policies",
       imgUri: require("../assets/terms.png"),
-      targetScreenName: "TermsAndConditions"
+      targetScreenName: "TermsAndConditions",
     },
     {
       id: 4,
       title: "About Us",
-      imgUri: require("../assets/about.png")
+      imgUri: require("../assets/about.png"),
+      targetScreenName: "TermsAndConditions",
     },
     {
       id: 5,
       title: "Contact Us",
-      imgUri: require("../assets/contact.png")
-    }
+      imgUri: require("../assets/contact.png"),
+      targetScreenName: "TermsAndConditions",
+    },
   ],
   ONBOARDING_DATA: [
     {
@@ -36,7 +40,7 @@ export default Object.freeze({
       subHeader:
         "Get all the updates instantly without missing Experience a rich UI for your comfort",
       imageUri: require("../assets/onboardingScreen.png"),
-      buttonTxt: "Next"
+      buttonTxt: "Next",
     },
     {
       id: 2,
@@ -44,7 +48,7 @@ export default Object.freeze({
       subHeader:
         "Get all the updates instantly without missing Experience a rich UI for your comfort",
       imageUri: require("../assets/onboardingScreen.png"),
-      buttonTxt: "Next"
+      buttonTxt: "Next",
     },
     {
       id: 3,
@@ -52,7 +56,7 @@ export default Object.freeze({
       subHeader:
         "Get all the updates instantly without missing Experience a rich UI for your comfort",
       imageUri: require("../assets/onboardingScreen.png"),
-      buttonTxt: "Start"
-    }
-  ]
+      buttonTxt: "Start",
+    },
+  ],
 });

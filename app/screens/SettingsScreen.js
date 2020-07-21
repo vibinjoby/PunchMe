@@ -8,62 +8,6 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import Screens from "../components/Screens";
-<<<<<<< HEAD
-import {
-  FlatList,
-  TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
-
-export default function Settings({ navigation }) {
-  const SettingsComponent = (linkText, imgUri, navigateScreenName) => (
-    <View style={styles.Section}>
-      <Image style={styles.img} source={imgUri} />
-      <Text style={styles.text}>{linkText}</Text>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          console.log("clicked");
-          navigateScreenName && navigation.navigate(navigateScreenName);
-        }}
-      >
-        <Image style={styles.next} source={require("../assets/next.png")} />
-      </TouchableWithoutFeedback>
-    </View>
-  );
-  const settingsLinks = [
-    {
-      id: 1,
-      title: "Help Center",
-      imgUri: require("../assets/helpCenter.png"),
-    },
-    {
-      id: 2,
-      title: "Report a Problem",
-      imgUri: require("../assets/report.png"),
-    },
-    {
-      id: 3,
-      title: "Terms and Policies",
-      imgUri: require("../assets/terms.png"),
-      navigateScreenName: "TermsAndConditions",
-    },
-    {
-      id: 4,
-      title: "About Us",
-      imgUri: require("../assets/about.png"),
-    },
-    {
-      id: 5,
-      title: "Contact Us",
-      imgUri: require("../assets/contact.png"),
-    },
-  ];
-  return (
-    <Screens style={styles.container}>
-      <FlatList
-        data={settingsLinks}
-        renderItem={({ item }) =>
-          SettingsComponent(item.title, item.imgUri, item.navigateScreenName)
-=======
 import commons from "../config/commonConstants";
 
 export default function Settings({ navigation }) {
@@ -84,7 +28,6 @@ export default function Settings({ navigation }) {
         data={commons.SETTINGS_LINK}
         renderItem={({ item }) =>
           SettingsComponent(item.title, item.imgUri, item.targetScreenName)
->>>>>>> a6a167554814383f906b6644ba0c8f4920973242
         }
         keyExtractor={(item) => item.title}
       />
