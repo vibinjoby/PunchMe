@@ -6,32 +6,32 @@ export default Object.freeze({
       id: 1,
       title: "Help Center",
       imgUri: require("../assets/helpCenter.png"),
-      targetScreenName: "TermsAndConditions",
+      targetScreenName: "TermsAndConditions"
     },
     {
       id: 2,
       title: "Report a Problem",
       imgUri: require("../assets/report.png"),
-      targetScreenName: "TermsAndConditions",
+      targetScreenName: "TermsAndConditions"
     },
     {
       id: 3,
       title: "Terms and Policies",
       imgUri: require("../assets/terms.png"),
-      targetScreenName: "TermsAndConditions",
+      targetScreenName: "TermsAndConditions"
     },
     {
       id: 4,
       title: "About Us",
       imgUri: require("../assets/about.png"),
-      targetScreenName: "TermsAndConditions",
+      targetScreenName: "TermsAndConditions"
     },
     {
       id: 5,
       title: "Contact Us",
       imgUri: require("../assets/contact.png"),
-      targetScreenName: "TermsAndConditions",
-    },
+      targetScreenName: "TermsAndConditions"
+    }
   ],
   ONBOARDING_DATA: [
     {
@@ -40,13 +40,14 @@ export default Object.freeze({
       subHeader:
         "Get all the updates instantly without missing Experience a rich UI for your comfort",
       imageUri: require("../assets/onboardingScreen.png"),
-      buttonTxt: "Next",
+      buttonTxt: "Next"
     },
     {
       id: 2,
       header: "Calculate your Payment!",
       subHeader:
         "Get all the updates instantly without missing Experience a rich UI for your comfort",
+<<<<<<< HEAD
       imageUri: require("../assets/onboardingScreen2.png"),
       buttonTxt: "Start",
     },
@@ -56,4 +57,18 @@ export default Object.freeze({
     minute: "00",
     seconds: "00",
   },
+=======
+      imageUri: require("../assets/onboardingScreen.png"),
+      buttonTxt: "Next"
+    },
+    {
+      id: 3,
+      header: "Easy To Use!",
+      subHeader:
+        "Get all the updates instantly without missing Experience a rich UI for your comfort",
+      imageUri: require("../assets/onboardingScreen.png"),
+      buttonTxt: "Start"
+    }
+  ]
+>>>>>>> a2e723bb88fcdcfd69e434e1e6d5f4ede86a8383
 });
