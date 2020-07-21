@@ -14,14 +14,13 @@ export default function HomeScreen({ route }) {
   //Fetch the route params for job title and hourly pay for saving in the activity log after user punches out
   const jobTitle = route.params && route.params.title;
   const jobEarning = route.params && route.params.hourlyPay;
-  const defaultTime = {
+
+  const [punchDetails, setPunchDetails] = useState([]);
+  const [timerTime, setTimerTime] = useState({
     hour: commons.CLOCK_INITIAL_ZERO,
     minute: commons.CLOCK_INITIAL_ZERO,
     seconds: commons.CLOCK_INITIAL_ZERO
-  };
-
-  const [punchDetails, setPunchDetails] = useState([]);
-  const [timerTime, setTimerTime] = useState(defaultTime);
+  });
   const [breakTime, setBreakTime] = useState({
     hour: commons.CLOCK_INITIAL_ZERO,
     minute: commons.CLOCK_INITIAL_ZERO,
@@ -113,7 +112,7 @@ export default function HomeScreen({ route }) {
         jobActivityDetails.totalHours,
         jobActivityDetails.breakTime,
         `You Earned ${totalEarnings} CAD`,
-        punchDetails[0].punchInTime,
+        punchDetails[punchDetails.length - 1].punchInTime,
         jobActivityDetails.punchOut
       )
         .then(data => {
@@ -133,8 +132,16 @@ export default function HomeScreen({ route }) {
     );
 
     //Reset the timers to default
-    setBreakTime(defaultTime);
-    setTimerTime(defaultTime);
+    setBreakTime({
+      hour: commons.CLOCK_INITIAL_ZERO,
+      minute: commons.CLOCK_INITIAL_ZERO,
+      seconds: commons.CLOCK_INITIAL_ZERO
+    });
+    setTimerTime({
+      hour: commons.CLOCK_INITIAL_ZERO,
+      minute: commons.CLOCK_INITIAL_ZERO,
+      seconds: commons.CLOCK_INITIAL_ZERO
+    });
   };
 
   const updatePunchDetails = (message, inTime) => {

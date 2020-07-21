@@ -54,5 +54,10 @@ export default Object.freeze({
       imageUri: require("../assets/onboardingScreen.png"),
       buttonTxt: "Start"
     }
-  ]
+  ],
+  DEFAULT_TIMER: {
+    hour: "00",
+    minute: "00",
+    seconds: "00"
+  }
 });
