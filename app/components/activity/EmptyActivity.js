@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image, Text, Button } from "react-native";
+import { StyleSheet, View, Image, Text, Button, Alert } from "react-native";
 import { AppLoading } from "expo";
 import FontLoad from "./FontLoad";
 
@@ -12,7 +12,6 @@ export default function EmptyActivity(props) {
         startAsync={FontLoad}
         onFinish={() => {
           setFontLoaded(true);
-          console.log("-------- Loading Finished ------------");
         }}
       />
     );
@@ -25,7 +24,13 @@ export default function EmptyActivity(props) {
         style={styles.icon}
       />
       <Text style={styles.message}>{props.message}</Text>
-      <Button style={styles.refresh}>Refresh</Button>
+      <Button
+        style={styles.refresh}
+        title="Refresh"
+        onPress={() => {
+          props.onPress();
+        }}
+      ></Button>
     </View>
   );
 }
@@ -48,8 +53,12 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   refresh: {
-    margin: 10,
+    margin: 20,
     paddingTop: 20,
     fontFamily: "ProximaNovaAltLight",
+    backgroundColor: "#000000",
+    borderColor: "#FFFFFF",
+    borderStyle: "solid",
+    borderWidth: 2,
   },
 });

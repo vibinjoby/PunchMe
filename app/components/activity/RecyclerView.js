@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     paddingTop: 18,
     paddingBottom: 18,
     fontFamily: "ProximaNovaAltLight",
+    backgroundColor: "#1A1A1A",
   },
   itemContainer: {
     backgroundColor: "#000000",

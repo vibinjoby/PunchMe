@@ -13,7 +13,7 @@ export const init = async () => {
   if (result) return;
 
   let promise = new Promise((resolve, reject) => {
-    db.transaction((tx) => {
+    db.transaction(tx => {
       tx.executeSql(
         constants.CREATE_JOBS_TABLE,
         [],
@@ -42,7 +42,7 @@ export const init = async () => {
 export const addJobs = (jobName, hourlyPay, notes) => {
   const timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
   const promise = new Promise((resolve, reject) => {
-    db.transaction((tx) => {
+    db.transaction(tx => {
       tx.executeSql(
         constants.INSERT_INTO_JOBS,
         [jobName, hourlyPay, notes, timestamp],
@@ -68,7 +68,7 @@ export const addActivity = (
 ) => {
   const timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
   const promise = new Promise((resolve, reject) => {
-    db.transaction((tx) => {
+    db.transaction(tx => {
       tx.executeSql(
         constants.INSERT_INTO_ACTIVITIES,
         [
@@ -78,7 +78,7 @@ export const addActivity = (
           earningDesc,
           punchInTime,
           punchOutTime,
-          timestamp,
+          timestamp
         ],
         (_, result) => {
           resolve(result);
@@ -93,9 +93,8 @@ export const addActivity = (
 };
 
 export const fetchJobs = () => {
-  init();
   const promise = new Promise((resolve, reject) => {
-    db.transaction((tx) => {
+    db.transaction(tx => {
       tx.executeSql(
         constants.SELECT_ALL_JOBS,
         [],
@@ -111,9 +110,39 @@ export const fetchJobs = () => {
   return promise;
 };
 
+export const deleteAllData = () => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      //Delete all activites data
+      tx.executeSql(
+        constants.DELETE_ALL_ACTIVITIES,
+        [],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, err) => {
+          reject(err);
+        }
+      );
+      //Delete all jobs data
+      tx.executeSql(
+        constants.DELETE_ALL_JOBS,
+        [],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, err) => {
+          reject(err);
+        }
+      );
+    });
+  });
+  return promise;
+};
+
 export const fetchActivities = () => {
   const promise = new Promise((resolve, reject) => {
-    db.transaction((tx) => {
+    db.transaction(tx => {
       tx.executeSql(
         constants.SELECT_ALL_ACTIVIES,
         [],
@@ -134,5 +163,6 @@ export default {
   addJobs,
   addActivity,
   fetchJobs,
-  fetchActivities,
+  deleteAllData,
+  fetchActivities
 };

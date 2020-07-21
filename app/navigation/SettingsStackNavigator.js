@@ -4,7 +4,7 @@ import {
   HeaderBackButton,
 } from "@react-navigation/stack";
 import SettingsScreen from "../screens/SettingsScreen";
-import Termsandsconditions from "../screens/TAndCScreen";
+import Termsandsconditions from "../screens/TermsandconditionsScreen";
 import colors from "../config/colors";
 
 const Stack = createStackNavigator();

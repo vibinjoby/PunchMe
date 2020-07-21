@@ -4,16 +4,15 @@ import {
   View,
   SafeAreaView,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import Toolbar from "../components/activity/Toolbar";
 import EmptyActivity from "../components/activity/EmptyActivity";
 import RecyclerView from "../components/activity/RecyclerView";
 import db from "../helpers/db";
-import { AppLoading } from "expo";
 import util from "../helpers/utils";
 
 function getActivitiesFromDB(callback) {
-  console.log("inside");
   db.fetchActivities().then((data) => {
     callback(data);
   });
@@ -27,7 +26,11 @@ export default function ActivityScreen() {
     getActivitiesFromDB((data) => {
       setTimeout(() => {
         setActivityLoaded(true);
-        setData(getFormattedData(data.rows));
+        console.log(" ========= ActivityScreen  ========= " + data);
+        if (data) {
+          let jsonLog = getFormattedData(data.rows);
+          setData(jsonLog);
+        }
       }, 1000);
     });
 
@@ -56,6 +59,7 @@ export default function ActivityScreen() {
 
   function getBodyLayout(data) {
     if (data && data.length > 0) {
+      console.log("======== getBodyLayout if ====== " + data.length);
       return (
         <RecyclerView
           data={data}
@@ -65,11 +69,15 @@ export default function ActivityScreen() {
         ></RecyclerView>
       );
     } else {
+      console.log("======== getBodyLayout else ====== ");
       return (
         <View style={styles.emptyContainer}>
           <EmptyActivity
             style={styles.emptyContainer}
             message="NO ACTIVITY FOUND"
+            onPress={() => {
+              setActivityLoaded(false);
+            }}
           />
         </View>
       );
@@ -78,7 +86,7 @@ export default function ActivityScreen() {
 }
 
 function getFormattedData(data) {
-  console.log(data);
+  console.log(" =========== getFormattedData ========== " + data);
   let logs = new Map();
   for (let i = 0; i < data.length; i++) {
     let row = data.item(i);
