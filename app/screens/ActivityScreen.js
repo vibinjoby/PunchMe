@@ -25,6 +25,13 @@ export default function ActivityScreen() {
   const [activityLoaded, setActivityLoaded] = useState(false);
 
   if (!activityLoaded && !data) {
+    getActivitiesFromDB((data) => {
+      setTimeout(() => {
+        setActivityLoaded(true);
+        setData(getFormattedData(data.rows));
+      }, 1000);
+    });
+
     return (
       <SafeAreaView>
         <View>
@@ -33,18 +40,6 @@ export default function ActivityScreen() {
             style={styles.loader}
             size="small"
             color="#FFAA20"
-          />
-          <AppLoading
-            startAsync={() => {
-              getActivitiesFromDB((data) => {
-                setTimeout(() => {
-                  setData(getFormattedData(data.rows));
-                }, 1000);
-              });
-            }}
-            onFinish={() => {
-              setActivityLoaded(true);
-            }}
           />
         </View>
       </SafeAreaView>
@@ -62,7 +57,7 @@ export default function ActivityScreen() {
 }
 
 function getBodyLayout(data) {
-  if (data) {
+  if (data && data.length > 0) {
     return <RecyclerView data={data}></RecyclerView>;
   } else {
     return (
@@ -101,13 +96,16 @@ function getFormattedData(data) {
     jsonLogs.push(row);
   }
 
-  console.log(jsonLogs);
+  console.log("====== getFormattedData ========= " + jsonLogs);
   return jsonLogs;
 }
 
 const styles = StyleSheet.create({
   emptyContainer: {
-    alignSelf: "center",
+    width: "100%",
+    height: "90%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   activityContainer: {
     width: "100%",
