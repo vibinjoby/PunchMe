@@ -89,7 +89,7 @@ export default function RecyclerView(props) {
               props.onRefresh();
             }, 1000);
           }}
-          colors="#FFAA20"
+          tintColor="#FFAA20"
         ></RefreshControl>
       }
     ></SectionList>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 6,
     alignSelf: "center",
-    fontFamily: "ProximaNovaAltLight",
+    fontFamily: "ProximaNovaAltBold",
     marginTop: 22,
     marginBottom: 7,
     borderRadius: 8,
