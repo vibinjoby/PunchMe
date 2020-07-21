@@ -12,6 +12,7 @@ import commons from "../config/commonConstants";
 
 export default function HomeScreen({ route }) {
   //Fetch the route params for job title and hourly pay for saving in the activity log after user punches out
+  const [punchInTime, setPunchInTime] = useState();
   const jobTitle = route.params && route.params.title;
   const jobEarning = route.params && route.params.hourlyPay;
 
@@ -31,10 +32,10 @@ export default function HomeScreen({ route }) {
   const [punchTimerObj, setPunchTimerObj] = useState();
   const [breakTimerObj, setBreakTimerObj] = useState();
 
-  let jobActivityDetails = { punchIn: null };
+  let jobActivityDetails = {};
 
   const handlePunchIn = (isResuming, context) => {
-    const punchInTime = utils.getCurrentTime();
+    !isResuming && setPunchInTime(utils.getCurrentTime());
 
     //When there is a active job started in another tab do not start a new one
     if (context && context.isJobActive)
@@ -66,7 +67,9 @@ export default function HomeScreen({ route }) {
     }, 1000);
     setPunchTimerObj(timer);
     updatePunchDetails(
-      `${isResuming ? "Resuming" : "Started"} shift at ${punchInTime}`,
+      `${
+        isResuming ? "Resuming" : "Started"
+      } shift at ${utils.getCurrentTime()}`,
       true
     );
 
@@ -74,14 +77,13 @@ export default function HomeScreen({ route }) {
     !isResuming &&
       utils.registerAndSendPushNotifications(
         `${jobTitle} PUNCH IN!!`,
-        `You have punched in at ${punchInTime}`
+        `You have punched in at ${utils.getCurrentTime()}`
       );
-
-    //Add the punch in time to activity log
-    jobActivityDetails.punchIn = punchInTime;
   };
 
   const handlePunchOut = context => {
+    //reset the punchintime to empty
+    setPunchInTime();
     const punchOutTime = utils.getCurrentTime();
     // Remove the flag in the context when the job ends
     context && context.onJobStart(false);
@@ -116,7 +118,7 @@ export default function HomeScreen({ route }) {
         jobActivityDetails.totalHours,
         jobActivityDetails.breakTime,
         `You Earned ${totalEarnings} CAD`,
-        punchDetails[punchDetails.length - 1].punchInTime,
+        punchInTime,
         jobActivityDetails.punchOut
       )
         .then(data => {
@@ -206,7 +208,7 @@ export default function HomeScreen({ route }) {
         />
       </View>
       <View style={styles.componentSpacing}>
-        <MemoizedPunchInTimeComp data={punchDetails} />
+        <MemoizedPunchInTimeComp data={punchInTime} />
       </View>
       <View style={styles.componentSpacing}>
         <MemoizedDetailsComponent data={punchDetails} />
