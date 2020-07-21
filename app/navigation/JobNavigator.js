@@ -12,13 +12,6 @@ const Tab = createMaterialTopTabNavigator();
 export default function JobNavigator({ route, navigation }) {
   const [jobsArr, setJobsArr] = useState([]);
   const [isJobActive, setIsJobActive] = useState(false);
-  const [hourlyPay, setHourlyPay] = useState();
-  const [jobTitle, setJobTitle] = useState();
-
-  const HomeComponent = () => (
-    <HomeScreen jobTitle={jobTitle} hourlyPay={hourlyPay} />
-  );
-
   const handleActiveJobs = () => {
     setIsJobActive(!isJobActive);
   };
@@ -64,7 +57,7 @@ export default function JobNavigator({ route, navigation }) {
                 name={job.name}
                 component={HomeScreen}
                 key={index}
-                initialParams={{ title: job.name, hourlyPay: job.hourly_pay }}
+                initialParams={{ title: job.name, hourlyPay: job.hourlyPay }}
               />
             ))}
           </Tab.Navigator>

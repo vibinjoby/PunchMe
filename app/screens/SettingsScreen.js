@@ -1,6 +1,14 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+  TouchableWithoutFeedback,
+} from "react-native";
 import Screens from "../components/Screens";
+<<<<<<< HEAD
 import {
   FlatList,
   TouchableWithoutFeedback,
@@ -55,6 +63,28 @@ export default function Settings({ navigation }) {
         data={settingsLinks}
         renderItem={({ item }) =>
           SettingsComponent(item.title, item.imgUri, item.navigateScreenName)
+=======
+import commons from "../config/commonConstants";
+
+export default function Settings({ navigation }) {
+  const SettingsComponent = (linkText, imgUri, targetScreenName) => (
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate(targetScreenName)}
+    >
+      <View style={styles.Section}>
+        <Image style={styles.img} source={imgUri} />
+        <Text style={styles.text}>{linkText}</Text>
+        <Image style={styles.next} source={require("../assets/next.png")} />
+      </View>
+    </TouchableWithoutFeedback>
+  );
+  return (
+    <Screens style={styles.container}>
+      <FlatList
+        data={commons.SETTINGS_LINK}
+        renderItem={({ item }) =>
+          SettingsComponent(item.title, item.imgUri, item.targetScreenName)
+>>>>>>> a6a167554814383f906b6644ba0c8f4920973242
         }
         keyExtractor={(item) => item.title}
       />

@@ -40,7 +40,6 @@ export const init = async () => {
 };
 
 export const addJobs = (jobName, hourlyPay, notes) => {
-  init();
   const timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
   const promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
@@ -67,7 +66,6 @@ export const addActivity = (
   punchInTime,
   punchOutTime
 ) => {
-  init();
   const timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
   const promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
@@ -112,6 +110,36 @@ export const fetchJobs = () => {
   return promise;
 };
 
+export const deleteAllData = () => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      //Delete all activites data
+      tx.executeSql(
+        constants.DELETE_ALL_ACTIVITIES,
+        [],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, err) => {
+          reject(err);
+        }
+      );
+      //Delete all jobs data
+      tx.executeSql(
+        constants.DELETE_ALL_JOBS,
+        [],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, err) => {
+          reject(err);
+        }
+      );
+    });
+  });
+  return promise;
+};
+
 export const fetchActivities = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
@@ -135,5 +163,6 @@ export default {
   addJobs,
   addActivity,
   fetchJobs,
+  deleteAllData,
   fetchActivities
 };

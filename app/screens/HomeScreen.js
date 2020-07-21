@@ -8,29 +8,31 @@ import PunchButtonComponent from "../components/home/PunchButtonComponent";
 import JobContext from "../context/JobContext";
 import utils from "../helpers/utils";
 import db from "../helpers/db";
+import commons from "../config/commonConstants";
 
 export default function HomeScreen({ route }) {
   //Fetch the route params for job title and hourly pay for saving in the activity log after user punches out
   const jobTitle = route.params && route.params.title;
   const jobEarning = route.params && route.params.hourlyPay;
+  const defaultTime = {
+    hour: commons.CLOCK_INITIAL_ZERO,
+    minute: commons.CLOCK_INITIAL_ZERO,
+    seconds: commons.CLOCK_INITIAL_ZERO
+  };
 
   const [punchDetails, setPunchDetails] = useState([]);
-  const [timerTime, setTimerTime] = useState({
-    hour: "00",
-    minute: "00",
-    seconds: "00",
-  });
+  const [timerTime, setTimerTime] = useState(defaultTime);
   const [breakTime, setBreakTime] = useState({
-    hour: "00",
-    minute: "00",
-    seconds: "00",
+    hour: commons.CLOCK_INITIAL_ZERO,
+    minute: commons.CLOCK_INITIAL_ZERO,
+    seconds: commons.CLOCK_INITIAL_ZERO
   });
   const [isBreak, setIsBreak] = useState(false);
   const [isPunchedIn, setIsPunchedIn] = useState(false);
   const [punchTimerObj, setPunchTimerObj] = useState();
   const [breakTimerObj, setBreakTimerObj] = useState();
 
-  let jobActivityDetails = {};
+  let jobActivityDetails = { punchIn: null };
 
   const handlePunchIn = (isResuming, context) => {
     const punchInTime = utils.getCurrentTime();
@@ -60,7 +62,7 @@ export default function HomeScreen({ route }) {
       setTimerTime({
         hour: timerTime.hour,
         minute: timerTime.minute,
-        seconds: timerTime.seconds,
+        seconds: timerTime.seconds
       });
     }, 1000);
     setPunchTimerObj(timer);
@@ -68,6 +70,13 @@ export default function HomeScreen({ route }) {
       `${isResuming ? "Resuming" : "Started"} shift at ${punchInTime}`,
       true
     );
+
+    //If the user is not coming back from break and punching in do not show notification
+    !isResuming &&
+      utils.registerAndSendPushNotifications(
+        `${jobTitle} PUNCH IN!!`,
+        `You have punched in at ${punchInTime}`
+      );
 
     //Add the punch in time to activity log
     jobActivityDetails.punchIn = punchInTime;
@@ -87,24 +96,45 @@ export default function HomeScreen({ route }) {
 
     // Add the punch out time,break time and total hours worked to activity log
     jobActivityDetails.punchOut = punchOutTime;
-    jobActivityDetails.breakTime = `${breakTime.minute} minutes`;
-    jobActivityDetails.totalHours = `${timerTime.hour} hours ${timerTime.minute} minutes`;
+    jobActivityDetails.breakTime = `Break ${breakTime.minute} minutes`;
+    jobActivityDetails.totalHours = `Worked for ${timerTime.hour} hours ${timerTime.minute} minutes`;
+
+    //Calculate the total earnings based on the hourly pay and the hours worked
+    const totalEarnings = utils.calculateEarnings(
+      parseFloat(jobEarning),
+      parseInt(timerTime.hour),
+      parseInt(timerTime.minute)
+    );
 
     // Save the activity details to DB after punching out
-    db.addActivity(
-      jobTitle,
-      jobActivityDetails.totalHours,
-      jobActivityDetails.breakTime,
-      jobEarning,
-      jobActivityDetails.punchIn,
-      jobActivityDetails.punchOut
-    )
-      .then(data => {
-        console.log(data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    try {
+      db.addActivity(
+        jobTitle,
+        jobActivityDetails.totalHours,
+        jobActivityDetails.breakTime,
+        `You Earned ${totalEarnings} CAD`,
+        punchDetails[0].punchInTime,
+        jobActivityDetails.punchOut
+      )
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(`Something went wrong while saving to ${error}`);
+    }
+
+    //If the user is punching out send a notification
+    utils.registerAndSendPushNotifications(
+      `${jobTitle} PUNCH OUT!!`,
+      `You have punched out at ${punchOutTime}`
+    );
+
+    //Reset the timers to default
+    setBreakTime(defaultTime);
+    setTimerTime(defaultTime);
   };
 
   const updatePunchDetails = (message, inTime) => {
@@ -112,7 +142,7 @@ export default function HomeScreen({ route }) {
     newPunchDetails.push({
       id: punchDetails.length + 1,
       message,
-      ...(inTime && { punchInTime: utils.getCurrentTime() }),
+      ...(inTime && { punchInTime: utils.getCurrentTime() })
     });
     setPunchDetails(newPunchDetails);
   };
@@ -142,7 +172,7 @@ export default function HomeScreen({ route }) {
       setBreakTime({
         hour: breakTime.hour,
         minute: breakTime.minute,
-        seconds: breakTime.seconds,
+        seconds: breakTime.seconds
       });
     }, 1000);
     setBreakTimerObj(timer);
@@ -172,7 +202,7 @@ export default function HomeScreen({ route }) {
       </View>
       <View style={styles.componentSpacing}>
         <JobContext.Consumer>
-          {(context) => (
+          {context => (
             <PunchButtonComponent
               onPunchIn={() => handlePunchIn(false, context)}
               onPunchOut={() => handlePunchOut(context)}
@@ -191,9 +221,9 @@ export default function HomeScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "space-around"
   },
   componentSpacing: {
-    marginVertical: 10,
-  },
+    marginVertical: 10
+  }
 });

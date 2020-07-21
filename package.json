@@ -10,12 +10,16 @@
   "dependencies": {
     "@react-native-community/async-storage": "~1.11.0",
     "@react-native-community/masked-view": "0.1.10",
+    "@react-native-community/viewpager": "3.3.0",
     "@react-navigation/bottom-tabs": "^5.7.0",
     "@react-navigation/material-top-tabs": "^5.2.13",
     "@react-navigation/native": "^5.7.0",
     "@react-navigation/stack": "^5.7.0",
     "expo": "^38.0.8",
     "expo-constants": "~9.1.1",
+    "expo-font": "~8.2.1",
+    "expo-notifications": "^0.3.3",
+    "expo-permissions": "~9.0.1",
     "expo-sqlite": "~8.2.1",
     "expo-status-bar": "^1.0.2",
     "moment": "^2.27.0",
@@ -27,8 +31,12 @@
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
     "react-native-tab-view": "^2.14.4",
+<<<<<<< HEAD
     "react-native-web": "~0.11.7",
     "expo-font": "~8.2.1"
+=======
+    "react-native-web": "~0.11.7"
+>>>>>>> a6a167554814383f906b6644ba0c8f4920973242
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
