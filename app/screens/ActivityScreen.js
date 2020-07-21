@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  ActivityIndicator,
+} from "react-native";
 import Toolbar from "../components/activity/Toolbar";
 import EmptyActivity from "../components/activity/EmptyActivity";
 import RecyclerView from "../components/activity/RecyclerView";
@@ -19,32 +24,30 @@ export default function ActivityScreen() {
   const [data, setData] = useState();
   const [activityLoaded, setActivityLoaded] = useState(false);
 
-  // useEffect(() => {
-  //   db.fetchActivities().then((data) => {
-  //     setData(data);
-  //   });
-  // }, []);
-
   if (!activityLoaded && !data) {
     return (
-      <View>
-        <Toolbar title="All Activity"></Toolbar>
-        <View style={[styles.emptyContainer]}>
-          <EmptyActivity message="NO ACTIVITY FOUND" />
+      <SafeAreaView>
+        <View>
+          <Toolbar title="All Activity"></Toolbar>
+          <ActivityIndicator
+            style={styles.loader}
+            size="small"
+            color="#FFAA20"
+          />
+          <AppLoading
+            startAsync={() => {
+              getActivitiesFromDB((data) => {
+                setTimeout(() => {
+                  setData(getFormattedData(data.rows));
+                }, 1000);
+              });
+            }}
+            onFinish={() => {
+              setActivityLoaded(true);
+            }}
+          />
         </View>
-        <AppLoading
-          startAsync={() => {
-            console.log("======== startAsync " + new Date() + " ==========");
-            getActivitiesFromDB((data) => {
-              setData(getFormattedData(data.rows));
-            });
-          }}
-          onFinish={() => {
-            console.log("======== onFinish " + new Date() + " ==========");
-            setActivityLoaded(true);
-          }}
-        />
-      </View>
+      </SafeAreaView>
     );
   }
 
@@ -52,15 +55,25 @@ export default function ActivityScreen() {
     <SafeAreaView>
       <View>
         <Toolbar title="All Activity"></Toolbar>
-        {/* <View style={[styles.emptyContainer]}>
-          <EmptyActivity message="NO ACTIVITY FOUND" />
-        </View> */}
-        <View style={styles.activityContainer}>
-          <RecyclerView data={data}></RecyclerView>
-        </View>
+        <View style={styles.activityContainer}>{getBodyLayout(data)}</View>
       </View>
     </SafeAreaView>
   );
+}
+
+function getBodyLayout(data) {
+  if (data) {
+    return <RecyclerView data={data}></RecyclerView>;
+  } else {
+    return (
+      <View style={styles.emptyContainer}>
+        <EmptyActivity
+          style={styles.emptyContainer}
+          message="NO ACTIVITY FOUND"
+        />
+      </View>
+    );
+  }
 }
 
 function getFormattedData(data) {
@@ -94,13 +107,14 @@ function getFormattedData(data) {
 
 const styles = StyleSheet.create({
   emptyContainer: {
-    width: "100%",
-    height: "90%",
-    justifyContent: "center",
-    alignItems: "center",
+    alignSelf: "center",
   },
   activityContainer: {
     width: "100%",
     height: "90%",
+  },
+  loader: {
+    margin: 20,
+    alignSelf: "center",
   },
 });
