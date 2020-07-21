@@ -23,11 +23,12 @@ export default function HeaderComponent({ navigation }) {
 }
 const styles = StyleSheet.create({
   header: {
-    flexDirection: "row"
+    flexDirection: "row",
+    paddingLeft: 10,
   },
   addJob: {
     color: "#fff",
     fontSize: 50,
-    textAlign: "right"
-  }
+    textAlign: "right",
+  },
 });
