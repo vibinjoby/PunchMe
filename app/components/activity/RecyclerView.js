@@ -45,6 +45,8 @@ function getHeaderLayout(title) {
 
 export default function RecyclerView(props) {
   const [fontLoaded, setFontLoaded] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
   const data = props.data;
 
   if (!fontLoaded) {
@@ -52,8 +54,8 @@ export default function RecyclerView(props) {
       <AppLoading
         startAsync={FontLoad}
         onFinish={() => {
-          console.log(" ========= RecyclerView ======= " + data);
           setFontLoaded(true);
+          setRefreshing(false);
         }}
       />
     );
@@ -71,6 +73,11 @@ export default function RecyclerView(props) {
       renderSectionHeader={({ section }) => {
         return getHeaderLayout(section.title);
       }}
+      onRefresh={() => {
+        setRefreshing(true);
+        props.onRefresh();
+      }}
+      refreshing={refreshing}
     ></SectionList>
   );
 }

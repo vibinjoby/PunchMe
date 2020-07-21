@@ -24,7 +24,7 @@ export default function ActivityScreen() {
   const [data, setData] = useState();
   const [activityLoaded, setActivityLoaded] = useState(false);
 
-  if (!activityLoaded && !data) {
+  if (!activityLoaded || !data) {
     getActivitiesFromDB((data) => {
       setTimeout(() => {
         setActivityLoaded(true);
@@ -54,20 +54,27 @@ export default function ActivityScreen() {
       </View>
     </SafeAreaView>
   );
-}
 
-function getBodyLayout(data) {
-  if (data && data.length > 0) {
-    return <RecyclerView data={data}></RecyclerView>;
-  } else {
-    return (
-      <View style={styles.emptyContainer}>
-        <EmptyActivity
-          style={styles.emptyContainer}
-          message="NO ACTIVITY FOUND"
-        />
-      </View>
-    );
+  function getBodyLayout(data) {
+    if (data && data.length > 0) {
+      return (
+        <RecyclerView
+          data={data}
+          onRefresh={() => {
+            setActivityLoaded(false);
+          }}
+        ></RecyclerView>
+      );
+    } else {
+      return (
+        <View style={styles.emptyContainer}>
+          <EmptyActivity
+            style={styles.emptyContainer}
+            message="NO ACTIVITY FOUND"
+          />
+        </View>
+      );
+    }
   }
 }
 
@@ -112,6 +119,7 @@ const styles = StyleSheet.create({
     height: "90%",
   },
   loader: {
+    flex: 2,
     margin: 20,
     alignSelf: "center",
   },
