@@ -13,7 +13,7 @@ export default function App() {
   useEffect(() => {
     const key = commons.FIRST_TIME_APP_LOAD;
     //Check async storage to see if onboarding screen is to be shown or not
-    utils.fetchAsyncStorageData(key).then((value) => {
+    utils.fetchAsyncStorageData(key).then(value => {
       if (value) setShowRealApp(true);
       //Else store the async key with value so that the onboarding screen is not shown again
       else {
@@ -24,9 +24,9 @@ export default function App() {
     });
 
     //Toggle this comment to reset all data and do only in development mode
-    // db.deleteAllData()
-    //   .then((data) => console.log(data))
-    //   .catch((err) => console.log(err));
+    /*db.deleteAllData()
+      .then(data => console.log(data))
+      .catch(err => console.log(err));*/
   }, []);
 
   return showRealApp ? (
