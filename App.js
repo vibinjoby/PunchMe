@@ -17,7 +17,7 @@ export default function App() {
       if (value) setShowRealApp(true);
       //Else store the async key with value so that the onboarding screen is not shown again
       else {
-        utils.storeAsyncStorageData(key, "Y");
+        utils.storeAsyncStorageData(key, commons.YES);
         //Initialize Tables in the DB for first time app load
         db.init();
       }

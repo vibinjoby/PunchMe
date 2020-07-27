@@ -12,8 +12,8 @@ const Tab = createMaterialTopTabNavigator();
 export default function JobNavigator({ route, navigation }) {
   const [jobsArr, setJobsArr] = useState([]);
   const [isJobActive, setIsJobActive] = useState(false);
-  const handleActiveJobs = () => {
-    setIsJobActive(!isJobActive);
+  const handleActiveJobs = active => {
+    setIsJobActive(active);
   };
 
   const handleDataFromDB = data => {

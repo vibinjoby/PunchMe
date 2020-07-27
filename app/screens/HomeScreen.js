@@ -53,10 +53,10 @@ export default function HomeScreen({ route }) {
     isMounted = true;
   }, [punchTimerObj, breakTimerObj]);
 
-  const handleStateChanges = nextAppState => {
+  function handleStateChanges(nextAppState) {
     //Check if the app's state is active or inactive and call the appropriate handlers
     nextAppState === "active" ? foregroundHandler() : backgroundHandler();
-  };
+  }
 
   function foregroundHandler() {
     calculateTime();
@@ -155,12 +155,44 @@ export default function HomeScreen({ route }) {
 
   async function checkForOpenPunch() {
     let punchObj = await utils.fetchAsyncStorageData(jobTitle);
+
+    if (!punchObj) {
+      db.fetchLastActivityForJob(jobTitle).then(data => {
+        try {
+          // When the app reloads set the last punch details if there is no active timer running
+          if (data.rows._array && data.rows._array.length) {
+            const { punch_in, punch_details } = data.rows._array[0];
+            setPunchDetails(JSON.parse(punch_details));
+            setPunchInTime(punch_in);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    }
+
     //If there is no punch in time previously saved for the job then return from the function
     if (!punchObj) return;
+
+    if (punchObj.punchDetails) {
+      setPunchDetails(punchObj.punchDetails);
+    }
 
     punchObj = JSON.parse(punchObj);
 
     setPunchInTime(punchObj.createdDateTimeStamp);
+
+    //When there is only entry for punch-in time add it to the details
+    if (!punchObj.punchDetails)
+      punchObj.punchDetails = [
+        {
+          id: 1,
+          message: `Started shift at ${punchObj.createdDateTimeStamp}`
+        }
+      ];
+
+    //If there is punch details in the object update in the state for component re-render
+    setPunchDetails(punchObj.punchDetails);
     if (punchObj.breakPunchIn) {
       const breakDuration = utils.getTotalBreakOnlyHours(punchObj);
       breakTime.hour = utils.prefixZero(breakDuration.split(":")[0]);
@@ -181,19 +213,18 @@ export default function HomeScreen({ route }) {
     }
 
     jobContext.onJobStart(true);
-    setIsLoading(true);
+
     !punchObj.isBreak ? handleStartTimer(false) : handleBreakTimer();
   }
 
   function handlePunchIn(isResuming) {
-    !isResuming && setPunchInTime(utils.getCurrentTime());
-
     //When there is a active job started in another tab do not start a new one
     if (!isResuming && jobContext.isJobActive)
       return Alert.alert(
         "Cannot Start Job!!",
         "You have already started a job, End the active job to start a new one"
       );
+    !isResuming && setPunchInTime(utils.getCurrentTime());
     jobContext.onJobStart(true);
 
     //Populate with values in the punch model object
@@ -224,7 +255,7 @@ export default function HomeScreen({ route }) {
       );
   }
 
-  const handlePunchOut = () => {
+  async function handlePunchOut() {
     //Reset the punchintime to empty
     setPunchInTime();
     const punchOutTime = utils.getCurrentTime();
@@ -235,10 +266,8 @@ export default function HomeScreen({ route }) {
     setIsBreak(false);
 
     clearInterval(punchTimerObj);
-    setPunchTimerObj(null);
     clearInterval(breakTimerObj);
 
-    utils.removeAsyncStorageData(jobTitle);
     updatePunchDetails(`Ending shift at ${punchOutTime}`);
 
     // Add the punch out time,break time and total hours worked to activity log
@@ -259,11 +288,40 @@ export default function HomeScreen({ route }) {
 
     // Save the activity details to DB after punching out
     try {
+      let punchObj = await utils.fetchAsyncStorageData(jobTitle);
+      //If the user punches in and punches out without taking a break, create a punch model obj
+      const details = [
+        {
+          id: 1,
+          message: `Started shift at ${
+            JSON.parse(punchObj).createdDateTimeStamp
+          }`
+        },
+        {
+          id: 2,
+          message: `Ending shift at ${punchOutTime}`
+        }
+      ];
+
+      if (punchObj) {
+        //Adding the ending shift details to the punch details object
+        punchObj = JSON.parse(punchObj);
+        punchObj.punchDetails &&
+          punchObj.punchDetails.push({
+            id: punchObj.punchDetails.length + 1,
+            message: `Ending shift at ${punchOutTime}`
+          });
+      }
+
       db.addActivity(
         jobTitle,
         jobActivityDetails.totalHours,
         jobActivityDetails.breakTime,
         `You Earned ${totalEarnings} CAD`,
+        // If there is no data for punch details in the async storage create a new model object and save it in db
+        punchObj && punchObj.punchDetails
+          ? JSON.stringify(punchObj.punchDetails)
+          : JSON.stringify(details),
         punchInTime,
         jobActivityDetails.punchOut
       )
@@ -273,9 +331,13 @@ export default function HomeScreen({ route }) {
         .catch(err => {
           console.log(err);
         });
+      //Reset the timer object to null so that when new punch in request comes timer is recreated
+      setPunchTimerObj(null);
     } catch (error) {
       console.log(`Something went wrong while saving to ${error}`);
     }
+    //Remove the async storage entry for the job when the user punches out
+    utils.removeAsyncStorageData(jobTitle);
 
     //If the user is punching out send a notification
     utils.registerAndSendPushNotifications(
@@ -294,9 +356,9 @@ export default function HomeScreen({ route }) {
       minute: commons.CLOCK_INITIAL_ZERO,
       seconds: commons.CLOCK_INITIAL_ZERO
     });
-  };
+  }
 
-  const updatePunchDetails = (message, inTime) => {
+  function updatePunchDetails(message, inTime) {
     const newPunchDetails = [...punchDetails];
     newPunchDetails.push({
       id: punchDetails.length + 1,
@@ -304,7 +366,7 @@ export default function HomeScreen({ route }) {
       ...(inTime && { punchInTime: utils.getCurrentTime() })
     });
     setPunchDetails(newPunchDetails);
-  };
+  }
 
   async function handleBreak() {
     if (!isPunchedIn) {
@@ -331,6 +393,23 @@ export default function HomeScreen({ route }) {
       delete punchModelObj.breakPunchOut;
     }
     punchModelObj.breakPunchIn = utils.getCurrentTime("HH:mm:ss");
+    //When there is only entry for punch-in time add it to the details
+    if (!punchModelObj.punchDetails)
+      punchModelObj.punchDetails = [
+        {
+          id: 1,
+          message: `Started shift at ${punchModelObj.createdDateTimeStamp}`
+        }
+      ];
+    //Add the punch details to the object
+    const details = punchModelObj.punchDetails
+      ? [...punchModelObj.punchDetails]
+      : [];
+    details.push({
+      id: details.length + 1,
+      message: `Break at ${utils.getCurrentTime()}`
+    });
+    punchModelObj.punchDetails = details;
 
     utils.storeAsyncStorageData(jobTitle, punchModelObj).then(() => {
       clearInterval(punchTimerObj);
@@ -359,6 +438,15 @@ export default function HomeScreen({ route }) {
 
     punchModelObj.breakPunchOut = utils.getCurrentTime("HH:mm:ss");
 
+    const details = punchModelObj.punchDetails
+      ? [...punchModelObj.punchDetails]
+      : [];
+    details.push({
+      id: details.length + 1,
+      message: `Resuming shift at ${utils.getCurrentTime()}`
+    });
+    punchModelObj.punchDetails = details;
+
     utils.storeAsyncStorageData(jobTitle, punchModelObj).then(() => {
       clearInterval(breakTimerObj);
       clearInterval(punchTimerObj);
@@ -385,7 +473,7 @@ export default function HomeScreen({ route }) {
       <View style={styles.componentSpacing}>
         <PunchButtonComponent
           onPunchIn={() => handlePunchIn(false)}
-          onPunchOut={() => handlePunchOut()}
+          onPunchOut={handlePunchOut}
           onBreak={handleBreak}
           onResume={handleResume}
           isBreak={isBreak}

@@ -63,6 +63,7 @@ export const addActivity = (
   workDesc,
   breakDesc,
   earningDesc,
+  punchDetails,
   punchInTime,
   punchOutTime
 ) => {
@@ -76,6 +77,7 @@ export const addActivity = (
           workDesc,
           breakDesc,
           earningDesc,
+          punchDetails,
           punchInTime,
           punchOutTime,
           timestamp
@@ -158,11 +160,30 @@ export const fetchActivities = () => {
   return promise;
 };
 
+export const fetchLastActivityForJob = jobName => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        constants.SELECT_LAST_ACTIVITY_JOB,
+        [jobName],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, err) => {
+          reject(err);
+        }
+      );
+    });
+  });
+  return promise;
+};
+
 export default {
   init,
   addJobs,
   addActivity,
   fetchJobs,
   deleteAllData,
-  fetchActivities
+  fetchActivities,
+  fetchLastActivityForJob
 };
