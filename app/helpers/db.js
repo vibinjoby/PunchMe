@@ -40,7 +40,7 @@ export const init = async () => {
   return promise;
 };
 
-export const checkIfJobExist = jobName => {
+const checkIfJobExist = jobName => {
   const promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
       tx.executeSql(
@@ -210,6 +210,5 @@ export default {
   fetchJobs,
   deleteAllData,
   fetchActivities,
-  fetchLastActivityForJob,
-  checkIfJobExist
+  fetchLastActivityForJob
 };
