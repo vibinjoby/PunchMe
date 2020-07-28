@@ -13,8 +13,8 @@ const Tab = createBottomTabNavigator();
 export default AppNavigator = () => (
   <Tab.Navigator
     tabBarOptions={{
-      activeTintColor: colors.primary,
-      inactiveTintColor: "#eee",
+      activeTintColor: colors.yellow,
+      inactiveTintColor: "#eee"
     }}
   >
     <Tab.Screen
@@ -23,16 +23,20 @@ export default AppNavigator = () => (
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="home" size={size} color={color} />
-        ),
+        )
       }}
     />
     <Tab.Screen
-      name={routes.LOGS}
+      name={routes.SCHEDULE}
       component={ActivityScreen}
       options={{
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="history" size={size} color={color} />
-        ),
+          <MaterialCommunityIcons
+            name="calendar-month"
+            size={size}
+            color={color}
+          />
+        )
       }}
     />
     <Tab.Screen
@@ -41,7 +45,7 @@ export default AppNavigator = () => (
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="settings" size={size} color={color} />
-        ),
+        )
       }}
     />
   </Tab.Navigator>

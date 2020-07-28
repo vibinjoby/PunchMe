@@ -6,14 +6,7 @@ export function DetailsComponent({ data }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>DETAILS</Text>
-      <View
-        style={[
-          styles.detailsContent,
-          Object.keys(data).length !== 0
-            ? { alignItems: "flex-start" }
-            : { alignItems: "center" }
-        ]}
-      >
+      <View style={[styles.detailsContent, { alignItems: "center" }]}>
         {Object.keys(data).length !== 0 ? (
           <FlatList
             data={data}
@@ -36,8 +29,6 @@ export function DetailsComponent({ data }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#1A1A1A",
-    padding: 20,
     height: 130
   },
   detailsContent: {
@@ -46,12 +37,16 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   header: {
-    color: "#FFFFFFF2",
-    marginBottom: 10
+    color: "#C3C0C0F2",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center"
   },
   detailsTxt: {
+    textAlign: "center",
     width: "100%",
-    paddingTop: 10,
+    paddingBottom: 10,
     color: "#808080F2"
   }
 });

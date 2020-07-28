@@ -14,21 +14,21 @@ export default function PunchButtonComponent({
     <View style={styles.container}>
       {!isPunchedIn ? (
         <TouchableOpacity style={styles.punchBtn} onPress={onPunchIn}>
-          <Text style={styles.text}>PUNCH IN</Text>
+          <Text style={styles.punchText}>PUNCH IN</Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={styles.punchBtn} onPress={onPunchOut}>
-          <Text style={styles.text}>PUNCH OUT</Text>
+          <Text style={styles.punchText}>PUNCH OUT</Text>
         </TouchableOpacity>
       )}
 
       {!isBreak ? (
         <TouchableOpacity style={styles.breakBtn} onPress={onBreak}>
-          <Text style={styles.text}>BREAK</Text>
+          <Text style={styles.breakTxt}>BREAK</Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={styles.breakBtn} onPress={onResume}>
-          <Text style={styles.text}>RESUME</Text>
+          <Text style={styles.breakTxt}>RESUME</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -43,10 +43,10 @@ const styles = StyleSheet.create({
     padding: 20
   },
   punchBtn: {
-    backgroundColor: "#F93434",
+    backgroundColor: colors.yellow,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 15,
+    borderRadius: 22,
     padding: 10,
     width: 120,
     marginVertical: 10
@@ -56,12 +56,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 15,
+    borderRadius: 22,
     padding: 10,
     width: 120,
     marginVertical: 10
   },
-  text: {
+  punchText: {
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    fontSize: 15,
+    color: colors.black,
+    alignSelf: "center"
+  },
+  breakTxt: {
     fontWeight: "bold",
     textTransform: "uppercase",
     fontSize: 15,

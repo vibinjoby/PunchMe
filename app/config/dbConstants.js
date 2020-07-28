@@ -3,6 +3,7 @@ export default {
   SELECT_ALL_ACTIVIES: "SELECT * FROM activities ORDER BY id DESC",
   SELECT_LAST_ACTIVITY_JOB:
     "SELECT * FROM activities where activity_title = ? ORDER BY id DESC LIMIT 1",
+  SELECT_JOB_NAME: "SELECT * FROM jobs where job_name=? COLLATE NOCASE",
   INSERT_INTO_ACTIVITIES:
     "INSERT INTO activities (activity_title,work_description , break_description, earning_description,punch_details, punch_in, punch_out, created_timestamp) VALUES (?, ?, ?,?,?,?,?,?);",
   INSERT_INTO_JOBS:

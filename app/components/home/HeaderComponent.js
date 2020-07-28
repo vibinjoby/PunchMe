@@ -8,12 +8,16 @@ export default function HeaderComponent({ navigation }) {
   return (
     <View style={styles.header}>
       <Image
-        width={300}
-        height={300}
+        style={styles.logo}
+        width={40}
+        height={50}
         source={require("../../assets/punchMe_logo/punchMe_logo.png")}
       />
       <TouchableOpacity
-        style={{ width: "60%", marginTop: -15 }}
+        style={{
+          marginTop: -15,
+          width: "80%"
+        }}
         onPress={handleAddJobs}
       >
         <Text style={styles.addJob}>+</Text>
@@ -24,11 +28,14 @@ export default function HeaderComponent({ navigation }) {
 const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
-    paddingLeft: 10,
+    paddingLeft: 10
+  },
+  logo: {
+    marginLeft: 10
   },
   addJob: {
     color: "#fff",
     fontSize: 50,
-    textAlign: "right",
-  },
+    textAlign: "right"
+  }
 });

@@ -11,7 +11,7 @@ import db from "../helpers/db";
 import commons from "../config/commonConstants";
 import Loader from "../helpers/Loader";
 
-export default function HomeScreen({ route }) {
+export default function HomeScreen({ route, navigation }) {
   let isMounted = false;
   let jobActivityDetails = {};
   let punchModelObj = {};
@@ -173,6 +173,9 @@ export default function HomeScreen({ route }) {
 
     //If there is no punch in time previously saved for the job then return from the function
     if (!punchObj) return;
+
+    //Navigate to the active job's tab
+    navigation.navigate(jobTitle);
 
     if (punchObj.punchDetails) {
       setPunchDetails(punchObj.punchDetails);

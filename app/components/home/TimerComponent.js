@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import CustomBlinkTextComponent from "./CustomBlinkTextComponent";
+import colors from "../../config/colors";
 
 export default function TimerComponent({
   timerTime,
@@ -49,14 +50,14 @@ const styles = StyleSheet.create({
   },
   timerTxt: {
     fontSize: 73,
-    color: "#FFAA20"
+    color: colors.white
   },
   breakTxt: {
-    color: "#C4C4C4",
+    color: colors.white,
     fontSize: 13
   },
   breakTimer: {
-    color: "#C4C4C4",
+    color: colors.yellow,
     fontSize: 21
   },
   breakContainer: {

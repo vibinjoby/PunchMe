@@ -12,6 +12,7 @@ const Tab = createMaterialTopTabNavigator();
 export default function JobNavigator({ route, navigation }) {
   const [jobsArr, setJobsArr] = useState([]);
   const [isJobActive, setIsJobActive] = useState(false);
+
   const handleActiveJobs = active => {
     setIsJobActive(active);
   };
@@ -31,7 +32,15 @@ export default function JobNavigator({ route, navigation }) {
   useEffect(() => {
     //Fetch jobs from database
     db.fetchJobs()
-      .then(data => handleDataFromDB(data))
+      .then(data => {
+        handleDataFromDB(data);
+        if (route.params && route.params.jobName) {
+          data.rows._array.length > 1 &&
+            navigation.navigate(
+              data.rows._array[data.rows._array.length - 1].job_name
+            );
+        }
+      })
       .catch(err => console.log(err));
   }, [route.params]);
 
@@ -47,9 +56,14 @@ export default function JobNavigator({ route, navigation }) {
           <Tab.Navigator
             tabBarOptions={{
               style: { backgroundColor: "black" },
-              indicatorStyle: { backgroundColor: colors.white },
+              indicatorStyle: { backgroundColor: colors.yellow },
               scrollEnabled: true,
-              labelStyle: { fontSize: 15, fontWeight: "bold" }
+              activeTintColor: colors.yellow,
+              inactiveTintColor: "#B1B1B1",
+              labelStyle: {
+                fontSize: 15,
+                fontWeight: "bold"
+              }
             }}
           >
             {jobsArr.map((job, index) => (

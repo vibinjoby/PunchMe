@@ -3,6 +3,7 @@ import moment from "moment";
 
 import constants from "../config/dbConstants";
 import utils from "../helpers/utils";
+import dbConstants from "../config/dbConstants";
 
 const db = SQLite.openDatabase("punchme.db");
 
@@ -39,8 +40,32 @@ export const init = async () => {
   return promise;
 };
 
-export const addJobs = (jobName, hourlyPay, notes) => {
+export const checkIfJobExist = jobName => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        dbConstants.SELECT_JOB_NAME,
+        [jobName],
+        (_, result) => {
+          resolve(result.rows._array);
+        },
+        (_, err) => {
+          reject(err);
+        }
+      );
+    });
+  });
+  return promise;
+};
+
+export const addJobs = async (jobName, hourlyPay, notes) => {
   const timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
+
+  //If a job name already exists do not insert record and return with rejected promise
+  const result = await checkIfJobExist(jobName);
+  if (result && result.length > 0) {
+    return Promise.reject("Job Name already exists");
+  }
   const promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
       tx.executeSql(
@@ -185,5 +210,6 @@ export default {
   fetchJobs,
   deleteAllData,
   fetchActivities,
-  fetchLastActivityForJob
+  fetchLastActivityForJob,
+  checkIfJobExist
 };

@@ -23,6 +23,9 @@ export default function App() {
       }
     });
 
+    //Disabling the warnings
+    console.disableYellowBox = true;
+
     //Toggle this comment to reset all data and do only in development mode
     /*db.deleteAllData()
       .then(data => console.log(data))

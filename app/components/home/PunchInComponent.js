@@ -1,11 +1,36 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
+import colors from "../../config/colors";
 
 export function PunchInComponent({ data }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.punchTxt}>PUNCH IN TIME : </Text>
-      <Text style={styles.punchTxt}>{data}</Text>
+      <View style={styles.leftContainer}>
+        <View
+          style={{
+            backgroundColor: "green",
+            width: 8,
+            height: 8,
+            borderRadius: 4,
+            alignSelf: "flex-end"
+          }}
+        />
+        <Text style={styles.punchTxt}>PUNCH IN </Text>
+        <Text style={styles.punchData}>{data}</Text>
+      </View>
+      <View style={styles.rightContainer}>
+        <View
+          style={{
+            backgroundColor: "red",
+            width: 8,
+            height: 8,
+            borderRadius: 4,
+            alignSelf: "flex-start"
+          }}
+        />
+        <Text style={styles.punchTxt}>PUNCH OUT </Text>
+        <Text style={styles.punchData}>{data} </Text>
+      </View>
     </View>
   );
 }
@@ -13,13 +38,33 @@ export function PunchInComponent({ data }) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  leftContainer: {
     backgroundColor: "#1A1A1A",
     justifyContent: "center",
     alignItems: "center",
-    padding: 20
+    padding: 20,
+    width: "45%",
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10
+  },
+  rightContainer: {
+    backgroundColor: "#1A1A1A",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    width: "45%",
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10
   },
   punchTxt: {
-    color: "#FFFFFF"
+    fontSize: 14,
+    color: colors.yellow
+  },
+  punchData: {
+    fontSize: 14,
+    color: colors.white
   }
 });
 
