@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, View, Alert, AppState } from "react-native";
+import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 
 import TimerComponent from "../components/home/TimerComponent";
 import { MemoizedPunchInTimeComp } from "../components/home/PunchInComponent";

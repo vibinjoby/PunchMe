@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-
+import { AppearanceProvider } from "react-native-appearance";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
-import AppNavigator from "./app/navigation/AppNavigator";
+
 import OnboardingComponent from "./app/components/onboarding/OnboardingComponent";
 import utils from "./app/helpers/utils";
 import db from "./app/helpers/db";
 import commons from "./app/config/commonConstants";
+import LoginStackNavigator from "./app/navigation/LoginStackNavigator";
 
 export default function App() {
   const [showRealApp, setShowRealApp] = useState(false);
@@ -32,15 +33,19 @@ export default function App() {
       .catch(err => console.log(err));*/
   }, []);
 
-  return showRealApp ? (
-    <NavigationContainer theme={DarkTheme}>
-      <AppNavigator />
-    </NavigationContainer>
-  ) : (
-    <OnboardingComponent
-      handleStart={() => {
-        setShowRealApp(true);
-      }}
-    />
+  return (
+    <AppearanceProvider>
+      {showRealApp ? (
+        <NavigationContainer theme={DarkTheme}>
+          <LoginStackNavigator />
+        </NavigationContainer>
+      ) : (
+        <OnboardingComponent
+          handleStart={() => {
+            setShowRealApp(true);
+          }}
+        />
+      )}
+    </AppearanceProvider>
   );
 }

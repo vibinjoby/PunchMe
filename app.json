@@ -4,6 +4,7 @@
     "slug": "punch-me",
     "version": "1.0.0",
     "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
     "icon": "./app/assets/icon.png",
     "splash": {
       "image": "./app/assets/splash.png",
