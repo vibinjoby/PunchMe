@@ -3,7 +3,7 @@
 ## Never Lose track of your hours and get paid for what you deserve
 
 See the design of the app here
-https://xd.adobe.com/view/cd3c7cd4-b577-40d8-5a76-a035431b1361-bb0d/
+https://xd.adobe.com/view/6d741a86-0280-48dd-b1ea-c83ac14c9f69-3827/specs/
 
 - This application will be published in iOS and android and developed using react native.
 - Punch Me application is an employee aid to calculate and manage his/her hours weekly/monthly and generate an estimate of the expected pay.
