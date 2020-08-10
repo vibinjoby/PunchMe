@@ -9,6 +9,8 @@ import RegisterScreen from "../screens/RegisterScreen";
 import ForgotPwdScreen from "../screens/ForgotPwdScreen";
 import colors from "../config/colors";
 import AppNavigator from "./AppNavigator";
+import TempPwdScreen from "../screens/TempPwdScreen";
+import ChangePwdScreen from "../screens/ChangePwdScreen";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +37,30 @@ export default function LoginStackNavigator() {
       <Stack.Screen
         name={routes.FORGOT_PWD}
         component={ForgotPwdScreen}
+        options={({ route, navigation }) => ({
+          title: "",
+          headerBackTitleStyle: { color: colors.yellow },
+          headerBackTitle: "Back",
+          headerLeft: props => (
+            <HeaderBackButton {...props} tintColor={colors.yellow} />
+          )
+        })}
+      />
+      <Stack.Screen
+        name={routes.TEMP_PWD}
+        component={TempPwdScreen}
+        options={({ route, navigation }) => ({
+          title: "",
+          headerBackTitleStyle: { color: colors.yellow },
+          headerBackTitle: "Back",
+          headerLeft: props => (
+            <HeaderBackButton {...props} tintColor={colors.yellow} />
+          )
+        })}
+      />
+      <Stack.Screen
+        name={routes.CHANGE_PWD}
+        component={ChangePwdScreen}
         options={({ route, navigation }) => ({
           title: "",
           headerBackTitleStyle: { color: colors.yellow },

@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TextInput } from "react-native";
 import colors from "../../config/colors";
 
 export default function CustomTextInput({
+  onChangeText,
   textHeader,
   customStyles,
   ...otherProps
@@ -10,7 +11,12 @@ export default function CustomTextInput({
   return (
     <View style={customStyles}>
       {textHeader && <Text style={styles.formTxt}>{textHeader}</Text>}
-      <TextInput style={styles.textInput} {...otherProps} />
+      <TextInput
+        style={styles.textInput}
+        {...otherProps}
+        autoCapitalize="none"
+        onChangeText={text => onChangeText && onChangeText(text)}
+      />
     </View>
   );
 }

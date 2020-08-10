@@ -1,6 +1,7 @@
 export default Object.freeze({
   FIRST_TIME_APP_LOAD: "FIRST_TIME_APP_LOAD",
   CLOCK_INITIAL_ZERO: "00",
+  API_URL: "http://ec2-3-16-255-54.us-east-2.compute.amazonaws.com:3000",
   SETTINGS_LINK: [
     {
       id: 1,
@@ -58,5 +59,6 @@ export default Object.freeze({
   },
   IS_TABLE_CREATED: "is_tables_created",
   YES: "Y",
+  TOKEN_KEY: "token",
   NOTIFICATION_TOKEN: "notification_token"
 });

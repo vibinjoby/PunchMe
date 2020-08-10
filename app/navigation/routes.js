@@ -5,5 +5,7 @@ export default Object.freeze({
   SCHEDULE: "Schedule",
   LOGIN: "Login",
   REGISTER: "Register",
-  FORGOT_PWD: "ForgotPwd"
+  FORGOT_PWD: "ForgotPwd",
+  TEMP_PWD: "TempPwd",
+  CHANGE_PWD: "ChangePwd"
 });

@@ -1,17 +1,14 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity
-} from "react-native";
+import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import * as yup from "yup";
+import { Formik } from "formik";
 
 import colors from "../config/colors";
 import routes from "../navigation/routes";
 import CustomTextInput from "../components/login/CustomTextInput";
 import CustomButton from "../components/login/CustomButton";
+import loginService from "../services/loginService";
+import CustomErrorText from "../components/login/CustomErrorText";
 
 export default function LoginScreen({ route, navigation }) {
   const handleRegisterClick = () => {
@@ -22,9 +19,15 @@ export default function LoginScreen({ route, navigation }) {
     navigation.navigate(routes.FORGOT_PWD);
   };
 
-  const handleLoginClick = () => {
-    navigation.navigate("Home");
+  const handleLoginClick = async values => {
+    const isSuccess = await loginService.loginUser(
+      values.email,
+      values.password
+    );
+    if (isSuccess) return navigation.navigate(routes.HOME);
+    alert("Invalid Username / Password");
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.loginHeader}>
@@ -35,29 +38,75 @@ export default function LoginScreen({ route, navigation }) {
         <Text style={styles.headerTxt}>PUNCH ME</Text>
       </View>
       <View style={styles.formContent}>
-        <CustomTextInput placeholder="Enter your email id" textHeader="EMAIL" />
-
-        <Text style={[styles.formText, { marginTop: 30 }]}>PASSWORD</Text>
-        <View style={{ flexDirection: "row" }}>
-          <CustomTextInput
-            placeholder="Enter your password"
-            customStyles={{ width: "100%" }}
-          />
-          <Text
-            style={{
-              color: colors.white,
-              marginLeft: -80,
-              marginTop: 27,
-              fontWeight: "bold"
-            }}
-            onPress={handleForgotPwdClick}
-          >
-            FORGOT?
-          </Text>
-        </View>
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          validationSchema={yup.object().shape({
+            email: yup
+              .string()
+              .email()
+              .label("Email")
+              .required(),
+            password: yup
+              .string()
+              .min(6)
+              .label("Password")
+              .required()
+          })}
+        >
+          {({
+            values,
+            handleChange,
+            errors,
+            setFieldTouched,
+            touched,
+            isValid,
+            isSubmitting,
+            validateForm
+          }) => (
+            <>
+              <CustomTextInput
+                autoFocus
+                placeholder="Enter your email id"
+                textHeader="EMAIL"
+                onBlur={() => setFieldTouched("email")}
+                onFocus={() => validateForm()}
+                onChangeText={handleChange("email")}
+              />
+              {touched.email && errors.email && (
+                <CustomErrorText> {errors.email}</CustomErrorText>
+              )}
+              <CustomTextInput
+                textHeader="PASSWORD"
+                secureTextEntry
+                placeholder="Enter your password"
+                onBlur={() => setFieldTouched("password")}
+                customStyles={{ width: "100%", marginTop: 20 }}
+                onChangeText={handleChange("password")}
+              />
+              {touched.password && errors.password && (
+                <CustomErrorText> {errors.password}</CustomErrorText>
+              )}
+              <Text
+                style={{
+                  textAlign: "right",
+                  color: colors.white,
+                  marginTop: 10,
+                  fontWeight: "bold"
+                }}
+                onPress={handleForgotPwdClick}
+              >
+                Forgot password?
+              </Text>
+              <CustomButton
+                title="LOGIN"
+                onPress={() => handleLoginClick(values)}
+                disabled={!isValid || isSubmitting}
+                customStyles={{ marginTop: 20 }}
+              />
+            </>
+          )}
+        </Formik>
       </View>
-
-      <CustomButton title="LOGIN" onPress={handleLoginClick} />
 
       <View style={{ marginVertical: 20 }}>
         <View

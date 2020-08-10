@@ -1,10 +1,23 @@
 import React from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
+import * as yup from "yup";
+import { Formik } from "formik";
+
 import colors from "../config/colors";
 import CustomTextInput from "../components/login/CustomTextInput";
 import CustomButton from "../components/login/CustomButton";
+import loginService from "../services/loginService";
+import routes from "../navigation/routes";
+import CustomErrorText from "../components/login/CustomErrorText";
 
 export default function ForgotPwdScreen({ navigation, route }) {
+  const handleSendMail = async values => {
+    //If the mail is sent to the user, navigate to the temporary password screen
+    const result = await loginService.forgotPassword(values.email);
+    if (result)
+      navigation.navigate(routes.TEMP_PWD, { username: result.username });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.loginHeader}>
@@ -22,9 +35,47 @@ export default function ForgotPwdScreen({ navigation, route }) {
         </Text>
       </View>
       <View style={styles.formContent}>
-        <CustomTextInput placeholder="Enter your email id" textHeader="EMAIL" />
+        <Formik
+          initialValues={{ email: "" }}
+          validationSchema={yup.object().shape({
+            email: yup
+              .string()
+              .email()
+              .required()
+          })}
+        >
+          {({
+            values,
+            handleChange,
+            errors,
+            setFieldTouched,
+            touched,
+            isValid,
+            isSubmitting,
+            validateForm
+          }) => (
+            <>
+              <CustomTextInput
+                placeholder="Enter your email id"
+                textHeader="EMAIL"
+                onBlur={() => setFieldTouched("email")}
+                onChangeText={handleChange("email")}
+                autoFocus
+                onFocus={() => validateForm()}
+              />
+              {touched.email && errors.email && (
+                <CustomErrorText> {errors.email}</CustomErrorText>
+              )}
+              <CustomButton
+                title="SEND EMAIL"
+                onPress={() => handleSendMail(values)}
+                disabled={!isValid || isSubmitting}
+                customStyles={{ marginTop: 20 }}
+              />
+            </>
+          )}
+        </Formik>
       </View>
-      <CustomButton title="SEND EMAIL" />
     </View>
   );
 }
