@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, ScrollView } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
 
@@ -20,7 +20,7 @@ export default function RegisterScreen({ navigation, route }) {
     }
   };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View
         style={{
           alignSelf: "center",
@@ -151,7 +151,7 @@ export default function RegisterScreen({ navigation, route }) {
           </>
         )}
       </Formik>
-    </View>
+    </ScrollView>
   );
 }
 

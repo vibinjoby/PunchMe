@@ -10,7 +10,7 @@ import JobContext from "../context/JobContext";
 import utils from "../helpers/utils";
 import db from "../helpers/db";
 import commons from "../config/commonConstants";
-import Loader from "../helpers/Loader";
+import AppLoader from "../helpers/AppLoader";
 
 export default function HomeScreen({ route, navigation }) {
   let isMounted = false;
@@ -460,7 +460,6 @@ export default function HomeScreen({ route, navigation }) {
   }
   return (
     <View style={styles.container}>
-      <Loader isLoading={isLoading} />
       <View style={styles.componentSpacing}>
         <TimerComponent
           timerTime={timerTime}

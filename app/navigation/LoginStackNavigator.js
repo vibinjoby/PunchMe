@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 
 export default function LoginStackNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator navigationOptions={{ headerLayoutPreset: "center" }}>
       <Stack.Screen
         name={routes.LOGIN}
         component={LoginScreen}
@@ -26,7 +26,11 @@ export default function LoginStackNavigator() {
         name={routes.REGISTER}
         component={RegisterScreen}
         options={({ route, navigation }) => ({
-          title: "",
+          title: "Register",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: colors.white
+          },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
           headerLeft: props => (
@@ -38,7 +42,11 @@ export default function LoginStackNavigator() {
         name={routes.FORGOT_PWD}
         component={ForgotPwdScreen}
         options={({ route, navigation }) => ({
-          title: "",
+          title: "Forgot Password",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: colors.white
+          },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
           headerLeft: props => (
@@ -50,7 +58,11 @@ export default function LoginStackNavigator() {
         name={routes.TEMP_PWD}
         component={TempPwdScreen}
         options={({ route, navigation }) => ({
-          title: "",
+          title: "Temporary Password",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: colors.white
+          },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
           headerLeft: props => (
@@ -62,7 +74,11 @@ export default function LoginStackNavigator() {
         name={routes.CHANGE_PWD}
         component={ChangePwdScreen}
         options={({ route, navigation }) => ({
-          title: "",
+          title: "Change Password",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: colors.white
+          },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
           headerLeft: props => (

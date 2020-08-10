@@ -9,6 +9,7 @@ import db from "./app/helpers/db";
 import commons from "./app/config/commonConstants";
 import LoginStackNavigator from "./app/navigation/LoginStackNavigator";
 import AppNavigator from "./app/navigation/AppNavigator";
+import AppLoader from "./app/helpers/AppLoader";
 
 export default function App() {
   // Initializing sentry for logging
@@ -20,6 +21,7 @@ export default function App() {
   });
   const [showRealApp, setShowRealApp] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const key = commons.FIRST_TIME_APP_LOAD;
@@ -50,6 +52,7 @@ export default function App() {
 
   return (
     <AppearanceProvider>
+      {/*<AppLoader isLoading={isLoading} />*/}
       {showRealApp ? (
         <NavigationContainer theme={DarkTheme}>
           {!loggedIn ? <LoginStackNavigator /> : <AppNavigator />}

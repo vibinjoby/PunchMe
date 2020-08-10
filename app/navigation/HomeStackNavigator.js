@@ -1,11 +1,13 @@
 import React from "react";
-import { Button, Alert } from "react-native";
+import { Button, Alert, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import JobNavigator from "./JobNavigator";
 import AddJobScreen from "../screens/AddJobScreen";
 import { HeaderBackButton } from "@react-navigation/stack";
 import colors from "../config/colors";
 import db from "../helpers/db";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { CardStyleInterpolators } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
@@ -50,19 +52,34 @@ export default function HomeStackNavigator() {
         name="AddJob"
         component={AddJobScreen}
         options={({ route, navigation }) => ({
+          cardStyleInterpolator:
+            CardStyleInterpolators.forScaleFromCenterAndroid,
+          headerTitleAlign: "center",
           headerBackTitleStyle: { color: colors.yellow },
-          headerBackTitle: "Cancel",
           headerLeft: props => (
-            <HeaderBackButton {...props} tintColor={colors.yellow} />
+            <HeaderBackButton
+              {...props}
+              label="Cancel"
+              tintColor={colors.yellow}
+            />
           ),
           headerRight: () => (
-            <Button
+            <TouchableOpacity
               onPress={() => {
                 handleAddJob(route, navigation);
               }}
-              title="Save"
-              color={colors.yellow}
-            />
+            >
+              <Text
+                style={{
+                  color: colors.yellow,
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  paddingRight: 5
+                }}
+              >
+                Save
+              </Text>
+            </TouchableOpacity>
           )
         })}
       />

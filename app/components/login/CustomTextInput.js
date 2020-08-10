@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   textInput: {
+    color: colors.white,
     borderRadius: 8,
     backgroundColor: "#212121",
     padding: 15,
