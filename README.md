@@ -18,5 +18,4 @@ https://xd.adobe.com/view/6d741a86-0280-48dd-b1ea-c83ac14c9f69-3827/specs/
 - Users can add schedule for the upcoming shifts in the schedule section therefore depending on the schedule for the shift the user is been updated for starting the shift. (the scheduled shift will be shown in home page)
 - Users can view the weekly , bi-weekly or monthly history of hours worked and the payment respectively.
 
-![punchme](PunchMe.png)
-![activity](Activity.PNG)
+![punchme](PunchMe.jpg)
