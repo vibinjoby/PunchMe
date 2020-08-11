@@ -115,6 +115,7 @@ export default function CreateTaskModal({
             />
           </View>
           <DateTimePicker
+            headerTextIOS="Pick a time"
             isVisible={isStartTimePickerVisible}
             onConfirm={handlePickedStartTime}
             onCancel={() => {

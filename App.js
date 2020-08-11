@@ -12,9 +12,6 @@ import LoginStackNavigator from "./app/navigation/LoginStackNavigator";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AppLoader from "./app/helpers/AppLoader";
 import TodoStore from "./app/context/TodoStore";
-import Screens from "./app/components/Screens";
-import ViewTaskComp from "./app/components/scheduler/ViewTaskComp";
-import CreateTaskModal from "./app/components/scheduler/CreateTaskModal";
 
 export default function App() {
   // Initializing sentry for logging
