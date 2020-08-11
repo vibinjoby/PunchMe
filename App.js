@@ -11,7 +11,8 @@ import commons from "./app/config/commonConstants";
 import LoginStackNavigator from "./app/navigation/LoginStackNavigator";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AppLoader from "./app/helpers/AppLoader";
-import TodoStore from "./app/context/TodoStore";
+import TodoStore from "./app/context/store/TodoStore";
+import AppThemeStore from "./app/context/store/AppThemeStore";
 
 export default function App() {
   // Initializing sentry for logging
@@ -48,7 +49,7 @@ export default function App() {
     console.disableYellowBox = true;
 
     //Toggle this comment to reset all data and do only in development mode
-    //utils.removeAsyncStorageData(tokenKey);
+    //utils.removeAsyncStorageData("TODO");
     /*db.deleteAllData()
       .then(data => console.log(data))
       .catch(err => console.log(err));*/
@@ -70,11 +71,13 @@ export default function App() {
     <AppearanceProvider>
       {/*<AppLoader isLoading={isLoading} />*/}
       {showRealApp ? (
-        <TodoStore>
-          <NavigationContainer theme={DarkTheme}>
-            {!loggedIn ? <LoginStackNavigator /> : <AppNavigator />}
-          </NavigationContainer>
-        </TodoStore>
+        <AppThemeStore>
+          <TodoStore>
+            <NavigationContainer theme={DarkTheme}>
+              {!loggedIn ? <LoginStackNavigator /> : <AppNavigator />}
+            </NavigationContainer>
+          </TodoStore>
+        </AppThemeStore>
       ) : (
         <OnboardingComponent
           handleStart={() => {

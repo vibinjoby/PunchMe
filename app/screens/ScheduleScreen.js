@@ -194,6 +194,7 @@ export default function ScheduleScreen({ route, navigation }) {
           >
             {todoList.map(item => (
               <ViewTaskComp
+                key={item.key}
                 item={item}
                 _getEvent={_getEvent}
                 setSelectedTask={setSelectedTask}

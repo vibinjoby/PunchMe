@@ -1,20 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
-import {
-  View,
-  StyleSheet,
-  Modal,
-  Text,
-  TextInput,
-  Button,
-  TouchableOpacity
-} from "react-native";
+import React, { useState, useContext } from "react";
+import { View, StyleSheet, Modal, Text, TouchableOpacity } from "react-native";
 
 import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from "moment";
 import uuid from "uuid";
 import CustomModalButton from "./CustomModalButton";
 import colors from "../../config/colors";
-import { Context } from "../../context/Context";
+import { SchedulerContext } from "../../context/SchedulerContext";
+import utils from "../../helpers/utils";
 
 export default function CreateTaskModal({
   isModalVisible,
@@ -23,7 +16,7 @@ export default function CreateTaskModal({
   selectedDate,
   updateCurrentTask
 }) {
-  const schedulerContext = useContext(Context);
+  const schedulerContext = useContext(SchedulerContext);
   const [isStartTimePickerVisible, setIsStartTimePickerVisible] = useState(
     false
   );
@@ -32,14 +25,18 @@ export default function CreateTaskModal({
   const [isEndTimePickerVisible, setIsEndTimePickerVisible] = useState(false);
 
   const handleCreateEventData = async () => {
+    //Validate the start time and end time and save the task
+    if (!utils.validateStartTimeEndTime(startTime, endTime))
+      return alert("End time cannot be lesser than start time");
+
     const creatTodo = {
       key: uuid(),
       date: selectedDate,
       todoList: [
         {
           key: uuid(),
-          title: "Task",
-          notes: "Notes",
+          title: `${startTime} To ${endTime}`,
+          notes: utils.calculateTotalDifferenceInTime(startTime, endTime),
           alarm: {},
           color: `rgb(${Math.floor(
             Math.random() * Math.floor(256)

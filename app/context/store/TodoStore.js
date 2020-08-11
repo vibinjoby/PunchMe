@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AsyncStorage } from "react-native";
-import { Context } from "./Context";
+import { SchedulerContext } from "../SchedulerContext";
 
 export default function TodoStore({ children }) {
   const [todo, setToDo] = useState([]);
@@ -109,7 +109,7 @@ export default function TodoStore({ children }) {
   deleteTodo = () => {};
 
   return (
-    <Context.Provider
+    <SchedulerContext.Provider
       value={{
         todo: [],
         updateTodo: item => updateTodo(item),
@@ -119,6 +119,6 @@ export default function TodoStore({ children }) {
       }}
     >
       {children}
-    </Context.Provider>
+    </SchedulerContext.Provider>
   );
 }

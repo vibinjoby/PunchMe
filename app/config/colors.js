@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import AppThemeContext from "../context/AppThemeContext";
+
 export default {
   primary: "#fc5c65",
   secondary: "#4ecdc4",

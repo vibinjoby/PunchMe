@@ -197,6 +197,39 @@ const getDuration = inTime => {
   return moment.duration(number)._data;
 };
 
+//This function calculates the total time difference between the start time and end time in create task
+//Sample input --> startTime= "12:30 AM" endTime= "01:30 PM" result= "01:00"
+const calculateTotalDifferenceInTime = (start, end) => {
+  try {
+    const startTime = moment(start, "hh:mm A");
+    const endTime = moment(end, "hh:mm A");
+
+    let diff = endTime.diff(startTime);
+    let hours = moment
+      .utc(diff)
+      .format("hh:mm")
+      .split(":")[0];
+
+    let minutes = moment.utc(diff).minutes();
+    return `${hours} ${parseInt(hours) > 1 ? "hours" : "hour"} ${minutes} ${
+      parseInt(minutes) > 1 ? "minutes" : "minute"
+    }`;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+//If the end time is less than start time return false else true
+const validateStartTimeEndTime = (startTime, endTime) => {
+  try {
+    return moment(startTime, "hh:mm A").isBefore(moment(endTime, "hh:mm A"));
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export default {
   prefixZero,
   getCurrentTime,
@@ -211,5 +244,7 @@ export default {
   storePunchInDetails,
   getBreakExcludedPunchTime,
   getTotalBreakOnlyHours,
-  getDuration
+  getDuration,
+  calculateTotalDifferenceInTime,
+  validateStartTimeEndTime
 };
