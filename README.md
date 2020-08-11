@@ -5,6 +5,8 @@
 See the design of the app here
 https://xd.adobe.com/view/6d741a86-0280-48dd-b1ea-c83ac14c9f69-3827/specs/
 
+![punchme](PunchMe.jpg)
+
 - This application will be published in iOS and android and developed using react native.
 - Punch Me application is an employee aid to calculate and manage his/her hours weekly/monthly and generate an estimate of the expected pay.
 - Using the app, the user can stay organised in the hours worked and get an overall insight of working and keep a track of his break hours.
@@ -17,5 +19,3 @@ https://xd.adobe.com/view/6d741a86-0280-48dd-b1ea-c83ac14c9f69-3827/specs/
 - All the past shift details and hours worked will be shown in the logs tab.
 - Users can add schedule for the upcoming shifts in the schedule section therefore depending on the schedule for the shift the user is been updated for starting the shift. (the scheduled shift will be shown in home page)
 - Users can view the weekly , bi-weekly or monthly history of hours worked and the payment respectively.
-
-![punchme](PunchMe.jpg)
