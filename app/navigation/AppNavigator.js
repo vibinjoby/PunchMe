@@ -8,6 +8,7 @@ import routes from "./routes";
 import ActivityScreen from "../screens/ActivityScreen";
 import HomeStackNavigator from "./HomeStackNavigator";
 import SettingsStackNavigator from "./SettingsStackNavigator";
+import SchedulerNavigator from "./SchedulerNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,7 +33,7 @@ export default AppNavigator = () => {
       />
       <Tab.Screen
         name={routes.SCHEDULE}
-        component={ActivityScreen}
+        component={SchedulerNavigator}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons

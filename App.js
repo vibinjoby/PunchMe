@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AppearanceProvider } from "react-native-appearance";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import * as Sentry from "sentry-expo";
+import * as Permissions from "expo-permissions";
 
 import OnboardingComponent from "./app/components/onboarding/OnboardingComponent";
 import utils from "./app/helpers/utils";
@@ -10,6 +11,10 @@ import commons from "./app/config/commonConstants";
 import LoginStackNavigator from "./app/navigation/LoginStackNavigator";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AppLoader from "./app/helpers/AppLoader";
+import TodoStore from "./app/context/TodoStore";
+import Screens from "./app/components/Screens";
+import ViewTaskComp from "./app/components/scheduler/ViewTaskComp";
+import CreateTaskModal from "./app/components/scheduler/CreateTaskModal";
 
 export default function App() {
   // Initializing sentry for logging
@@ -24,6 +29,8 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    _askForCalendarPermissions();
+    _askForReminderPermissions();
     const key = commons.FIRST_TIME_APP_LOAD;
     //Check async storage to see if onboarding screen is to be shown or not
     utils.fetchAsyncStorageData(key).then(value => {
@@ -50,13 +57,27 @@ export default function App() {
       .catch(err => console.log(err));*/
   }, []);
 
+  const _askForCalendarPermissions = async () => {
+    await Permissions.askAsync(Permissions.CALENDAR);
+  };
+
+  const _askForReminderPermissions = async () => {
+    if (Platform.OS === "android") {
+      return true;
+    }
+
+    await Permissions.askAsync(Permissions.REMINDERS);
+  };
+
   return (
     <AppearanceProvider>
       {/*<AppLoader isLoading={isLoading} />*/}
       {showRealApp ? (
-        <NavigationContainer theme={DarkTheme}>
-          {!loggedIn ? <LoginStackNavigator /> : <AppNavigator />}
-        </NavigationContainer>
+        <TodoStore>
+          <NavigationContainer theme={DarkTheme}>
+            {!loggedIn ? <LoginStackNavigator /> : <AppNavigator />}
+          </NavigationContainer>
+        </TodoStore>
       ) : (
         <OnboardingComponent
           handleStart={() => {

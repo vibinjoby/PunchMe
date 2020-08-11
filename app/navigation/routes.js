@@ -7,5 +7,7 @@ export default Object.freeze({
   REGISTER: "Register",
   FORGOT_PWD: "ForgotPwd",
   TEMP_PWD: "TempPwd",
-  CHANGE_PWD: "ChangePwd"
+  CHANGE_PWD: "ChangePwd",
+  SCHEDULER: "Scheduler",
+  CREATE_TASK: "CreateTask"
 });
