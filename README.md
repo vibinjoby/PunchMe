@@ -1,9 +1,13 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/vibinjoby/PunchMe)
+
 # PunchMe
 
 ## Never Lose track of your hours and get paid for what you deserve
 
 See the design of the app here
 https://xd.adobe.com/view/6d741a86-0280-48dd-b1ea-c83ac14c9f69-3827/specs/
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/vibinjoby/PunchMe)
 
 ![punchme](PunchMe.jpg)
 
