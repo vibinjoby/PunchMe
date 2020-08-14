@@ -8,27 +8,61 @@ export default function PunchButtonComponent({
   onBreak,
   onResume,
   isPunchedIn,
-  isBreak
+  isBreak,
+  theme
 }) {
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        theme === "light" && { backgroundColor: colors.lightBackground }
+      ]}
+    >
       {!isPunchedIn ? (
         <TouchableOpacity style={styles.punchBtn} onPress={onPunchIn}>
-          <Text style={styles.punchText}>PUNCH IN</Text>
+          <Text
+            style={[
+              styles.punchText,
+              theme === "light" && { color: colors.white }
+            ]}
+          >
+            PUNCH IN
+          </Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={styles.punchBtn} onPress={onPunchOut}>
-          <Text style={styles.punchText}>PUNCH OUT</Text>
+          <Text
+            style={[
+              styles.punchText,
+              theme === "light" && { color: colors.white }
+            ]}
+          >
+            PUNCH OUT
+          </Text>
         </TouchableOpacity>
       )}
 
       {!isBreak ? (
         <TouchableOpacity style={styles.breakBtn} onPress={onBreak}>
-          <Text style={styles.breakTxt}>BREAK</Text>
+          <Text
+            style={[
+              styles.breakTxt,
+              theme === "light" && { color: colors.black }
+            ]}
+          >
+            BREAK
+          </Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={styles.breakBtn} onPress={onResume}>
-          <Text style={styles.breakTxt}>RESUME</Text>
+          <Text
+            style={[
+              styles.breakTxt,
+              theme === "light" && { color: colors.black }
+            ]}
+          >
+            RESUME
+          </Text>
         </TouchableOpacity>
       )}
     </View>

@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useColorScheme } from "react-native-appearance";
+
 import routes from "./routes";
 import ScheduleScreen from "../screens/ScheduleScreen";
+import AppThemeContext from "../context/AppThemeContext";
+import colors from "../config/colors";
 
 const Stack = createStackNavigator();
 
 export default function SchedulerNavigator() {
+  // Theme based colors
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -14,7 +24,14 @@ export default function SchedulerNavigator() {
         options={{
           headerShown: true,
           headerLeft: null,
-          headerTitleAlign: "center"
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor:
+              themeColor === "light" ? colors.white : colors.black
+          },
+          headerTitleStyle: {
+            color: themeColor === "dark" ? colors.white : colors.black
+          }
         }}
       />
     </Stack.Navigator>

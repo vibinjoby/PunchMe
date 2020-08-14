@@ -233,8 +233,8 @@ function CreateTask({ route, navigation }) {
         dots: [
           {
             key: uuid(),
-            color: "#2E66E7",
-            selectedDotColor: "#2E66E7"
+            color: "#4B4BF9",
+            selectedDotColor: "#4B4BF9"
           }
         ]
       }

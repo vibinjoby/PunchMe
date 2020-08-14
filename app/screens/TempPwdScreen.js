@@ -1,16 +1,23 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
+import { useColorScheme } from "react-native-appearance";
 
 import colors from "../config/colors";
 import CustomButton from "../components/login/CustomButton";
 import { TextInput } from "react-native-gesture-handler";
 import routes from "../navigation/routes";
 import loginService from "../services/loginService";
+import AppThemeContext from "../context/AppThemeContext";
 
 export default function TempPwdScreen({ route, navigation }) {
   const { username } = route.params;
+
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
 
   const firstTI = useRef();
   const secondTI = useRef();
@@ -29,9 +36,19 @@ export default function TempPwdScreen({ route, navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        themeColor === "light" && { backgroundColor: colors.lightBackground }
+      ]}
+    >
       <View style={styles.formContent}>
-        <Text style={{ color: colors.white, textAlign: "center" }}>
+        <Text
+          style={{
+            color: themeColor === "dark" ? colors.white : "#717171",
+            textAlign: "center"
+          }}
+        >
           Enter the 4 digit code received on Your registered email address
         </Text>
 
@@ -62,6 +79,7 @@ export default function TempPwdScreen({ route, navigation }) {
                 <TextInput
                   style={styles.codeTextInput}
                   maxLength={1}
+                  keyboardType="decimal-pad"
                   autoFocus
                   onBlur={() => setFieldTouched("firstNum")}
                   onFocus={() => validateForm()}
@@ -77,6 +95,7 @@ export default function TempPwdScreen({ route, navigation }) {
                 <TextInput
                   style={styles.codeTextInput}
                   maxLength={1}
+                  keyboardType="decimal-pad"
                   ref={secondTI}
                   onBlur={() => setFieldTouched("secondNum")}
                   onChangeText={handleChange("secondNum")}
@@ -89,6 +108,7 @@ export default function TempPwdScreen({ route, navigation }) {
                 <TextInput
                   style={styles.codeTextInput}
                   maxLength={1}
+                  keyboardType="decimal-pad"
                   ref={thirdTI}
                   onBlur={() => setFieldTouched("thirdNum")}
                   onChangeText={handleChange("thirdNum")}
@@ -101,6 +121,7 @@ export default function TempPwdScreen({ route, navigation }) {
                 <TextInput
                   style={styles.codeTextInput}
                   maxLength={1}
+                  keyboardType="decimal-pad"
                   ref={fourthTI}
                   onBlur={() => setFieldTouched("fourthNum")}
                   onChangeText={handleChange("fourthNum")}

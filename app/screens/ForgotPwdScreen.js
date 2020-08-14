@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
+import { useColorScheme } from "react-native-appearance";
 
 import colors from "../config/colors";
 import CustomTextInput from "../components/login/CustomTextInput";
@@ -9,8 +10,14 @@ import CustomButton from "../components/login/CustomButton";
 import loginService from "../services/loginService";
 import routes from "../navigation/routes";
 import CustomErrorText from "../components/login/CustomErrorText";
+import AppThemeContext from "../context/AppThemeContext";
 
 export default function ForgotPwdScreen({ navigation, route }) {
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
   const handleSendMail = async values => {
     //If the mail is sent to the user, navigate to the temporary password screen
     const result = await loginService.forgotPassword(values.email);
@@ -19,7 +26,12 @@ export default function ForgotPwdScreen({ navigation, route }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        themeColor === "light" && { backgroundColor: colors.lightBackground }
+      ]}
+    >
       <View style={styles.loginHeader}>
         <Image
           style={styles.headerLogo}
@@ -28,7 +40,14 @@ export default function ForgotPwdScreen({ navigation, route }) {
         <Text style={styles.headerTxt}>PUNCH ME</Text>
       </View>
       <View style={styles.subHeader}>
-        <Text style={styles.forgtPwdTxt}>FORGOT PASSWORD?</Text>
+        <Text
+          style={[
+            styles.forgtPwdTxt,
+            themeColor === "light" && { color: colors.black }
+          ]}
+        >
+          FORGOT PASSWORD?
+        </Text>
         <Text style={styles.subheaderTxt}>
           Enter the email address you used to create your account and we will
           email you a link to reset your password
@@ -83,7 +102,7 @@ export default function ForgotPwdScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.black,
-    marginTop: 40,
+    paddingTop: 40,
     flex: 1
   },
   loginHeader: {

@@ -1,9 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, TextInput, Text } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import { StyleSheet, TextInput, Text, View } from "react-native";
 import Screens from "../components/Screens";
 import colors from "../config/colors";
+import AppThemeContext from "../context/AppThemeContext";
+import { useColorScheme } from "react-native-appearance";
 
 export default function AddJobScreen({ navigation: { setParams } }) {
+  // Theme based colors
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
   const [title, setTitle] = useState();
   const [hourlyPay, setHourlyPay] = useState();
   const [notes, setNotes] = useState();
@@ -21,7 +29,12 @@ export default function AddJobScreen({ navigation: { setParams } }) {
   }, [title, hourlyPay, notes]);
 
   return (
-    <Screens style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        themeColor === "light" && { backgroundColor: colors.lightBackground }
+      ]}
+    >
       <TextInput
         onChangeText={text => {
           if (!text) setIsTitleErr(true);
@@ -29,8 +42,14 @@ export default function AddJobScreen({ navigation: { setParams } }) {
           setTitle(text);
         }}
         placeholder="Job Title"
-        style={[styles.textInput, isTitleError ? styles.errorInput : ""]}
-        placeholderTextColor={colors.white}
+        style={[
+          styles.textInput,
+          isTitleError ? styles.errorInput : "",
+          themeColor === "light" && { backgroundColor: colors.white }
+        ]}
+        placeholderTextColor={
+          themeColor === "dark" ? colors.white : colors.black
+        }
       />
       {/** Conditionally render the error */}
       {isTitleError && (
@@ -44,8 +63,14 @@ export default function AddJobScreen({ navigation: { setParams } }) {
           else setIsHourlyPayErr(false);
         }}
         placeholder="Hourly Payment"
-        style={[styles.textInput, isHourlyPayError ? styles.errorInput : ""]}
-        placeholderTextColor={colors.white}
+        style={[
+          styles.textInput,
+          isHourlyPayError ? styles.errorInput : "",
+          themeColor === "light" && { backgroundColor: colors.white }
+        ]}
+        placeholderTextColor={
+          themeColor === "dark" ? colors.white : colors.black
+        }
       />
       {/** Conditionally render the error */}
       {isHourlyPayError && (
@@ -54,16 +79,22 @@ export default function AddJobScreen({ navigation: { setParams } }) {
       <TextInput
         onChangeText={text => setNotes(text)}
         placeholder="Notes"
-        style={styles.textInput}
-        placeholderTextColor={colors.white}
+        style={[
+          styles.textInput,
+          themeColor === "light" && { backgroundColor: colors.white }
+        ]}
+        placeholderTextColor={
+          themeColor === "dark" ? colors.white : colors.black
+        }
       />
-    </Screens>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20
+    flex: 1,
+    paddingTop: 20
   },
   error: {
     marginTop: -10,

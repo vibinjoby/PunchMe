@@ -13,6 +13,7 @@ import AppNavigator from "./app/navigation/AppNavigator";
 import AppLoader from "./app/helpers/AppLoader";
 import TodoStore from "./app/context/store/TodoStore";
 import AppThemeStore from "./app/context/store/AppThemeStore";
+import Screens from "./app/components/Screens";
 
 export default function App() {
   // Initializing sentry for logging
@@ -49,7 +50,7 @@ export default function App() {
     console.disableYellowBox = true;
 
     //Toggle this comment to reset all data and do only in development mode
-    //utils.removeAsyncStorageData("TODO");
+    //utils.removeAsyncStorageData("token");
     /*db.deleteAllData()
       .then(data => console.log(data))
       .catch(err => console.log(err));*/

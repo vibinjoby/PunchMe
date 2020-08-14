@@ -2,7 +2,12 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import colors from "../../config/colors";
 
-export default function ViewTaskComp({ item, setSelectedTask, _getEvent }) {
+export default function ViewTaskComp({
+  item,
+  setSelectedTask,
+  _getEvent,
+  theme
+}) {
   return (
     <TouchableOpacity
       onPress={() => {
@@ -10,7 +15,10 @@ export default function ViewTaskComp({ item, setSelectedTask, _getEvent }) {
         _getEvent();
       }}
       key={item.key}
-      style={styles.taskListContent}
+      style={[
+        styles.taskListContent,
+        theme === "light" && { backgroundColor: colors.white }
+      ]}
     >
       <View
         style={{
@@ -23,7 +31,14 @@ export default function ViewTaskComp({ item, setSelectedTask, _getEvent }) {
               styles.leftCircleView /* , { backgroundColor: item.color } */
             ]}
           />
-          <Text style={styles.titleTxt}>{item.title}</Text>
+          <Text
+            style={[
+              styles.titleTxt,
+              theme === "light" && { color: colors.black }
+            ]}
+          >
+            {item.title}
+          </Text>
         </View>
         <View>
           <View style={styles.notesView}>

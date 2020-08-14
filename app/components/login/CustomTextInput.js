@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import colors from "../../config/colors";
+import { useColorScheme } from "react-native-appearance";
+import AppThemeContext from "../../context/AppThemeContext";
 
 export default function CustomTextInput({
   onChangeText,
@@ -8,11 +10,28 @@ export default function CustomTextInput({
   customStyles,
   ...otherProps
 }) {
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
   return (
     <View style={customStyles}>
-      {textHeader && <Text style={styles.formTxt}>{textHeader}</Text>}
+      {textHeader && (
+        <Text
+          style={[
+            styles.formTxt,
+            themeColor === "light" && { color: colors.black }
+          ]}
+        >
+          {textHeader}
+        </Text>
+      )}
       <TextInput
-        style={styles.textInput}
+        placeholderTextColor="#A2A2A2"
+        style={[
+          styles.textInput,
+          themeColor === "light" && { color: colors.black }
+        ]}
         {...otherProps}
         autoCapitalize="none"
         onChangeText={text => onChangeText && onChangeText(text)}
@@ -28,9 +47,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   textInput: {
+    backgroundColor: "#212121",
     color: colors.white,
     borderRadius: 8,
-    backgroundColor: "#212121",
     padding: 15,
     fontSize: 16,
     marginTop: 10

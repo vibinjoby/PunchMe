@@ -1,7 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
+import colors from "../../config/colors";
 
-export default function HeaderComponent({ navigation }) {
+export default function HeaderComponent({ navigation, theme }) {
   const handleAddJobs = () => {
     navigation.navigate("AddJob");
   };
@@ -20,7 +21,11 @@ export default function HeaderComponent({ navigation }) {
         }}
         onPress={handleAddJobs}
       >
-        <Text style={styles.addJob}>+</Text>
+        <Text
+          style={[styles.addJob, theme === "light" && { color: colors.black }]}
+        >
+          +
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -28,7 +33,8 @@ export default function HeaderComponent({ navigation }) {
 const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
-    paddingLeft: 10
+    paddingLeft: 10,
+    paddingVertical: 5
   },
   logo: {
     marginLeft: 10

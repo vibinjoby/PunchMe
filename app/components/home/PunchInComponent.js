@@ -2,10 +2,15 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import colors from "../../config/colors";
 
-export function PunchInComponent({ data }) {
+export function PunchInComponent({ data, theme }) {
   return (
     <View style={styles.container}>
-      <View style={styles.leftContainer}>
+      <View
+        style={[
+          styles.leftContainer,
+          theme === "light" && { backgroundColor: colors.white }
+        ]}
+      >
         <View
           style={{
             backgroundColor: "green",
@@ -18,7 +23,12 @@ export function PunchInComponent({ data }) {
         <Text style={styles.punchTxt}>PUNCH IN </Text>
         <Text style={styles.punchData}>{data}</Text>
       </View>
-      <View style={styles.rightContainer}>
+      <View
+        style={[
+          styles.rightContainer,
+          theme === "light" && { backgroundColor: colors.white }
+        ]}
+      >
         <View
           style={{
             backgroundColor: "red",
@@ -29,7 +39,11 @@ export function PunchInComponent({ data }) {
           }}
         />
         <Text style={styles.punchTxt}>PUNCH OUT </Text>
-        <Text style={styles.punchData}>{data} </Text>
+        <Text
+          style={[styles.punchData, theme === "light" && { color: "#2E2E2E" }]}
+        >
+          {data}{" "}
+        </Text>
       </View>
     </View>
   );

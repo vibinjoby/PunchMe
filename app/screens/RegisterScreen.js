@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, Image, ScrollView } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
+import { useColorScheme } from "react-native-appearance";
 
 import CustomTextInput from "../components/login/CustomTextInput";
 import CustomButton from "../components/login/CustomButton";
 import registerService from "../services/registerService";
 import CustomErrorText from "../components/login/CustomErrorText";
 import routes from "../navigation/routes";
+import AppThemeContext from "../context/AppThemeContext";
+import colors from "../config/colors";
 
 export default function RegisterScreen({ navigation, route }) {
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
   const handleRegister = async values => {
     try {
       const { id } = await registerService.registerUser(values);
@@ -20,7 +27,12 @@ export default function RegisterScreen({ navigation, route }) {
     }
   };
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={[
+        styles.container,
+        themeColor === "light" && { backgroundColor: colors.lightBackground }
+      ]}
+    >
       <View
         style={{
           alignSelf: "center",
@@ -157,8 +169,9 @@ export default function RegisterScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.black,
     flex: 1,
-    marginTop: 10,
-    marginHorizontal: 40
+    paddingTop: 10,
+    paddingHorizontal: 40
   }
 });

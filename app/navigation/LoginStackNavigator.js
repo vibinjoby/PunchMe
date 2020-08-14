@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   createStackNavigator,
-  HeaderBackButton
+  HeaderBackButton,
+  CardStyleInterpolators
 } from "@react-navigation/stack";
+import { useColorScheme } from "react-native-appearance";
+
 import LoginScreen from "../screens/LoginScreen";
 import routes from "./routes";
 import RegisterScreen from "../screens/RegisterScreen";
@@ -11,10 +14,15 @@ import colors from "../config/colors";
 import AppNavigator from "./AppNavigator";
 import TempPwdScreen from "../screens/TempPwdScreen";
 import ChangePwdScreen from "../screens/ChangePwdScreen";
+import AppThemeContext from "../context/AppThemeContext";
 
 const Stack = createStackNavigator();
 
 export default function LoginStackNavigator() {
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
   return (
     <Stack.Navigator navigationOptions={{ headerLayoutPreset: "center" }}>
       <Stack.Screen
@@ -26,10 +34,15 @@ export default function LoginStackNavigator() {
         name={routes.REGISTER}
         component={RegisterScreen}
         options={({ route, navigation }) => ({
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           title: "Register",
+          headerStyle: {
+            backgroundColor:
+              themeColor === "light" ? colors.lightBackground : colors.black
+          },
           headerTitleAlign: "center",
           headerTitleStyle: {
-            color: colors.white
+            color: themeColor === "dark" ? colors.white : colors.black
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
@@ -42,10 +55,15 @@ export default function LoginStackNavigator() {
         name={routes.FORGOT_PWD}
         component={ForgotPwdScreen}
         options={({ route, navigation }) => ({
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           title: "Forgot Password",
           headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor:
+              themeColor === "light" ? colors.lightBackground : colors.black
+          },
           headerTitleStyle: {
-            color: colors.white
+            color: themeColor === "dark" ? colors.white : colors.black
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
@@ -58,10 +76,15 @@ export default function LoginStackNavigator() {
         name={routes.TEMP_PWD}
         component={TempPwdScreen}
         options={({ route, navigation }) => ({
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           title: "Temporary Password",
+          headerStyle: {
+            backgroundColor:
+              themeColor === "light" ? colors.lightBackground : colors.black
+          },
           headerTitleAlign: "center",
           headerTitleStyle: {
-            color: colors.white
+            color: themeColor === "dark" ? colors.white : colors.black
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
@@ -74,10 +97,15 @@ export default function LoginStackNavigator() {
         name={routes.CHANGE_PWD}
         component={ChangePwdScreen}
         options={({ route, navigation }) => ({
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           title: "Change Password",
+          headerStyle: {
+            backgroundColor:
+              themeColor === "light" ? colors.lightBackground : colors.black
+          },
           headerTitleAlign: "center",
           headerTitleStyle: {
-            color: colors.white
+            color: themeColor === "dark" ? colors.white : colors.black
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",

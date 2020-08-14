@@ -1,11 +1,16 @@
 import React, { useRef } from "react";
 import { View, StyleSheet, Text, FlatList } from "react-native";
+import colors from "../../config/colors";
 
-export function DetailsComponent({ data }) {
+export function DetailsComponent({ data, theme }) {
   let flatListRef = useRef();
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>DETAILS</Text>
+      <Text
+        style={[styles.header, theme === "light" && { color: colors.black }]}
+      >
+        DETAILS
+      </Text>
       <View style={[styles.detailsContent, { alignItems: "center" }]}>
         {Object.keys(data).length !== 0 ? (
           <FlatList

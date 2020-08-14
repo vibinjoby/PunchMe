@@ -1,25 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useColorScheme } from "react-native-appearance";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import colors from "../config/colors";
 import routes from "./routes";
-import ActivityScreen from "../screens/ActivityScreen";
 import HomeStackNavigator from "./HomeStackNavigator";
 import SettingsStackNavigator from "./SettingsStackNavigator";
 import SchedulerNavigator from "./SchedulerNavigator";
+import AppThemeContext from "../context/AppThemeContext";
 
 const Tab = createBottomTabNavigator();
 
 export default AppNavigator = () => {
-  const colorScheme = useColorScheme();
-  console.log(colorScheme);
+  // Theme based colors
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
   return (
     <Tab.Navigator
       tabBarOptions={{
+        style: {
+          backgroundColor: themeColor === "dark" ? colors.black : colors.white
+        },
         activeTintColor: colors.yellow,
-        inactiveTintColor: "#eee"
+        inactiveTintColor: themeColor === "dark" ? "#eee" : colors.black
       }}
     >
       <Tab.Screen

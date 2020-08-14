@@ -6,7 +6,8 @@ import colors from "../../config/colors";
 export default function TimerComponent({
   timerTime,
   breakTime,
-  isBreak = false
+  isBreak = false,
+  theme
 }) {
   const [isBlink, setIsBlink] = useState(isBreak);
 
@@ -16,23 +17,43 @@ export default function TimerComponent({
   }, [isBreak]);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        theme === "light" && { backgroundColor: colors.white }
+      ]}
+    >
       {/**If the user has taken break, blink the overall timer text else pass the blink and interval period as null */}
       {isBlink ? (
         <CustomBlinkTextComponent
-          style={styles.timerTxt}
+          style={[
+            styles.timerTxt,
+            theme === "light" && { color: colors.black }
+          ]}
           blinkPeriod={isBlink ? 1000 : null}
           intervalPeriod={isBlink ? 1000 : null}
         >
           {timerTime.hour}:{timerTime.minute}:{timerTime.seconds}
         </CustomBlinkTextComponent>
       ) : (
-        <Text style={styles.timerTxt}>
+        <Text
+          style={[
+            styles.timerTxt,
+            theme === "light" && { color: colors.black }
+          ]}
+        >
           {timerTime.hour}:{timerTime.minute}:{timerTime.seconds}
         </Text>
       )}
       <View style={styles.breakContainer}>
-        <Text style={styles.breakTxt}>BREAK</Text>
+        <Text
+          style={[
+            styles.breakTxt,
+            theme === "light" && { color: colors.black }
+          ]}
+        >
+          BREAK
+        </Text>
         <Text style={styles.breakTimer}>
           {breakTime.hour}:{breakTime.minute}:{breakTime.seconds}
         </Text>

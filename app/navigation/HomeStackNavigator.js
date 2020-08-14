@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Alert, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import JobNavigator from "./JobNavigator";
 import AddJobScreen from "../screens/AddJobScreen";
 import { HeaderBackButton } from "@react-navigation/stack";
+import { useColorScheme } from "react-native-appearance";
+
 import colors from "../config/colors";
 import db from "../helpers/db";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { CardStyleInterpolators } from "@react-navigation/stack";
+import AppThemeContext from "../context/AppThemeContext";
 
 const Stack = createStackNavigator();
 
 export default function HomeStackNavigator() {
+  // Theme based colors
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
   const handleAddJob = (route, navigation) => {
     //Get the params from Add Job Screen when the save is clicked
     const { title, hourlyPay, notes, handleErrors } = route.params;
@@ -52,9 +61,16 @@ export default function HomeStackNavigator() {
         name="AddJob"
         component={AddJobScreen}
         options={({ route, navigation }) => ({
+          headerStyle: {
+            backgroundColor:
+              themeColor === "light" ? colors.white : colors.black
+          },
           cardStyleInterpolator:
             CardStyleInterpolators.forScaleFromCenterAndroid,
           headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: themeColor === "dark" ? colors.white : colors.black
+          },
           headerBackTitleStyle: { color: colors.yellow },
           headerLeft: props => (
             <HeaderBackButton

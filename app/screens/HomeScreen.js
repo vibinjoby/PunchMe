@@ -11,11 +11,19 @@ import utils from "../helpers/utils";
 import db from "../helpers/db";
 import commons from "../config/commonConstants";
 import AppLoader from "../helpers/AppLoader";
+import AppThemeContext from "../context/AppThemeContext";
+import colors from "../config/colors";
 
 export default function HomeScreen({ route, navigation }) {
   let isMounted = false;
   let jobActivityDetails = {};
   let punchModelObj = {};
+
+  // Theme based colors
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
 
   //Fetch the route params for job title and hourly pay for saving in the activity log after user punches out
   const jobTitle = route.params && route.params.title;
@@ -459,22 +467,29 @@ export default function HomeScreen({ route, navigation }) {
     });
   }
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        themeColor === "light" && { backgroundColor: colors.lightBackground }
+      ]}
+    >
       <View style={styles.componentSpacing}>
         <TimerComponent
+          theme={themeColor}
           timerTime={timerTime}
           breakTime={breakTime}
           isBreak={isBreak}
         />
       </View>
       <View style={styles.componentSpacing}>
-        <MemoizedPunchInTimeComp data={punchInTime} />
+        <MemoizedPunchInTimeComp theme={themeColor} data={punchInTime} />
       </View>
       <View style={styles.componentSpacing}>
-        <MemoizedDetailsComponent data={punchDetails} />
+        <MemoizedDetailsComponent theme={themeColor} data={punchDetails} />
       </View>
       <View style={styles.componentSpacing}>
         <PunchButtonComponent
+          theme={themeColor}
           onPunchIn={() => handlePunchIn(false)}
           onPunchOut={handlePunchOut}
           onBreak={handleBreak}
@@ -489,6 +504,7 @@ export default function HomeScreen({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "black",
     flex: 1,
     justifyContent: "space-around"
   },

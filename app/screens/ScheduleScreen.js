@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   TouchableOpacity,
@@ -10,13 +10,22 @@ import {
 } from "react-native";
 import moment from "moment";
 import * as Calendar from "expo-calendar";
-
+import { useColorScheme } from "react-native-appearance";
 import CalendarStrip from "react-native-calendar-strip";
+
 import colors from "../config/colors";
 import CreateTaskModal from "../components/scheduler/CreateTaskModal";
 import ViewTaskComp from "../components/scheduler/ViewTaskComp";
+import AppThemeContext from "../context/AppThemeContext";
+import EmptyTaskComp from "../components/scheduler/EmptyTaskComp";
 
 export default function ScheduleScreen({ route, navigation }) {
+  // Theme based colors
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
   const [datesWhitelist, setDatesWhiteList] = useState([
     {
       start: moment(),
@@ -124,7 +133,9 @@ export default function ScheduleScreen({ route, navigation }) {
       />
       <View
         style={{
-          flex: 1
+          flex: 1,
+          backgroundColor:
+            themeColor === "dark" ? colors.black : colors.lightBackground
         }}
       >
         <CalendarStrip
@@ -132,34 +143,26 @@ export default function ScheduleScreen({ route, navigation }) {
             calenderRef = ref;
           }}
           calendarAnimation={{ type: "sequence", duration: 30 }}
-          daySelectionAnimation={{
-            type: "background",
-            duration: 200,
-            highlightColor: "#ffffff"
-          }}
           style={{
             height: 150,
             paddingTop: 20,
-            paddingBottom: 20
+            marginTop: 20,
+            backgroundColor: themeColor === "dark" ? "#1A1A1A" : colors.white
           }}
-          calendarHeaderStyle={{ color: "#DFDFE4" }}
-          dateNumberStyle={{ color: colors.white, paddingTop: 10 }}
-          dateNameStyle={{ color: "#BBBBBB" }}
-          highlightDateNumberStyle={{
-            color: "#fff",
-            backgroundColor: "#4B4BF9",
-            marginTop: 10,
-            height: 35,
-            width: 35,
-            textAlign: "center",
-            borderRadius: 17.5,
-            overflow: "hidden",
-            paddingTop: 6,
-            fontWeight: "400",
-            justifyContent: "center",
-            alignItems: "center"
+          calendarHeaderStyle={{
+            color: themeColor === "dark" ? "#DFDFE4" : colors.black
           }}
-          highlightDateNameStyle={{ color: colors.white }}
+          dateNumberStyle={{
+            color: themeColor === "dark" ? colors.white : colors.black,
+            paddingTop: 10
+          }}
+          dateNameStyle={{
+            color: themeColor === "dark" ? "#BBBBBB" : colors.black
+          }}
+          highlightDateNumberStyle={styles.highlightedDatesNumber}
+          highlightDateNameStyle={{
+            color: themeColor === "dark" ? colors.white : colors.black
+          }}
           disabledDateNameStyle={{ color: "grey" }}
           disabledDateNumberStyle={{ color: "grey", paddingTop: 10 }}
           datesWhitelist={datesWhitelist}
@@ -167,6 +170,7 @@ export default function ScheduleScreen({ route, navigation }) {
           iconRight={require("../assets/right-arrow.png")}
           iconContainer={{ flex: 0.1 }}
           markedDates={markedDate}
+          selectedDate={Date()}
           onDateSelected={date => {
             const selectedDate = `${moment(date).format("YYYY")}-${moment(
               date
@@ -179,29 +183,42 @@ export default function ScheduleScreen({ route, navigation }) {
           onPress={() => setIsModalVisible(true)}
           style={styles.viewTask}
         >
-          <Text style={{ fontSize: 50, fontWeight: "bold" }}>+</Text>
-        </TouchableOpacity>
-        <View
-          style={{
-            width: "100%",
-            height: Dimensions.get("window").height - 170
-          }}
-        >
-          <ScrollView
-            contentContainerStyle={{
-              paddingBottom: 180
+          <Text
+            style={{
+              fontSize: 50,
+              fontWeight: "bold",
+              color: themeColor === "dark" ? "black" : colors.lightBackground
             }}
           >
-            {todoList.map(item => (
-              <ViewTaskComp
-                key={item.key}
-                item={item}
-                _getEvent={_getEvent}
-                setSelectedTask={setSelectedTask}
-              />
-            ))}
-          </ScrollView>
-        </View>
+            +
+          </Text>
+        </TouchableOpacity>
+        {todoList.length > 0 ? (
+          <View
+            style={{
+              width: "100%",
+              height: Dimensions.get("window").height - 170
+            }}
+          >
+            <ScrollView
+              contentContainerStyle={{
+                paddingBottom: 180
+              }}
+            >
+              {todoList.map(item => (
+                <ViewTaskComp
+                  key={item.key}
+                  item={item}
+                  _getEvent={_getEvent}
+                  setSelectedTask={setSelectedTask}
+                  theme={themeColor}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        ) : (
+          <EmptyTaskComp theme={themeColor} />
+        )}
       </View>
     </>
   );
@@ -219,15 +236,21 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: colors.yellow,
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    shadowRadius: 30,
-    shadowOpacity: 0.5,
-    elevation: 5,
     zIndex: 999
+  },
+  highlightedDatesNumber: {
+    color: colors.white,
+    backgroundColor: "#4B4BF9",
+    marginTop: 10,
+    height: 35,
+    width: 35,
+    textAlign: "center",
+    borderRadius: 17.5,
+    overflow: "hidden",
+    paddingTop: 6,
+    fontWeight: "400",
+    justifyContent: "center",
+    alignItems: "center"
   },
   title: {
     height: 25,
