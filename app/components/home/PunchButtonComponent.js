@@ -15,7 +15,7 @@ export default function PunchButtonComponent({
     <View
       style={[
         styles.container,
-        theme === "light" && { backgroundColor: colors.lightBackground }
+        theme === "light" && { backgroundColor: colors.white }
       ]}
     >
       {!isPunchedIn ? (
@@ -43,7 +43,7 @@ export default function PunchButtonComponent({
       )}
 
       {!isBreak ? (
-        <TouchableOpacity style={styles.breakBtn} onPress={onBreak}>
+        <TouchableOpacity style={[styles.breakBtn]} onPress={onBreak}>
           <Text
             style={[
               styles.breakTxt,
@@ -54,7 +54,7 @@ export default function PunchButtonComponent({
           </Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.breakBtn} onPress={onResume}>
+        <TouchableOpacity style={[styles.breakBtn]} onPress={onResume}>
           <Text
             style={[
               styles.breakTxt,

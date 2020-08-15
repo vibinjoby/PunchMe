@@ -7,7 +7,12 @@ export default function HeaderComponent({ navigation, theme }) {
     navigation.navigate("AddJob");
   };
   return (
-    <View style={styles.header}>
+    <View
+      style={[
+        styles.header,
+        theme === "light" && { backgroundColor: colors.lightPrimary }
+      ]}
+    >
       <Image
         style={styles.logo}
         width={40}
@@ -21,11 +26,7 @@ export default function HeaderComponent({ navigation, theme }) {
         }}
         onPress={handleAddJobs}
       >
-        <Text
-          style={[styles.addJob, theme === "light" && { color: colors.black }]}
-        >
-          +
-        </Text>
+        <Text style={styles.addJob}>+</Text>
       </TouchableOpacity>
     </View>
   );

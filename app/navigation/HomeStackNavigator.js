@@ -63,13 +63,13 @@ export default function HomeStackNavigator() {
         options={({ route, navigation }) => ({
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.white : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black
           },
           cardStyleInterpolator:
             CardStyleInterpolators.forScaleFromCenterAndroid,
           headerTitleAlign: "center",
           headerTitleStyle: {
-            color: themeColor === "dark" ? colors.white : colors.black
+            color: colors.white
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerLeft: props => (

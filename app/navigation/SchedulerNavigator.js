@@ -27,10 +27,10 @@ export default function SchedulerNavigator() {
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.white : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black
           },
           headerTitleStyle: {
-            color: themeColor === "dark" ? colors.white : colors.black
+            color: colors.white
           }
         }}
       />

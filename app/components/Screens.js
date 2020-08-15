@@ -14,14 +14,12 @@ function Screens({ children, style }) {
 
   return (
     <>
-      <StatusBar
-        barStyle={themeColor === "dark" ? "light-content" : "dark-content"}
-      />
+      <StatusBar barStyle="light-content" />
       <SafeAreaView
         style={[
           styles.screen,
           style,
-          themeColor === "light" && { backgroundColor: colors.lightBackground }
+          themeColor === "light" && { backgroundColor: colors.lightPrimary }
         ]}
       >
         {children}

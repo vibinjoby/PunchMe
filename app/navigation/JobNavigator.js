@@ -71,8 +71,7 @@ export default function JobNavigator({ route, navigation }) {
               indicatorStyle: { backgroundColor: colors.yellow },
               scrollEnabled: true,
               activeTintColor: colors.yellow,
-              inactiveTintColor:
-                themeColor === "dark" ? "#B1B1B1" : colors.black,
+              inactiveTintColor: themeColor === "dark" ? "#B1B1B1" : "grey",
               labelStyle: {
                 fontSize: 15,
                 fontWeight: "bold"

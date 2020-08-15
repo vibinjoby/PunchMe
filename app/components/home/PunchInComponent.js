@@ -21,7 +21,11 @@ export function PunchInComponent({ data, theme }) {
           }}
         />
         <Text style={styles.punchTxt}>PUNCH IN </Text>
-        <Text style={styles.punchData}>{data}</Text>
+        <Text
+          style={[styles.punchData, theme === "light" && { color: "#2E2E2E" }]}
+        >
+          {data}
+        </Text>
       </View>
       <View
         style={[

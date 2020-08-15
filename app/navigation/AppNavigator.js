@@ -23,10 +23,11 @@ export default AppNavigator = () => {
     <Tab.Navigator
       tabBarOptions={{
         style: {
-          backgroundColor: themeColor === "dark" ? colors.black : colors.white
+          backgroundColor:
+            themeColor === "dark" ? colors.black : colors.lightPrimary
         },
         activeTintColor: colors.yellow,
-        inactiveTintColor: themeColor === "dark" ? "#eee" : colors.black
+        inactiveTintColor: themeColor === "dark" ? "#eee" : colors.white
       }}
     >
       <Tab.Screen
