@@ -45,11 +45,12 @@ export default function AddJobScreen({ navigation: { setParams } }) {
         style={[
           styles.textInput,
           isTitleError ? styles.errorInput : "",
-          themeColor === "light" && { backgroundColor: colors.white }
+          themeColor === "light" && {
+            backgroundColor: colors.white,
+            color: colors.black
+          }
         ]}
-        placeholderTextColor={
-          themeColor === "dark" ? colors.white : colors.black
-        }
+        placeholderTextColor="grey"
       />
       {/** Conditionally render the error */}
       {isTitleError && (
@@ -66,11 +67,12 @@ export default function AddJobScreen({ navigation: { setParams } }) {
         style={[
           styles.textInput,
           isHourlyPayError ? styles.errorInput : "",
-          themeColor === "light" && { backgroundColor: colors.white }
+          themeColor === "light" && {
+            backgroundColor: colors.white,
+            color: colors.black
+          }
         ]}
-        placeholderTextColor={
-          themeColor === "dark" ? colors.white : colors.black
-        }
+        placeholderTextColor="grey"
       />
       {/** Conditionally render the error */}
       {isHourlyPayError && (
@@ -81,11 +83,12 @@ export default function AddJobScreen({ navigation: { setParams } }) {
         placeholder="Notes"
         style={[
           styles.textInput,
-          themeColor === "light" && { backgroundColor: colors.white }
+          themeColor === "light" && {
+            backgroundColor: colors.white,
+            color: colors.black
+          }
         ]}
-        placeholderTextColor={
-          themeColor === "dark" ? colors.white : colors.black
-        }
+        placeholderTextColor="grey"
       />
     </View>
   );
@@ -103,6 +106,7 @@ const styles = StyleSheet.create({
     color: "red"
   },
   textInput: {
+    fontFamily: "ProximaNovaRegular",
     backgroundColor: "#1A1A1A",
     fontSize: 18,
     color: colors.white,

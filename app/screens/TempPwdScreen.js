@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
@@ -10,8 +10,11 @@ import { TextInput } from "react-native-gesture-handler";
 import routes from "../navigation/routes";
 import loginService from "../services/loginService";
 import AppThemeContext from "../context/AppThemeContext";
+import utils from "../helpers/utils";
+import AppLoader from "../helpers/AppLoader";
 
 export default function TempPwdScreen({ route, navigation }) {
+  const [isLoading, setIsLoading] = useState(false);
   const { username } = route.params;
 
   const appTheme = useContext(AppThemeContext);
@@ -26,122 +29,131 @@ export default function TempPwdScreen({ route, navigation }) {
 
   const handleNext = async values => {
     // Check if the temporary password is accepted and then navigate to change password screen
-    const tempCode = `${values.firstNum}${values.secondNum}${values.thirdNum}${values.fourthNum}`;
-    const data = await loginService.checkTemporaryPwd(username, tempCode);
-    if (data && data.message === "Accepted")
-      navigation.navigate(routes.CHANGE_PWD, {
-        username,
-        tempPwd: tempCode
-      });
+    try {
+      setIsLoading(true);
+      const tempCode = `${values.firstNum}${values.secondNum}${values.thirdNum}${values.fourthNum}`;
+      const data = await loginService.checkTemporaryPwd(username, tempCode);
+      if (data && data.message === "Accepted")
+        navigation.navigate(routes.CHANGE_PWD, {
+          username,
+          tempPwd: tempCode
+        });
+      setIsLoading(false);
+    } catch (error) {
+      utils.showAlertPopupWithLoading(setIsLoading, error);
+    }
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        themeColor === "light" && { backgroundColor: colors.lightBackground }
-      ]}
-    >
-      <View style={styles.formContent}>
-        <Text
-          style={{
-            color: themeColor === "dark" ? colors.white : "#717171",
-            textAlign: "center"
-          }}
-        >
-          Enter the 4 digit code received on Your registered email address
-        </Text>
+    <>
+      <AppLoader isLoading={isLoading} />
+      <View
+        style={[
+          styles.container,
+          themeColor === "light" && { backgroundColor: colors.lightBackground }
+        ]}
+      >
+        <View style={styles.formContent}>
+          <Text
+            style={{
+              color: themeColor === "dark" ? colors.white : "#717171",
+              textAlign: "center"
+            }}
+          >
+            Enter the 4 digit code received on Your registered email address
+          </Text>
 
-        <Formik
-          initialValues={{
-            firstNum: "",
-            secondNum: "",
-            thirdNum: "",
-            fourthNum: ""
-          }}
-          validationSchema={yup.object().shape({
-            firstNum: yup.string().required(),
-            secondNum: yup.string().required(),
-            thirdNum: yup.string().required(),
-            fourthNum: yup.string().required()
-          })}
-        >
-          {({
-            values,
-            handleChange,
-            isValid,
-            setFieldTouched,
-            isSubmitting,
-            validateForm
-          }) => (
-            <>
-              <View style={styles.codeInputContainer}>
-                <TextInput
-                  style={styles.codeTextInput}
-                  maxLength={1}
-                  keyboardType="decimal-pad"
-                  autoFocus
-                  onBlur={() => setFieldTouched("firstNum")}
-                  onFocus={() => validateForm()}
-                  returnKeyType="next"
-                  ref={firstTI}
-                  onChangeText={handleChange("firstNum")}
-                  onKeyPress={e => {
-                    if (e.nativeEvent.key !== "Backspace")
-                      secondTI.current.focus();
-                  }}
-                  blurOnSubmit={false}
-                />
-                <TextInput
-                  style={styles.codeTextInput}
-                  maxLength={1}
-                  keyboardType="decimal-pad"
-                  ref={secondTI}
-                  onBlur={() => setFieldTouched("secondNum")}
-                  onChangeText={handleChange("secondNum")}
-                  onKeyPress={e => {
-                    thirdTI.current.focus();
-                    if (e.nativeEvent.key === "Backspace")
-                      firstTI.current.focus();
-                  }}
-                />
-                <TextInput
-                  style={styles.codeTextInput}
-                  maxLength={1}
-                  keyboardType="decimal-pad"
-                  ref={thirdTI}
-                  onBlur={() => setFieldTouched("thirdNum")}
-                  onChangeText={handleChange("thirdNum")}
-                  onKeyPress={e => {
-                    fourthTI.current.focus();
-                    if (e.nativeEvent.key === "Backspace")
-                      secondTI.current.focus();
-                  }}
-                />
-                <TextInput
-                  style={styles.codeTextInput}
-                  maxLength={1}
-                  keyboardType="decimal-pad"
-                  ref={fourthTI}
-                  onBlur={() => setFieldTouched("fourthNum")}
-                  onChangeText={handleChange("fourthNum")}
-                  onKeyPress={e => {
-                    if (e.nativeEvent.key === "Backspace")
+          <Formik
+            initialValues={{
+              firstNum: "",
+              secondNum: "",
+              thirdNum: "",
+              fourthNum: ""
+            }}
+            validationSchema={yup.object().shape({
+              firstNum: yup.string().required(),
+              secondNum: yup.string().required(),
+              thirdNum: yup.string().required(),
+              fourthNum: yup.string().required()
+            })}
+          >
+            {({
+              values,
+              handleChange,
+              isValid,
+              setFieldTouched,
+              isSubmitting,
+              validateForm
+            }) => (
+              <>
+                <View style={styles.codeInputContainer}>
+                  <TextInput
+                    style={styles.codeTextInput}
+                    maxLength={1}
+                    keyboardType="decimal-pad"
+                    autoFocus
+                    onBlur={() => setFieldTouched("firstNum")}
+                    onFocus={() => validateForm()}
+                    returnKeyType="next"
+                    ref={firstTI}
+                    onChangeText={handleChange("firstNum")}
+                    onKeyPress={e => {
+                      if (e.nativeEvent.key !== "Backspace")
+                        secondTI.current.focus();
+                    }}
+                    blurOnSubmit={false}
+                  />
+                  <TextInput
+                    style={styles.codeTextInput}
+                    maxLength={1}
+                    keyboardType="decimal-pad"
+                    ref={secondTI}
+                    onBlur={() => setFieldTouched("secondNum")}
+                    onChangeText={handleChange("secondNum")}
+                    onKeyPress={e => {
                       thirdTI.current.focus();
-                  }}
+                      if (e.nativeEvent.key === "Backspace")
+                        firstTI.current.focus();
+                    }}
+                  />
+                  <TextInput
+                    style={styles.codeTextInput}
+                    maxLength={1}
+                    keyboardType="decimal-pad"
+                    ref={thirdTI}
+                    onBlur={() => setFieldTouched("thirdNum")}
+                    onChangeText={handleChange("thirdNum")}
+                    onKeyPress={e => {
+                      fourthTI.current.focus();
+                      if (e.nativeEvent.key === "Backspace")
+                        secondTI.current.focus();
+                    }}
+                  />
+                  <TextInput
+                    style={styles.codeTextInput}
+                    maxLength={1}
+                    keyboardType="decimal-pad"
+                    ref={fourthTI}
+                    onBlur={() => setFieldTouched("fourthNum")}
+                    onChangeText={handleChange("fourthNum")}
+                    onKeyPress={e => {
+                      if (e.nativeEvent.key === "Backspace")
+                        thirdTI.current.focus();
+                    }}
+                  />
+                </View>
+                <CustomButton
+                  title="Next"
+                  onPress={() => handleNext(values)}
+                  disabled={!isValid || isSubmitting}
+                  customStyles={{ marginTop: 20 }}
                 />
-              </View>
-              <CustomButton
-                title="Next"
-                onPress={() => handleNext(values)}
-                disabled={!isValid || isSubmitting}
-                customStyles={{ marginTop: 20 }}
-              />
-            </>
-          )}
-        </Formik>
+              </>
+            )}
+          </Formik>
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 

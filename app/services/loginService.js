@@ -8,17 +8,12 @@ const tokenKey = "token";
 http.setJwt(getJwt());
 
 export async function loginUser(email, password) {
-  try {
-    const { data: jwt } = await http.post(`${commons.API_URL}/api/login`, {
-      email,
-      password
-    });
-    utils.storeAsyncStorageData(tokenKey, jwt);
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
+  const { data: jwt } = await http.post(`${commons.API_URL}/api/login`, {
+    email,
+    password
+  });
+  utils.storeAsyncStorageData(tokenKey, jwt);
+  return true;
 }
 
 export function logout() {
@@ -45,47 +40,33 @@ export function getJwt() {
 
 export async function forgotPassword(email) {
   if (!email) return;
-  try {
-    const { data } = await http.post(
-      `${commons.API_URL}/api/login/forgotPassword/${email}`
-    );
-    return data;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
+  const { data } = await http.post(
+    `${commons.API_URL}/api/login/forgotPassword/${email}`
+  );
+  return data;
 }
 
 export async function checkTemporaryPwd(username, tempPwd) {
-  try {
-    const { data } = await http.post(
-      `${commons.API_URL}/api/login/checkTempPassword`,
-      {
-        username,
-        tempPassword: tempPwd
-      }
-    );
-    return data;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
+  const { data } = await http.post(
+    `${commons.API_URL}/api/login/checkTempPassword`,
+    {
+      username,
+      tempPassword: tempPwd
+    }
+  );
+  return data;
 }
 
 export async function createNewPassword(username, tempPassword, newPassword) {
-  try {
-    const { data } = await http.post(
-      `${commons.API_URL}/api/login/createNewPassword/`,
-      {
-        username,
-        tempPassword,
-        newPassword
-      }
-    );
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+  const { data } = await http.post(
+    `${commons.API_URL}/api/login/createNewPassword/`,
+    {
+      username,
+      tempPassword,
+      newPassword
+    }
+  );
+  return data;
 }
 
 export default {

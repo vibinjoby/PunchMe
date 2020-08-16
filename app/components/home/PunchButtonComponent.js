@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     marginVertical: 10
   },
   punchText: {
+    fontFamily: "ProximaNovaBold",
     fontWeight: "bold",
     textTransform: "uppercase",
     fontSize: 15,
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   breakTxt: {
+    fontFamily: "ProximaNovaBold",
     fontWeight: "bold",
     textTransform: "uppercase",
     fontSize: 15,

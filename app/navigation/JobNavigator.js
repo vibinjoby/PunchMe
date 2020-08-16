@@ -10,6 +10,8 @@ import db from "../helpers/db";
 import colors from "../config/colors";
 import JobContext from "../context/JobContext";
 import AppThemeContext from "../context/AppThemeContext";
+import { AppLoading } from "expo";
+import FontLoad from "../components/activity/FontLoad";
 
 const Tab = createMaterialTopTabNavigator();
 export default function JobNavigator({ route, navigation }) {
@@ -21,6 +23,8 @@ export default function JobNavigator({ route, navigation }) {
 
   const [jobsArr, setJobsArr] = useState([]);
   const [isJobActive, setIsJobActive] = useState(false);
+
+  const [fontLoaded, setFontLoaded] = useState(false);
 
   const handleActiveJobs = active => {
     setIsJobActive(active);
@@ -53,6 +57,17 @@ export default function JobNavigator({ route, navigation }) {
       .catch(err => console.log(err));
   }, [route.params]);
 
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={FontLoad}
+        onFinish={() => {
+          setFontLoaded(true);
+        }}
+      />
+    );
+  }
+
   return (
     <Screens>
       <HeaderComponent navigation={navigation} theme={themeColor} />
@@ -73,8 +88,8 @@ export default function JobNavigator({ route, navigation }) {
               activeTintColor: colors.yellow,
               inactiveTintColor: themeColor === "dark" ? "#B1B1B1" : "grey",
               labelStyle: {
-                fontSize: 15,
-                fontWeight: "bold"
+                fontFamily: "ProximaNovaBold",
+                fontSize: 15
               }
             }}
           >

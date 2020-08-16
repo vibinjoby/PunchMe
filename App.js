@@ -10,10 +10,10 @@ import db from "./app/helpers/db";
 import commons from "./app/config/commonConstants";
 import LoginStackNavigator from "./app/navigation/LoginStackNavigator";
 import AppNavigator from "./app/navigation/AppNavigator";
-import AppLoader from "./app/helpers/AppLoader";
 import TodoStore from "./app/context/store/TodoStore";
 import AppThemeStore from "./app/context/store/AppThemeStore";
-import Screens from "./app/components/Screens";
+import { AppLoading } from "expo";
+import FontLoad from "./app/components/activity/FontLoad";
 
 export default function App() {
   // Initializing sentry for logging
@@ -25,7 +25,6 @@ export default function App() {
   });
   const [showRealApp, setShowRealApp] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     _askForCalendarPermissions();
@@ -68,9 +67,21 @@ export default function App() {
     await Permissions.askAsync(Permissions.REMINDERS);
   };
 
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={FontLoad}
+        onFinish={() => {
+          setFontLoaded(true);
+        }}
+      />
+    );
+  }
+
   return (
     <AppearanceProvider>
-      {/*<AppLoader isLoading={isLoading} />*/}
       {showRealApp ? (
         <AppThemeStore>
           <TodoStore>

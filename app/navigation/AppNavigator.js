@@ -40,6 +40,15 @@ export default AppNavigator = () => {
         }}
       />
       <Tab.Screen
+        name={routes.LOGS}
+        component={HomeStackNavigator}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="clock" size={size} color={color} />
+          )
+        }}
+      />
+      <Tab.Screen
         name={routes.SCHEDULE}
         component={SchedulerNavigator}
         options={{

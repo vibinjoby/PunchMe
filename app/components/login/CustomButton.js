@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 import colors from "../../config/colors";
+import AppThemeContext from "../../context/AppThemeContext";
+import { useColorScheme } from "react-native-appearance";
 
 export default function CustomButton({
   title,
@@ -10,13 +12,32 @@ export default function CustomButton({
   onPress,
   disabled
 }) {
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
   return !disabled ? (
     <TouchableOpacity style={[styles.loginBtn, customStyles]} onPress={onPress}>
-      <Text style={styles.loginBtnTxt}>{title}</Text>
+      <Text
+        style={[
+          styles.loginBtnTxt,
+          themeColor === "light" && { color: "white" }
+        ]}
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
   ) : (
     <TouchableWithoutFeedback style={[styles.disabledBtn, customStyles]}>
-      <Text style={styles.disabledTxt}>{title}</Text>
+      <Text
+        style={[
+          styles.disabledTxt,
+          themeColor === "light" && { color: "white" }
+        ]}
+      >
+        {title}
+      </Text>
     </TouchableWithoutFeedback>
   );
 }
@@ -35,12 +56,12 @@ const styles = StyleSheet.create({
     padding: 15
   },
   disabledTxt: {
+    fontFamily: "ProximaNovaBold",
     textAlign: "center",
-    fontWeight: "bold",
     color: colors.white
   },
   loginBtnTxt: {
-    textAlign: "center",
-    fontWeight: "bold"
+    fontFamily: "ProximaNovaBold",
+    textAlign: "center"
   }
 });

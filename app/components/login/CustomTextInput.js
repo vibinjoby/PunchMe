@@ -14,6 +14,7 @@ export default function CustomTextInput({
   const systemTheme = useColorScheme();
   const themeColor =
     appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
   return (
     <View style={customStyles}>
       {textHeader && (
@@ -30,7 +31,10 @@ export default function CustomTextInput({
         placeholderTextColor="#A2A2A2"
         style={[
           styles.textInput,
-          themeColor === "light" && { color: colors.black }
+          themeColor === "light" && {
+            color: colors.black,
+            backgroundColor: colors.white
+          }
         ]}
         {...otherProps}
         autoCapitalize="none"
@@ -42,11 +46,12 @@ export default function CustomTextInput({
 
 const styles = StyleSheet.create({
   formTxt: {
+    fontFamily: "ProximaNovaBold",
     color: colors.white,
-    fontSize: 13,
-    fontWeight: "bold"
+    fontSize: 13
   },
   textInput: {
+    fontFamily: "ProximaNovaRegular",
     backgroundColor: "#212121",
     color: colors.white,
     borderRadius: 8,

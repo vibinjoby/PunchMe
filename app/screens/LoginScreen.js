@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
@@ -11,8 +11,11 @@ import CustomButton from "../components/login/CustomButton";
 import loginService from "../services/loginService";
 import CustomErrorText from "../components/login/CustomErrorText";
 import AppThemeContext from "../context/AppThemeContext";
+import utils from "../helpers/utils";
+import AppLoader from "../helpers/AppLoader";
 
 export default function LoginScreen({ route, navigation }) {
+  const [isLoading, setIsLoading] = useState(false);
   const appTheme = useContext(AppThemeContext);
   const systemTheme = useColorScheme();
   const themeColor =
@@ -27,122 +30,130 @@ export default function LoginScreen({ route, navigation }) {
   };
 
   const handleLoginClick = async values => {
-    const isSuccess = await loginService.loginUser(
-      values.email,
-      values.password
-    );
-    if (isSuccess) return navigation.navigate(routes.HOME);
-    alert("Invalid Username / Password");
+    try {
+      setIsLoading(true);
+      const isSuccess = await loginService.loginUser(
+        values.email,
+        values.password
+      );
+      if (isSuccess) {
+        setIsLoading(false);
+        return navigation.navigate(routes.HOME);
+      }
+    } catch (error) {
+      utils.showAlertPopupWithLoading(setIsLoading, error);
+    }
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        themeColor === "light" && { backgroundColor: colors.lightBackground }
-      ]}
-    >
-      <View style={styles.loginHeader}>
-        <Image
-          style={styles.headerLogo}
-          source={require("../assets/punchMe_logo/punchme_logo_2x.png")}
-        />
-        <Text style={styles.headerTxt}>PUNCH ME</Text>
-      </View>
-      <View style={styles.formContent}>
-        <Formik
-          initialValues={{ email: "", password: "" }}
-          validationSchema={yup.object().shape({
-            email: yup
-              .string()
-              .email()
-              .label("Email")
-              .required(),
-            password: yup
-              .string()
-              .min(6)
-              .label("Password")
-              .required()
-          })}
-        >
-          {({
-            values,
-            handleChange,
-            errors,
-            setFieldTouched,
-            touched,
-            isValid,
-            isSubmitting,
-            validateForm
-          }) => (
-            <>
-              <CustomTextInput
-                autoFocus
-                placeholder="Enter your email id"
-                textHeader="EMAIL"
-                onBlur={() => setFieldTouched("email")}
-                onFocus={() => validateForm()}
-                onChangeText={handleChange("email")}
-              />
-              {touched.email && errors.email && (
-                <CustomErrorText> {errors.email}</CustomErrorText>
-              )}
-              <CustomTextInput
-                textHeader="PASSWORD"
-                secureTextEntry
-                placeholder="Enter your password"
-                onBlur={() => setFieldTouched("password")}
-                customStyles={{ width: "100%", marginTop: 20 }}
-                onChangeText={handleChange("password")}
-              />
-              {touched.password && errors.password && (
-                <CustomErrorText> {errors.password}</CustomErrorText>
-              )}
-              <Text
-                style={{
-                  textAlign: "right",
-                  color: themeColor === "dark" ? colors.white : colors.black,
-                  marginTop: 10,
-                  fontWeight: "bold"
-                }}
-                onPress={handleForgotPwdClick}
-              >
-                Forgot password?
-              </Text>
-              <CustomButton
-                title="LOGIN"
-                onPress={() => handleLoginClick(values)}
-                disabled={!isValid || isSubmitting}
-                customStyles={{ marginTop: 20 }}
-              />
-            </>
-          )}
-        </Formik>
-      </View>
-
-      <View>
-        <Text
-          style={{
-            color: themeColor === "dark" ? "#FFFFFFA3" : "#555555A3",
-            textAlign: "center"
-          }}
-        >
-          Don’t have an account?
-        </Text>
-        <TouchableOpacity onPress={handleRegisterClick}>
-          <Text
-            style={{
-              marginTop: 10,
-              color: themeColor === "dark" ? colors.white : colors.black,
-              fontWeight: "bold",
-              textAlign: "center"
-            }}
+    <>
+      <AppLoader isLoading={isLoading} />
+      <View
+        style={[
+          styles.container,
+          themeColor === "light" && { backgroundColor: colors.lightBackground }
+        ]}
+      >
+        <View style={styles.loginHeader}>
+          <Image
+            style={styles.headerLogo}
+            source={require("../assets/punchMe_logo/punchme_logo_2x.png")}
+          />
+          <Text style={styles.headerTxt}>PUNCH ME</Text>
+        </View>
+        <View style={styles.formContent}>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validationSchema={yup.object().shape({
+              email: yup
+                .string()
+                .email()
+                .label("Email")
+                .required(),
+              password: yup
+                .string()
+                .min(6)
+                .label("Password")
+                .required()
+            })}
           >
-            REGISTER
+            {({
+              values,
+              handleChange,
+              errors,
+              setFieldTouched,
+              touched,
+              isValid,
+              isSubmitting,
+              validateForm
+            }) => (
+              <>
+                <CustomTextInput
+                  autoFocus
+                  placeholder="Enter your email id"
+                  textHeader="EMAIL"
+                  onBlur={() => setFieldTouched("email")}
+                  onFocus={() => validateForm()}
+                  onChangeText={handleChange("email")}
+                />
+                {touched.email && errors.email && (
+                  <CustomErrorText> {errors.email}</CustomErrorText>
+                )}
+                <CustomTextInput
+                  textHeader="PASSWORD"
+                  secureTextEntry
+                  placeholder="Enter your password"
+                  onBlur={() => setFieldTouched("password")}
+                  customStyles={{ width: "100%", marginTop: 20 }}
+                  onChangeText={handleChange("password")}
+                />
+                {touched.password && errors.password && (
+                  <CustomErrorText> {errors.password}</CustomErrorText>
+                )}
+                <Text
+                  style={[
+                    styles.forgotPwdTxt,
+                    {
+                      color: themeColor === "dark" ? colors.white : colors.black
+                    }
+                  ]}
+                  onPress={handleForgotPwdClick}
+                >
+                  Forgot password?
+                </Text>
+                <CustomButton
+                  title="LOGIN"
+                  onPress={() => handleLoginClick(values)}
+                  disabled={!isValid || isSubmitting}
+                  customStyles={{ marginTop: 20 }}
+                />
+              </>
+            )}
+          </Formik>
+        </View>
+
+        <View>
+          <Text
+            style={[
+              styles.dontHaveAccTxt,
+              { color: themeColor === "dark" ? "#FFFFFFA3" : "#555555A3" }
+            ]}
+          >
+            Don’t have an account?
           </Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={handleRegisterClick}>
+            <Text
+              style={[
+                styles.registerTxt,
+                { color: themeColor === "dark" ? colors.white : colors.black }
+              ]}
+            >
+              REGISTER
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
@@ -160,7 +171,7 @@ const styles = StyleSheet.create({
     height: 88
   },
   headerTxt: {
-    fontWeight: "bold",
+    fontFamily: "ProximaNovaBold",
     fontSize: 18,
     color: colors.yellow,
     marginTop: 10
@@ -182,8 +193,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  googleTxt: {
-    fontSize: 40,
-    fontWeight: "800"
+  forgotPwdTxt: {
+    fontFamily: "ProximaNovaBold",
+    textAlign: "right",
+    marginTop: 10
+  },
+  dontHaveAccTxt: {
+    fontSize: 14,
+    fontFamily: "ProximaNovaRegular",
+    textAlign: "center"
+  },
+  registerTxt: {
+    fontSize: 14,
+    fontFamily: "ProximaNovaBold",
+    marginTop: 10,
+    textAlign: "center"
   }
 });

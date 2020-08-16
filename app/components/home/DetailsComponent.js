@@ -42,13 +42,14 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   header: {
+    fontFamily: "ProximaNovaBold",
     color: "#C3C0C0F2",
     fontSize: 18,
-    fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center"
   },
   detailsTxt: {
+    fontFamily: "ProximaNovaRegular",
     textAlign: "center",
     width: "100%",
     paddingBottom: 10,

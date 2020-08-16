@@ -6,6 +6,7 @@ export default function CustomErrorText({ children }) {
 }
 const styles = StyleSheet.create({
   text: {
+    fontFamily: "ProximaNovaBold",
     fontSize: 14,
     color: "red",
     marginBottom: 5

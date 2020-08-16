@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import * as Permissions from "expo-permissions";
 import * as Notifications from "expo-notifications";
 import commons from "../config/commonConstants";
+import { Alert } from "react-native";
 
 const prefixZero = number => {
   //If the input passed is not a string then stringify the input
@@ -230,6 +231,16 @@ const validateStartTimeEndTime = (startTime, endTime) => {
   }
 };
 
+const showAlertPopupWithLoading = (setIsLoading, error) => {
+  Alert.alert("Error!!", error, [
+    {
+      text: "OK",
+      onPress: () => setIsLoading(false),
+      style: "cancel"
+    }
+  ]);
+};
+
 export default {
   prefixZero,
   getCurrentTime,
@@ -246,5 +257,6 @@ export default {
   getTotalBreakOnlyHours,
   getDuration,
   calculateTotalDifferenceInTime,
-  validateStartTimeEndTime
+  validateStartTimeEndTime,
+  showAlertPopupWithLoading
 };

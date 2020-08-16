@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import React, { useContext, useState, useEffect } from "react";
+import { View, StyleSheet, Image, Text, Alert } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { useColorScheme } from "react-native-appearance";
@@ -11,8 +11,11 @@ import loginService from "../services/loginService";
 import routes from "../navigation/routes";
 import CustomErrorText from "../components/login/CustomErrorText";
 import AppThemeContext from "../context/AppThemeContext";
+import AppLoader from "../helpers/AppLoader";
+import utils from "../helpers/utils";
 
 export default function ForgotPwdScreen({ navigation, route }) {
+  const [isLoading, setIsLoading] = useState(false);
   const appTheme = useContext(AppThemeContext);
   const systemTheme = useColorScheme();
   const themeColor =
@@ -20,82 +23,84 @@ export default function ForgotPwdScreen({ navigation, route }) {
 
   const handleSendMail = async values => {
     //If the mail is sent to the user, navigate to the temporary password screen
-    const result = await loginService.forgotPassword(values.email);
-    if (result)
-      navigation.navigate(routes.TEMP_PWD, { username: result.username });
+    try {
+      setIsLoading(true);
+      const result = await loginService.forgotPassword(values.email);
+      if (result)
+        navigation.navigate(routes.TEMP_PWD, { username: result.username });
+      setIsLoading(false);
+    } catch (error) {
+      utils.showAlertPopupWithLoading(setIsLoading, error);
+      console.log(error);
+    }
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        themeColor === "light" && { backgroundColor: colors.lightBackground }
-      ]}
-    >
-      <View style={styles.loginHeader}>
-        <Image
-          style={styles.headerLogo}
-          source={require("../assets/punchMe_logo/punchme_logo_2x.png")}
-        />
-        <Text style={styles.headerTxt}>PUNCH ME</Text>
+    <>
+      <View
+        style={[
+          styles.container,
+          themeColor === "light" && { backgroundColor: colors.lightBackground }
+        ]}
+      >
+        <View style={styles.loginHeader}>
+          <Image
+            style={styles.headerLogo}
+            source={require("../assets/punchMe_logo/punchme_logo_2x.png")}
+          />
+          <Text style={styles.headerTxt}>PUNCH ME</Text>
+        </View>
+        <View style={styles.subHeader}>
+          <Text style={styles.subheaderTxt}>
+            Enter the email address you used to create your account and we will
+            email you a link to reset your password
+          </Text>
+        </View>
+        <View style={styles.formContent}>
+          <Formik
+            initialValues={{ email: "" }}
+            validationSchema={yup.object().shape({
+              email: yup
+                .string()
+                .email()
+                .required()
+            })}
+          >
+            {({
+              values,
+              handleChange,
+              errors,
+              setFieldTouched,
+              touched,
+              isValid,
+              isSubmitting,
+              validateForm
+            }) => (
+              <>
+                <CustomTextInput
+                  placeholder="Enter your email id"
+                  textHeader="EMAIL"
+                  onBlur={() => setFieldTouched("email")}
+                  onChangeText={handleChange("email")}
+                  autoFocus
+                  onFocus={() => validateForm()}
+                />
+                {touched.email && errors.email && (
+                  <CustomErrorText> {errors.email}</CustomErrorText>
+                )}
+                <CustomButton
+                  title="SEND EMAIL"
+                  onPress={() => handleSendMail(values)}
+                  disabled={!isValid || isSubmitting}
+                  customStyles={{ marginTop: 20 }}
+                />
+              </>
+            )}
+          </Formik>
+        </View>
       </View>
-      <View style={styles.subHeader}>
-        <Text
-          style={[
-            styles.forgtPwdTxt,
-            themeColor === "light" && { color: colors.black }
-          ]}
-        >
-          FORGOT PASSWORD?
-        </Text>
-        <Text style={styles.subheaderTxt}>
-          Enter the email address you used to create your account and we will
-          email you a link to reset your password
-        </Text>
-      </View>
-      <View style={styles.formContent}>
-        <Formik
-          initialValues={{ email: "" }}
-          validationSchema={yup.object().shape({
-            email: yup
-              .string()
-              .email()
-              .required()
-          })}
-        >
-          {({
-            values,
-            handleChange,
-            errors,
-            setFieldTouched,
-            touched,
-            isValid,
-            isSubmitting,
-            validateForm
-          }) => (
-            <>
-              <CustomTextInput
-                placeholder="Enter your email id"
-                textHeader="EMAIL"
-                onBlur={() => setFieldTouched("email")}
-                onChangeText={handleChange("email")}
-                autoFocus
-                onFocus={() => validateForm()}
-              />
-              {touched.email && errors.email && (
-                <CustomErrorText> {errors.email}</CustomErrorText>
-              )}
-              <CustomButton
-                title="SEND EMAIL"
-                onPress={() => handleSendMail(values)}
-                disabled={!isValid || isSubmitting}
-                customStyles={{ marginTop: 20 }}
-              />
-            </>
-          )}
-        </Formik>
-      </View>
-    </View>
+      <AppLoader isLoading={isLoading} />
+    </>
   );
 }
 
@@ -113,7 +118,7 @@ const styles = StyleSheet.create({
     height: 88
   },
   headerTxt: {
-    fontWeight: "bold",
+    fontFamily: "ProximaNovaBold",
     fontSize: 18,
     color: colors.yellow,
     marginTop: 10
@@ -128,7 +133,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   subheaderTxt: {
-    color: colors.silver,
+    color: "grey",
     textAlign: "center",
     marginHorizontal: 50,
     fontSize: 15,

@@ -77,10 +77,12 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10
   },
   punchTxt: {
+    fontFamily: "ProximaNovaRegular",
     fontSize: 14,
     color: colors.yellow
   },
   punchData: {
+    fontFamily: "ProximaNovaRegular",
     fontSize: 14,
     color: colors.white
   }

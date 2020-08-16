@@ -24,11 +24,26 @@ export default function LoginStackNavigator() {
   const themeColor =
     appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
   return (
-    <Stack.Navigator navigationOptions={{ headerLayoutPreset: "center" }}>
+    <Stack.Navigator
+      navigationOptions={{ headerLayoutPreset: "center" }}
+      screenOptions={{
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+
+        headerStyle: {
+          backgroundColor:
+            themeColor === "light" ? colors.lightPrimary : colors.black
+        },
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+          fontFamily: "ProximaNovaBold",
+          color: colors.white
+        }
+      }}
+    >
       <Stack.Screen
         name={routes.LOGIN}
         component={LoginScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, title: "" }}
       />
       <Stack.Screen
         name={routes.REGISTER}
@@ -38,11 +53,12 @@ export default function LoginStackNavigator() {
           title: "Register",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightBackground : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black
           },
           headerTitleAlign: "center",
           headerTitleStyle: {
-            color: themeColor === "dark" ? colors.white : colors.black
+            fontFamily: "ProximaNovaBold",
+            color: colors.white
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
@@ -60,10 +76,11 @@ export default function LoginStackNavigator() {
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightBackground : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black
           },
           headerTitleStyle: {
-            color: themeColor === "dark" ? colors.white : colors.black
+            fontFamily: "ProximaNovaBold",
+            color: colors.white
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
@@ -80,11 +97,12 @@ export default function LoginStackNavigator() {
           title: "Temporary Password",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightBackground : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black
           },
           headerTitleAlign: "center",
           headerTitleStyle: {
-            color: themeColor === "dark" ? colors.white : colors.black
+            fontFamily: "ProximaNovaBold",
+            color: colors.white
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
@@ -101,11 +119,12 @@ export default function LoginStackNavigator() {
           title: "Change Password",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightBackground : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black
           },
           headerTitleAlign: "center",
           headerTitleStyle: {
-            color: themeColor === "dark" ? colors.white : colors.black
+            fontFamily: "ProximaNovaBold",
+            color: colors.white
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",

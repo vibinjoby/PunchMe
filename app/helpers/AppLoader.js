@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -6,7 +6,6 @@ import {
   Image,
   ActivityIndicator
 } from "react-native";
-import Colors from "../config/colors";
 import colors from "../config/colors";
 
 export default function AppLoader({ isLoading }) {
@@ -22,7 +21,7 @@ export default function AppLoader({ isLoading }) {
         <View style={styles.activityIndicatorWrapper}>
           <ActivityIndicator
             /*animating={this.state.loading}*/
-            color={Colors.primary}
+            color={colors.primary}
           />
 
           {/* If you want to image set source here */}

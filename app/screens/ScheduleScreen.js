@@ -43,7 +43,7 @@ export default function ScheduleScreen({ route, navigation }) {
   const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
-    _handleDeletePreviousDayTask();
+    //_handleDeletePreviousDayTask();
   }, []);
 
   const _handleDeletePreviousDayTask = async () => {

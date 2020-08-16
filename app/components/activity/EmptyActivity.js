@@ -1,22 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, Image, Text, Button, Alert } from "react-native";
-import { AppLoading } from "expo";
-import FontLoad from "./FontLoad";
 
 export default function EmptyActivity(props) {
-  const [fontLoaded, setFontLoaded] = useState(false);
-
-  if (!fontLoaded) {
-    return (
-      <AppLoading
-        startAsync={FontLoad}
-        onFinish={() => {
-          setFontLoaded(true);
-        }}
-      />
-    );
-  }
-
   return (
     <View>
       <Image
@@ -37,20 +22,20 @@ export default function EmptyActivity(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    width: "100%"
   },
 
   icon: {
     width: 147,
     height: 147,
-    alignSelf: "center",
+    alignSelf: "center"
   },
 
   message: {
     fontFamily: "ProximaNovaAltLight",
     color: "#959698",
     fontSize: 18,
-    paddingTop: 20,
+    paddingTop: 20
   },
   refresh: {
     margin: 20,
@@ -59,6 +44,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#000000",
     borderColor: "#FFFFFF",
     borderStyle: "solid",
-    borderWidth: 2,
-  },
+    borderWidth: 2
+  }
 });
