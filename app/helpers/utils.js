@@ -199,19 +199,16 @@ const getDuration = inTime => {
 };
 
 //This function calculates the total time difference between the start time and end time in create task
-//Sample input --> startTime= "12:30 AM" endTime= "01:30 PM" result= "01:00"
+//Sample input --> startTime= "Sun 17, 12:30 AM" endTime= "Sun 17, 01:30 PM" result= "01:00"
 const calculateTotalDifferenceInTime = (start, end) => {
   try {
-    const startTime = moment(start, "hh:mm A");
-    const endTime = moment(end, "hh:mm A");
+    const startTime = moment(start, "MMMM Do, hh:mm A");
+    const endTime = moment(end, "MMMM Do, hh:mm A");
 
-    let diff = endTime.diff(startTime);
-    let hours = moment
-      .utc(diff)
-      .format("hh:mm")
-      .split(":")[0];
+    let diff = moment.duration(endTime.diff(startTime));
 
-    let minutes = moment.utc(diff).minutes();
+    let hours = diff.hours();
+    let minutes = diff.minutes();
     return `${hours} ${parseInt(hours) > 1 ? "hours" : "hour"} ${minutes} ${
       parseInt(minutes) > 1 ? "minutes" : "minute"
     }`;
@@ -222,9 +219,17 @@ const calculateTotalDifferenceInTime = (start, end) => {
 };
 
 //If the end time is less than start time return false else true
-const validateStartTimeEndTime = (startTime, endTime) => {
+const validateStartTimeEndTime = (selectedDate, startTime, endTime) => {
   try {
-    return moment(startTime, "hh:mm A").isBefore(moment(endTime, "hh:mm A"));
+    if (
+      moment(startTime, "MMMM Do, hh:mm A").isBefore(
+        moment(selectedDate, "YYYY-MM-DD")
+      )
+    )
+      return false;
+    return moment(startTime, "MMMM Do, hh:mm A").isBefore(
+      moment(endTime, "MMMM Do, hh:mm A")
+    );
   } catch (error) {
     console.log(error);
     return false;
@@ -239,6 +244,12 @@ const showAlertPopupWithLoading = (setIsLoading, error) => {
       style: "cancel"
     }
   ]);
+};
+
+const convertDateTimeToFormat = (dateTime, currentFormat, expectedFormat) => {
+  return moment(moment(dateTime, currentFormat).toDate()).format(
+    expectedFormat
+  );
 };
 
 export default {
@@ -258,5 +269,6 @@ export default {
   getDuration,
   calculateTotalDifferenceInTime,
   validateStartTimeEndTime,
-  showAlertPopupWithLoading
+  showAlertPopupWithLoading,
+  convertDateTimeToFormat
 };

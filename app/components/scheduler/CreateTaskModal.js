@@ -1,9 +1,19 @@
 import React, { useState, useContext } from "react";
-import { View, StyleSheet, Modal, Text, TouchableOpacity } from "react-native";
-
+import {
+  View,
+  StyleSheet,
+  Modal,
+  Text,
+  TouchableOpacity,
+  Alert,
+  Platform
+} from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from "moment";
 import uuid from "uuid";
+import * as Calendar from "expo-calendar";
+import * as Localization from "expo-localization";
+
 import CustomModalButton from "./CustomModalButton";
 import colors from "../../config/colors";
 import { SchedulerContext } from "../../context/SchedulerContext";
@@ -26,8 +36,23 @@ export default function CreateTaskModal({
 
   const handleCreateEventData = async () => {
     //Validate the start time and end time and save the task
-    if (!utils.validateStartTimeEndTime(startTime, endTime))
-      return alert("End time cannot be lesser than start time");
+    if (!utils.validateStartTimeEndTime(selectedDate, startTime, endTime))
+      return Alert.alert(
+        "INCORRECT DATE/TIME SELECTED",
+        "Start Date cannot be less than selected date or end date/time cannot be less than start date/time"
+      );
+
+    const title = `${utils.convertDateTimeToFormat(
+      startTime,
+      "MMMM Do, hh:mm A",
+      "ddd hh:mm A"
+    )} To ${utils.convertDateTimeToFormat(
+      endTime,
+      "MMMM Do, hh:mm A",
+      "ddd hh:mm A"
+    )}`;
+
+    const notes = utils.calculateTotalDifferenceInTime(startTime, endTime);
 
     const creatTodo = {
       key: uuid(),
@@ -35,8 +60,8 @@ export default function CreateTaskModal({
       todoList: [
         {
           key: uuid(),
-          title: `${startTime} To ${endTime}`,
-          notes: utils.calculateTotalDifferenceInTime(startTime, endTime),
+          title,
+          notes,
           alarm: {},
           color: `rgb(${Math.floor(
             Math.random() * Math.floor(256)
@@ -57,20 +82,69 @@ export default function CreateTaskModal({
       }
     };
 
+    await _addEventsToCalendar(title, notes, startTime, endTime);
+
     await schedulerContext.updateTodo(creatTodo);
     await updateCurrentTask(selectedDate);
     setIsModalVisible(false);
   };
 
+  const _createNewCalendar = async () => {
+    let calendarId = null;
+    try {
+      const newCalendar = {
+        title: "Punch me reminder",
+        entityType: Calendar.EntityTypes.EVENT,
+        color: "#2196F3",
+        source:
+          Platform.OS === "ios"
+            ? undefined
+            : { isLocalAccount: true, name: "Expo Calendar" },
+        name: "Punch Me",
+        accessLevel: Calendar.CalendarAccessLevel.OWNER,
+        ownerAccount: "personal"
+      };
+
+      calendarId = await Calendar.createCalendarAsync(newCalendar);
+    } catch (e) {
+      console.log(e);
+      Alert.alert(e.message);
+    }
+
+    return calendarId;
+  };
+
+  const _addEventsToCalendar = async (title, notes, startDate, endDate) => {
+    const calendarId = await _createNewCalendar();
+    const event = {
+      title,
+      notes,
+      startDate: moment(startDate, "MMMM Do, hh:mm A").toDate(),
+      endDate: moment(endDate, "MMMM Do, hh:mm A").toDate(),
+      timeZone: Localization.timezone
+    };
+
+    try {
+      const createEventAsyncRes = await Calendar.createEventAsync(
+        calendarId ? calendarId.toString() : null,
+        event
+      );
+
+      return createEventAsyncRes;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handlePickedStartTime = date => {
-    const selectedTime = moment(date).format("hh:mm A");
+    const selectedTime = moment(date).format("MMMM Do, hh:mm A");
     setStartTime(selectedTime);
 
     setIsStartTimePickerVisible(false);
   };
 
   const handlePickedEndTime = date => {
-    const selectedTime = moment(date).format("hh:mm A");
+    const selectedTime = moment(date).format("MMMM Do, hh:mm A");
     setEndTime(selectedTime);
 
     setIsEndTimePickerVisible(false);
@@ -113,20 +187,22 @@ export default function CreateTaskModal({
           </View>
           <DateTimePicker
             headerTextIOS="Pick a time"
+            date={moment(selectedDate).toDate()}
             isVisible={isStartTimePickerVisible}
             onConfirm={handlePickedStartTime}
             onCancel={() => {
               setIsStartTimePickerVisible(false);
             }}
-            mode="time"
+            mode="datetime"
           />
           <DateTimePicker
             isVisible={isEndTimePickerVisible}
+            date={moment(selectedDate).toDate()}
             onConfirm={handlePickedEndTime}
             onCancel={() => {
               setIsEndTimePickerVisible(false);
             }}
-            mode="time"
+            mode="datetime"
           />
         </View>
       </TouchableOpacity>
@@ -159,7 +235,7 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   time: {
-    fontSize: 20,
+    fontSize: 12,
     textAlign: "center",
     color: colors.white,
     marginBottom: 20

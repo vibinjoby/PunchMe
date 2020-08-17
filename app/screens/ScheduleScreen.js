@@ -43,6 +43,7 @@ export default function ScheduleScreen({ route, navigation }) {
   const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
+    _updateCurrentTask(currentDate);
     //_handleDeletePreviousDayTask();
   }, []);
 
@@ -95,14 +96,14 @@ export default function ScheduleScreen({ route, navigation }) {
           return false;
         });
         if (todoLists.length !== 0) {
-          setMarkedDate(markDot);
           setTodoList(todoLists[0].todoList);
         } else {
-          setMarkedDate(markDot);
           setTodoList([]);
         }
+        setMarkedDate(markDot);
       }
     } catch (error) {
+      console.log(error);
       // Error retrieving data
     }
   };
@@ -170,7 +171,7 @@ export default function ScheduleScreen({ route, navigation }) {
           iconRight={require("../assets/right-arrow.png")}
           iconContainer={{ flex: 0.1 }}
           markedDates={markedDate}
-          selectedDate={Date()}
+          selectedDate={new moment().toDate()}
           onDateSelected={date => {
             const selectedDate = `${moment(date).format("YYYY")}-${moment(
               date

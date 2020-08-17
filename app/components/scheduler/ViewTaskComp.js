@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   titleTxt: {
     color: colors.yellow,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700"
   },
   notesView: {
