@@ -55,7 +55,7 @@ export default function App() {
     console.disableYellowBox = true;
 
     //Toggle this comment to reset all data and do only in development mode
-    utils.removeAsyncStorageData("token");
+    //utils.removeAsyncStorageData("token");
     /*db.deleteAllData()
       .then(data => console.log(data))
       .catch(err => console.log(err));*/
