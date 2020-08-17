@@ -221,12 +221,14 @@ const calculateTotalDifferenceInTime = (start, end) => {
 //If the end time is less than start time return false else true
 const validateStartTimeEndTime = (selectedDate, startTime, endTime) => {
   try {
+    // If the start date and the selected date is not same return false
     if (
-      moment(startTime, "MMMM Do, hh:mm A").isBefore(
-        moment(selectedDate, "YYYY-MM-DD")
-      )
+      !moment(
+        convertDateTimeToFormat(startTime, "MMMM Do, hh:mm A", "YYYY-MM-DD")
+      ).isSame(moment(selectedDate, "YYYY-MM-DD"))
     )
       return false;
+
     return moment(startTime, "MMMM Do, hh:mm A").isBefore(
       moment(endTime, "MMMM Do, hh:mm A")
     );
