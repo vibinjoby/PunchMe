@@ -3,6 +3,8 @@ import { AppearanceProvider } from "react-native-appearance";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import * as Sentry from "sentry-expo";
 import * as Permissions from "expo-permissions";
+import { AppLoading } from "expo";
+import * as AppAuth from "expo-app-auth";
 
 import OnboardingComponent from "./app/components/onboarding/OnboardingComponent";
 import utils from "./app/helpers/utils";
@@ -12,9 +14,8 @@ import LoginStackNavigator from "./app/navigation/LoginStackNavigator";
 import AppNavigator from "./app/navigation/AppNavigator";
 import TodoStore from "./app/context/store/TodoStore";
 import AppThemeStore from "./app/context/store/AppThemeStore";
-import { AppLoading } from "expo";
 import FontLoad from "./app/components/activity/FontLoad";
-import * as AppAuth from "expo-app-auth";
+import UserInfoStore from "./app/context/store/UserInfoStore";
 
 // When configured correctly, URLSchemes should contain your REVERSED_CLIENT_ID
 const { URLSchemes } = AppAuth;
@@ -91,9 +92,11 @@ export default function App() {
       {showRealApp ? (
         <AppThemeStore>
           <TodoStore>
-            <NavigationContainer theme={DarkTheme}>
-              {!loggedIn ? <LoginStackNavigator /> : <AppNavigator />}
-            </NavigationContainer>
+            <UserInfoStore>
+              <NavigationContainer theme={DarkTheme}>
+                {!loggedIn ? <LoginStackNavigator /> : <AppNavigator />}
+              </NavigationContainer>
+            </UserInfoStore>
           </TodoStore>
         </AppThemeStore>
       ) : (

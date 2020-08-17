@@ -7,7 +7,7 @@ import {
   FlatList,
   Switch,
   TouchableOpacity,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback
 } from "react-native";
 import Screens from "../components/Screens";
 import commons from "../config/commonConstants";
@@ -33,7 +33,7 @@ export default function Settings({ navigation }) {
           style={{
             alignSelf: "center",
             margin: "5%",
-            padding: "3%",
+            padding: "3%"
           }}
           source={require("../assets/moon.png")}
         />
@@ -54,7 +54,7 @@ export default function Settings({ navigation }) {
         renderItem={({ item }) =>
           SettingsComponent(item.title, item.imgUri, item.targetScreenName)
         }
-        keyExtractor={(item) => item.title}
+        keyExtractor={item => item.title}
       />
     </Screens>
   );
@@ -62,20 +62,20 @@ export default function Settings({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 20
   },
   heading: {
     backgroundColor: "#1A1A1A",
     alignItems: "center",
     marginBottom: 20,
-    padding: 30,
+    padding: 30
   },
   name: {
     fontWeight: "bold",
     alignSelf: "center",
     color: "#FFFFFF",
     padding: "1%",
-    fontSize: 20,
+    fontSize: 20
   },
   Section: {
     backgroundColor: "#1A1A1A",
@@ -84,20 +84,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    marginBottom: 20,
+    marginBottom: 20
   },
   text: {
     color: "#C7C7CC",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   img: {
     width: 42,
-    height: 42,
+    height: 42
   },
   next: {
     justifyContent: "center",
     width: 32,
-    height: 20,
-  },
+    height: 20
+  }
 });

@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { useColorScheme } from "react-native-appearance";
 import * as GoogleSignIn from "expo-google-sign-in";
+import jwtDecode from "jwt-decode";
 
 import colors from "../config/colors";
 import routes from "../navigation/routes";
@@ -12,12 +13,14 @@ import CustomButton from "../components/login/CustomButton";
 import loginService from "../services/loginService";
 import CustomErrorText from "../components/login/CustomErrorText";
 import AppThemeContext from "../context/AppThemeContext";
+import UserContext from "../context/UserContext";
 import utils from "../helpers/utils";
 import AppLoader from "../helpers/AppLoader";
 import GoogleSignInButton from "../components/login/GoogleSignInButton";
 
 export default function LoginScreen({ route, navigation }) {
   const [isLoading, setIsLoading] = useState(false);
+  const userInfoCtx = useContext(UserContext);
   const appTheme = useContext(AppThemeContext);
   const systemTheme = useColorScheme();
   const themeColor =
@@ -34,12 +37,11 @@ export default function LoginScreen({ route, navigation }) {
   const handleLoginClick = async values => {
     try {
       setIsLoading(true);
-      const isSuccess = await loginService.loginUser(
-        values.email,
-        values.password
-      );
-      if (isSuccess) {
+      const data = await loginService.loginUser(values.email, values.password);
+      if (data) {
         setIsLoading(false);
+        //Set the decoded token obj to the user context
+        userInfoCtx.setUserInfo(jwtDecode(data));
         return navigation.navigate(routes.HOME);
       }
     } catch (error) {

@@ -43,7 +43,7 @@ export default function LoginStackNavigator() {
       <Stack.Screen
         name={routes.LOGIN}
         component={LoginScreen}
-        options={{ headerShown: true, title: "" }}
+        options={{ headerShown: false, title: "" }}
       />
       <Stack.Screen
         name={routes.REGISTER}
