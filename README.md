@@ -7,6 +7,12 @@
 See the design of the app here
 https://xd.adobe.com/view/6d741a86-0280-48dd-b1ea-c83ac14c9f69-3827/specs/
 
+See the issues page for the app here
+https://sentry.io/organizations/vibins-team/issues/
+
+See the JIRA dashboard here
+https://camplus.atlassian.net/secure/RapidBoard.jspa?rapidView=2&projectKey=PM&selectedIssue=PM-1
+
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/vibinjoby/PunchMe)
 
 ![punchme](PunchMe.jpg)
