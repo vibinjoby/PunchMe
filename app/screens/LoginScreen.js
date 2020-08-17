@@ -1,8 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { useColorScheme } from "react-native-appearance";
+import * as GoogleSignIn from "expo-google-sign-in";
 
 import colors from "../config/colors";
 import routes from "../navigation/routes";
@@ -13,6 +14,7 @@ import CustomErrorText from "../components/login/CustomErrorText";
 import AppThemeContext from "../context/AppThemeContext";
 import utils from "../helpers/utils";
 import AppLoader from "../helpers/AppLoader";
+import GoogleSignInButton from "../components/login/GoogleSignInButton";
 
 export default function LoginScreen({ route, navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +46,36 @@ export default function LoginScreen({ route, navigation }) {
       utils.showAlertPopupWithLoading(setIsLoading, error);
     }
   };
+
+  const _syncUserWithStateAsync = async () => {
+    setIsLoading(true);
+    const user = await GoogleSignIn.signInSilentlyAsync();
+    setIsLoading(false);
+    if (user) navigation.navigate(routes.HOME);
+  };
+
+  const signInAsync = async () => {
+    try {
+      await GoogleSignIn.askForPlayServicesAsync();
+      const { type, user } = await GoogleSignIn.signInAsync();
+      if (type === "success") {
+        _syncUserWithStateAsync();
+      }
+    } catch ({ message }) {
+      alert("login: Error:" + message);
+    }
+  };
+
+  useEffect(() => {
+    (async function() {
+      await GoogleSignIn.initAsync({
+        // You may ommit the clientId when the firebase `googleServicesFile` is configured
+        clientId:
+          "393073135707-d5tupl6ed5b43vus0l8cc6mckfnrfb69.apps.googleusercontent.com"
+      });
+      _syncUserWithStateAsync();
+    })();
+  });
 
   return (
     <>
@@ -121,6 +153,7 @@ export default function LoginScreen({ route, navigation }) {
                 >
                   Forgot password?
                 </Text>
+
                 <CustomButton
                   title="LOGIN"
                   onPress={() => handleLoginClick(values)}
@@ -130,6 +163,7 @@ export default function LoginScreen({ route, navigation }) {
               </>
             )}
           </Formik>
+          <GoogleSignInButton onPress={signInAsync} />
         </View>
 
         <View>

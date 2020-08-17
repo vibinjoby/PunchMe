@@ -14,11 +14,16 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.punch.me",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.393073135707-d5tupl6ed5b43vus0l8cc6mckfnrfb69"
+        }
+      },
+      "googleServicesFile": "./app/GoogleService-Info.plist"
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
@@ -36,7 +41,8 @@
       ]
     },
     "android": {
-      "package": "com.punchme"
+      "package": "com.punch.me",
+      "googleServicesFile": "./app/google-services.json"
     }
   }
 }

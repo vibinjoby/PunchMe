@@ -14,6 +14,12 @@ import TodoStore from "./app/context/store/TodoStore";
 import AppThemeStore from "./app/context/store/AppThemeStore";
 import { AppLoading } from "expo";
 import FontLoad from "./app/components/activity/FontLoad";
+import * as AppAuth from "expo-app-auth";
+
+// When configured correctly, URLSchemes should contain your REVERSED_CLIENT_ID
+const { URLSchemes } = AppAuth;
+
+console.log(URLSchemes);
 
 export default function App() {
   // Initializing sentry for logging
@@ -49,7 +55,7 @@ export default function App() {
     console.disableYellowBox = true;
 
     //Toggle this comment to reset all data and do only in development mode
-    //utils.removeAsyncStorageData("TODO");
+    utils.removeAsyncStorageData("token");
     /*db.deleteAllData()
       .then(data => console.log(data))
       .catch(err => console.log(err));*/
