@@ -5,15 +5,15 @@ export default Object.freeze({
   SETTINGS_LINK: [
     {
       id: 1,
-      title: "Account",
+      title: "My Account",
       imgUri: require("../assets/helpCenter.png"),
-      targetScreenName: "TermsAndConditions",
+      targetScreenName: "Myaccount",
     },
     {
       id: 2,
       title: "Report a Problem",
       imgUri: require("../assets/report.png"),
-      targetScreenName: "TermsAndConditions",
+      targetScreenName: "Report",
     },
     {
       id: 3,
