@@ -5,34 +5,28 @@ export default Object.freeze({
   SETTINGS_LINK: [
     {
       id: 1,
-      title: "Help Center",
+      title: "Account",
       imgUri: require("../assets/helpCenter.png"),
-      targetScreenName: "TermsAndConditions"
+      targetScreenName: "TermsAndConditions",
     },
     {
       id: 2,
       title: "Report a Problem",
       imgUri: require("../assets/report.png"),
-      targetScreenName: "TermsAndConditions"
+      targetScreenName: "TermsAndConditions",
     },
     {
       id: 3,
-      title: "Terms and Policies",
+      title: "Contact Us",
       imgUri: require("../assets/terms.png"),
-      targetScreenName: "TermsAndConditions"
+      targetScreenName: "Contactus",
     },
     {
       id: 4,
-      title: "About Us",
+      title: "Log Out",
       imgUri: require("../assets/about.png"),
-      targetScreenName: "TermsAndConditions"
+      targetScreenName: "TermsAndConditions",
     },
-    {
-      id: 5,
-      title: "Contact Us",
-      imgUri: require("../assets/contact.png"),
-      targetScreenName: "TermsAndConditions"
-    }
   ],
   ONBOARDING_DATA: [
     {
@@ -41,7 +35,7 @@ export default Object.freeze({
       subHeader:
         "Get all the updates instantly without missing Experience a rich UI for your comfort",
       imageUri: require("../assets/onboardingScreen.png"),
-      buttonTxt: "Next"
+      buttonTxt: "Next",
     },
     {
       id: 2,
@@ -49,16 +43,16 @@ export default Object.freeze({
       subHeader:
         "Get all the updates instantly without missing Experience a rich UI for your comfort",
       imageUri: require("../assets/onboardingScreen2.png"),
-      buttonTxt: "Start"
-    }
+      buttonTxt: "Start",
+    },
   ],
   DEFAULT_TIMER: {
     hour: "00",
     minute: "00",
-    seconds: "00"
+    seconds: "00",
   },
   IS_TABLE_CREATED: "is_tables_created",
   YES: "Y",
   TOKEN_KEY: "token",
-  NOTIFICATION_TOKEN: "notification_token"
+  NOTIFICATION_TOKEN: "notification_token",
 });

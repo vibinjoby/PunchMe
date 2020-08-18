@@ -1,12 +1,13 @@
 import React from "react";
 import {
   createStackNavigator,
-  HeaderBackButton
+  HeaderBackButton,
 } from "@react-navigation/stack";
 import { CardStyleInterpolators } from "@react-navigation/stack";
 
 import SettingsScreen from "../screens/SettingsScreen";
 import TermsConditionsScreen from "../screens/TermsConditionsScreen";
+import ContactusScreen from "../screens/ContactusScreen";
 import colors from "../config/colors";
 
 const Stack = createStackNavigator();
@@ -20,8 +21,22 @@ export default function SettingsStackNavigator() {
         options={{
           headerShown: true,
           headerLeft: null,
-          headerTitleAlign: "center"
+          headerTitleAlign: "center",
         }}
+      />
+      <Stack.Screen
+        name="Contactus"
+        component={ContactusScreen}
+        options={({ navigation }) => ({
+          title: "Contact Us",
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          headerBackTitleStyle: { color: colors.yellow },
+          headerBackTitle: "Cancel",
+          headerTitleAlign: "center",
+          headerLeft: (props) => (
+            <HeaderBackButton {...props} tintColor={colors.yellow} />
+          ),
+        })}
       />
       <Stack.Screen
         name="TermsAndConditions"
@@ -32,9 +47,9 @@ export default function SettingsStackNavigator() {
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Cancel",
           headerTitleAlign: "center",
-          headerLeft: props => (
+          headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
-          )
+          ),
         })}
       />
     </Stack.Navigator>
