@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,115 +6,122 @@ import {
   Image,
   FlatList,
   Switch,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
+  TouchableOpacity
 } from "react-native";
-import Screens from "../components/Screens";
 import commons from "../config/commonConstants";
+import SettingsComp from "../components/settings/SettingsComp";
+import AppThemeContext from "../context/AppThemeContext";
+import { useColorScheme } from "react-native-appearance";
+import colors from "../config/colors";
 
-export default function Settings({ navigation }) {
-  const SettingsComponent = (linkText, imgUri, targetScreenName) => (
-    <View>
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate(targetScreenName)}
-      >
-        <View style={styles.Section}>
-          <Image style={styles.img} source={imgUri} />
-          <Text style={styles.text}>{linkText}</Text>
-          <Image style={styles.next} source={require("../assets/next.png")} />
-        </View>
-      </TouchableWithoutFeedback>
-    </View>
-  );
+export default function Settings({ route, navigation }) {
+  //Theme
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
   return (
-    <Screens style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        themeColor === "light" && { backgroundColor: colors.white }
+      ]}
+    >
       <TouchableOpacity>
         <Image
           style={{
             alignSelf: "center",
             margin: "5%",
-            padding: "10%",
+            padding: "10%"
           }}
           source={require("../assets/moon.png")}
         />
       </TouchableOpacity>
-      <Text style={styles.name}>Test Name</Text>
-      <View style={styles.Section}>
-        <Text style={styles.notification}>Receive Notification</Text>
-        <View style={styles.container}>
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            ios_backgroundColor="black"
-          />
-        </View>
-      </View>
-      <View style={styles.Section}>
-        <Image style={styles.img} source={require("../assets/moon.png")} />
-        <Text style={styles.text}>Dark Mode</Text>
-        <View style={styles.container}>
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            ios_backgroundColor="black"
-          />
+      <Text
+        style={[
+          styles.username,
+          themeColor === "light" && { color: colors.black }
+        ]}
+      >
+        Test Name
+      </Text>
+      <View
+        style={[
+          styles.section,
+          themeColor === "light" && { backgroundColor: colors.white }
+        ]}
+      >
+        <Text
+          style={[
+            styles.notification,
+            themeColor === "light" && { color: colors.black }
+          ]}
+        >
+          Receive Notification
+        </Text>
+        <View
+          style={[
+            styles.container,
+            themeColor === "light" && { backgroundColor: colors.white }
+          ]}
+        >
+          <Switch trackColor={{ false: colors.light, true: colors.yellow }} />
         </View>
       </View>
       <FlatList
         data={commons.SETTINGS_LINK}
-        renderItem={({ item }) =>
-          SettingsComponent(item.title, item.imgUri, item.targetScreenName)
-        }
-        keyExtractor={(item) => item.title}
+        renderItem={({ item }) => (
+          <SettingsComp
+            themeColor={themeColor}
+            linkText={item.title}
+            imgUri={item.imgUri}
+            targetScreenName={item.targetScreenName}
+            iconColor={item.iconColor}
+            navigation={navigation}
+            onPress={item.onPress}
+          />
+        )}
+        keyExtractor={item => item.title}
       />
-    </Screens>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
-  },
-  heading: {
-    backgroundColor: "black",
-    alignItems: "center",
-    marginBottom: 20,
-    padding: 30,
+    flex: 1
   },
   name: {
     fontWeight: "bold",
     alignSelf: "center",
-    color: "#FFFFFF",
+    color: colors.white,
     padding: "1%",
     fontSize: 20,
-    marginBottom: 10,
+    marginBottom: 10
   },
   notification: {
-    color: "#C7C7CC",
+    color: colors.white,
     justifyContent: "center",
     alignItems: "center",
-    fontSize: 17,
+    fontSize: 17
   },
-  Section: {
-    backgroundColor: "black",
+  section: {
+    backgroundColor: colors.black,
     padding: 10,
     flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    borderBottomWidth: 0.2,
-    borderColor: "#969696",
+    borderColor: "#969696"
   },
   text: {
     color: "#C7C7CC",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   img: {
     width: 42,
-    height: 42,
-  },
-  next: {
-    justifyContent: "center",
-    width: 32,
-    height: 20,
-  },
+    height: 42
+  }
 });

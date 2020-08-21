@@ -32,12 +32,12 @@ export default function AccountScreen({ navigation: { setParams } }) {
     <View
       style={[
         styles.container,
-        themeColor === "light" && { backgroundColor: colors.lightBackground },
+        themeColor === "light" && { backgroundColor: colors.lightBackground }
       ]}
     >
       <Text style={styles.heading}>First Name</Text>
       <TextInput
-        onChangeText={(text) => {
+        onChangeText={text => {
           if (!text) setIsTitleErr(true);
           else setIsTitleErr(false);
           setTitle(text);
@@ -48,8 +48,8 @@ export default function AccountScreen({ navigation: { setParams } }) {
           isTitleError ? styles.errorInput : "",
           themeColor === "light" && {
             backgroundColor: colors.white,
-            color: colors.black,
-          },
+            color: colors.black
+          }
         ]}
         placeholderTextColor="grey"
       />
@@ -59,7 +59,7 @@ export default function AccountScreen({ navigation: { setParams } }) {
       )}
       <Text style={styles.heading}>Last Name</Text>
       <TextInput
-        onChangeText={(text) => {
+        onChangeText={text => {
           setHourlyPay(text);
           if (!text) setIsHourlyPayErr(true);
           else setIsHourlyPayErr(false);
@@ -70,8 +70,8 @@ export default function AccountScreen({ navigation: { setParams } }) {
           isHourlyPayError ? styles.errorInput : "",
           themeColor === "light" && {
             backgroundColor: colors.white,
-            color: colors.black,
-          },
+            color: colors.black
+          }
         ]}
         placeholderTextColor="grey"
       />
@@ -81,14 +81,14 @@ export default function AccountScreen({ navigation: { setParams } }) {
       )}
       <Text style={styles.heading}>Email Id</Text>
       <TextInput
-        onChangeText={(text) => setNotes(text)}
+        onChangeText={text => setNotes(text)}
         placeholder="Email ID"
         style={[
           styles.textInput,
           themeColor === "light" && {
             backgroundColor: colors.white,
-            color: colors.black,
-          },
+            color: colors.black
+          }
         ]}
         placeholderTextColor="grey"
       />
@@ -99,13 +99,13 @@ export default function AccountScreen({ navigation: { setParams } }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 20
   },
   error: {
     marginTop: -10,
     marginLeft: 20,
     marginBottom: 10,
-    color: "red",
+    color: "red"
   },
   textInput: {
     fontFamily: "ProximaNovaRegular",
@@ -113,14 +113,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: colors.white,
     marginBottom: 20,
-    padding: 20,
+    padding: 20
   },
   errorInput: {
     borderColor: "red",
-    borderWidth: 1,
+    borderWidth: 1
   },
   heading: {
     marginLeft: 10,
-    padding: 5,
-  },
+    padding: 5
+  }
 });
