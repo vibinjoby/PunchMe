@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, Image, Text, Button, Alert } from "react-native";
 import { AppLoading } from "expo";
 import FontLoad from "./FontLoad";
+import RefreshButton from "./RefreshButton";
 
 export default function EmptyActivity(props) {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -30,6 +31,7 @@ export default function EmptyActivity(props) {
         onPress={() => {
           props.onPress();
         }}
+        color="#ffffff"
       ></Button>
     </View>
   );
@@ -54,11 +56,6 @@ const styles = StyleSheet.create({
   },
   refresh: {
     margin: 20,
-    paddingTop: 20,
-    fontFamily: "ProximaNovaAltLight",
-    backgroundColor: "#000000",
-    borderColor: "#FFFFFF",
-    borderStyle: "solid",
-    borderWidth: 2,
+    paddingTop: 30,
   },
 });

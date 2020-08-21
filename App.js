@@ -24,9 +24,9 @@ export default function App() {
     });
 
     //Toggle this comment to reset all data and do only in development mode
-    // db.deleteAllData()
-    //   .then((data) => console.log(data))
-    //   .catch((err) => console.log(err));
+    db.deleteAllData()
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
   }, []);
 
   return showRealApp ? (
