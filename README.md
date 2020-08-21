@@ -1,9 +1,21 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/vibinjoby/PunchMe)
+
 # PunchMe
 
 ## Never Lose track of your hours and get paid for what you deserve
 
 See the design of the app here
-https://xd.adobe.com/view/cd3c7cd4-b577-40d8-5a76-a035431b1361-bb0d/
+https://xd.adobe.com/view/6d741a86-0280-48dd-b1ea-c83ac14c9f69-3827/specs/
+
+See the issues page for the app here
+https://sentry.io/organizations/vibins-team/issues/
+
+See the JIRA dashboard here
+https://camplus.atlassian.net/secure/RapidBoard.jspa?rapidView=2&projectKey=PM&selectedIssue=PM-1
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/vibinjoby/PunchMe)
+
+![punchme](PunchMe.jpg)
 
 - This application will be published in iOS and android and developed using react native.
 - Punch Me application is an employee aid to calculate and manage his/her hours weekly/monthly and generate an estimate of the expected pay.
@@ -17,6 +29,3 @@ https://xd.adobe.com/view/cd3c7cd4-b577-40d8-5a76-a035431b1361-bb0d/
 - All the past shift details and hours worked will be shown in the logs tab.
 - Users can add schedule for the upcoming shifts in the schedule section therefore depending on the schedule for the shift the user is been updated for starting the shift. (the scheduled shift will be shown in home page)
 - Users can view the weekly , bi-weekly or monthly history of hours worked and the payment respectively.
-
-![punchme](PunchMe.png)
-![activity](Activity.PNG)

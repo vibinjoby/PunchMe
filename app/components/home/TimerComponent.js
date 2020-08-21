@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import CustomBlinkTextComponent from "./CustomBlinkTextComponent";
+import colors from "../../config/colors";
 
 export default function TimerComponent({
   timerTime,
   breakTime,
-  isBreak = false
+  isBreak = false,
+  theme
 }) {
   const [isBlink, setIsBlink] = useState(isBreak);
 
@@ -15,23 +17,43 @@ export default function TimerComponent({
   }, [isBreak]);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        theme === "light" && { backgroundColor: colors.white }
+      ]}
+    >
       {/**If the user has taken break, blink the overall timer text else pass the blink and interval period as null */}
       {isBlink ? (
         <CustomBlinkTextComponent
-          style={styles.timerTxt}
+          style={[
+            styles.timerTxt,
+            theme === "light" && { color: colors.lightPrimary }
+          ]}
           blinkPeriod={isBlink ? 1000 : null}
           intervalPeriod={isBlink ? 1000 : null}
         >
           {timerTime.hour}:{timerTime.minute}:{timerTime.seconds}
         </CustomBlinkTextComponent>
       ) : (
-        <Text style={styles.timerTxt}>
+        <Text
+          style={[
+            styles.timerTxt,
+            theme === "light" && { color: colors.lightPrimary }
+          ]}
+        >
           {timerTime.hour}:{timerTime.minute}:{timerTime.seconds}
         </Text>
       )}
       <View style={styles.breakContainer}>
-        <Text style={styles.breakTxt}>BREAK</Text>
+        <Text
+          style={[
+            styles.breakTxt,
+            theme === "light" && { color: colors.black }
+          ]}
+        >
+          BREAK
+        </Text>
         <Text style={styles.breakTimer}>
           {breakTime.hour}:{breakTime.minute}:{breakTime.seconds}
         </Text>
@@ -48,15 +70,18 @@ const styles = StyleSheet.create({
     padding: 20
   },
   timerTxt: {
+    fontFamily: "ProximaNovaRegular",
     fontSize: 73,
-    color: "#FFAA20"
+    color: colors.white
   },
   breakTxt: {
-    color: "#C4C4C4",
+    color: colors.white,
+    fontWeight: "bold",
     fontSize: 13
   },
   breakTimer: {
-    color: "#C4C4C4",
+    fontFamily: "ProximaNovaRegular",
+    color: colors.yellow,
     fontSize: 21
   },
   breakContainer: {

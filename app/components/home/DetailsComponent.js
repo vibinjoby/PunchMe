@@ -1,19 +1,17 @@
 import React, { useRef } from "react";
 import { View, StyleSheet, Text, FlatList } from "react-native";
+import colors from "../../config/colors";
 
-export function DetailsComponent({ data }) {
+export function DetailsComponent({ data, theme }) {
   let flatListRef = useRef();
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>DETAILS</Text>
-      <View
-        style={[
-          styles.detailsContent,
-          Object.keys(data).length !== 0
-            ? { alignItems: "flex-start" }
-            : { alignItems: "center" }
-        ]}
+      <Text
+        style={[styles.header, theme === "light" && { color: colors.black }]}
       >
+        DETAILS
+      </Text>
+      <View style={[styles.detailsContent, { alignItems: "center" }]}>
         {Object.keys(data).length !== 0 ? (
           <FlatList
             data={data}
@@ -36,8 +34,6 @@ export function DetailsComponent({ data }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#1A1A1A",
-    padding: 20,
     height: 130
   },
   detailsContent: {
@@ -46,12 +42,17 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   header: {
-    color: "#FFFFFFF2",
-    marginBottom: 10
+    fontFamily: "ProximaNovaBold",
+    color: "#C3C0C0F2",
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: "center"
   },
   detailsTxt: {
+    fontFamily: "ProximaNovaRegular",
+    textAlign: "center",
     width: "100%",
-    paddingTop: 10,
+    paddingBottom: 10,
     color: "#808080F2"
   }
 });

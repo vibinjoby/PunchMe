@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "393073135707",
+    "firebase_url": "https://whatsappbot-gshfsn.firebaseio.com",
+    "project_id": "whatsappbot-gshfsn",
+    "storage_bucket": "whatsappbot-gshfsn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393073135707:android:d3614d30a619b72b186f7e",
+        "android_client_info": {
+          "package_name": "com.punch.me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393073135707-gdkaf3o377sq3eg6kq5c5hejlqaitgp2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzqO685oMSk-Z87uyprL6WD6T-bXfx0D8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393073135707-gdkaf3o377sq3eg6kq5c5hejlqaitgp2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "393073135707-d5tupl6ed5b43vus0l8cc6mckfnrfb69.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.punch.me"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

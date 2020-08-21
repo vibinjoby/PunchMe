@@ -1,15 +1,26 @@
-import React from "react";
-import { Button, Alert } from "react-native";
+import React, { useContext } from "react";
+import { Button, Alert, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import JobNavigator from "./JobNavigator";
 import AddJobScreen from "../screens/AddJobScreen";
 import { HeaderBackButton } from "@react-navigation/stack";
+import { useColorScheme } from "react-native-appearance";
+
 import colors from "../config/colors";
 import db from "../helpers/db";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { CardStyleInterpolators } from "@react-navigation/stack";
+import AppThemeContext from "../context/AppThemeContext";
 
 const Stack = createStackNavigator();
 
 export default function HomeStackNavigator() {
+  // Theme based colors
+  const appTheme = useContext(AppThemeContext);
+  const systemTheme = useColorScheme();
+  const themeColor =
+    appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
   const handleAddJob = (route, navigation) => {
     //Get the params from Add Job Screen when the save is clicked
     const { title, hourlyPay, notes, handleErrors } = route.params;
@@ -21,8 +32,8 @@ export default function HomeStackNavigator() {
     }
 
     //Save the job to DB if the inputs are non empty
-    db.addJobs(title, hourlyPay, notes)
-      .then((data) => {
+    db.addJobs(title.trim(), hourlyPay, notes)
+      .then(() => {
         Alert.alert(
           "New Job Added!!!",
           "You have successfully added a new Job",
@@ -31,13 +42,13 @@ export default function HomeStackNavigator() {
               text: "OK",
               onPress: () =>
                 navigation.navigate("JobNavigator", {
-                  jobName: "Loblaws",
-                }),
-            },
+                  jobName: "dummy" // Added params for the target screen to re-render the screen
+                })
+            }
           ]
         );
       })
-      .catch((err) => alert(`something went wrong in the DB ${err}`));
+      .catch(err => alert(`something went wrong in the DB ${err}`));
   };
   return (
     <Stack.Navigator>
@@ -50,20 +61,42 @@ export default function HomeStackNavigator() {
         name="AddJob"
         component={AddJobScreen}
         options={({ route, navigation }) => ({
+          headerStyle: {
+            backgroundColor:
+              themeColor === "light" ? colors.lightPrimary : colors.black
+          },
+          cardStyleInterpolator:
+            CardStyleInterpolators.forScaleFromCenterAndroid,
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: colors.white
+          },
           headerBackTitleStyle: { color: colors.yellow },
-          headerBackTitle: "Cancel",
-          headerLeft: (props) => (
-            <HeaderBackButton {...props} tintColor={colors.yellow} />
+          headerLeft: props => (
+            <HeaderBackButton
+              {...props}
+              label="Cancel"
+              tintColor={colors.yellow}
+            />
           ),
           headerRight: () => (
-            <Button
+            <TouchableOpacity
               onPress={() => {
                 handleAddJob(route, navigation);
               }}
-              title="Save"
-              color={colors.yellow}
-            />
-          ),
+            >
+              <Text
+                style={{
+                  color: colors.yellow,
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  paddingRight: 5
+                }}
+              >
+                Save
+              </Text>
+            </TouchableOpacity>
+          )
         })}
       />
     </Stack.Navigator>

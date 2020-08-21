@@ -2,7 +2,7 @@ import { Text, SafeAreaView, StyleSheet, View } from "react-native";
 import React from "react";
 import Screens from "../components/Screens";
 
-export default function TermsandsconditionsScreen() {
+export default function TermsConditionsScreen() {
   return (
     <Screens>
       <Text style={styles.container}>
@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
     fontSize: 18,
-    color: "white",
-  },
+    color: "white"
+  }
 });

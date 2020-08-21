@@ -4,6 +4,7 @@
     "slug": "punch-me",
     "version": "1.0.0",
     "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
     "icon": "./app/assets/icon.png",
     "splash": {
       "image": "./app/assets/splash.png",
@@ -15,10 +16,33 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.punch.me",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.393073135707-d5tupl6ed5b43vus0l8cc6mckfnrfb69"
+        }
+      },
+      "googleServicesFile": "./app/GoogleService-Info.plist"
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "your team short name here",
+            "project": "your project short name here",
+            "authToken": "your auth token here"
+          }
+        }
+      ]
+    },
+    "android": {
+      "package": "com.punch.me",
+      "googleServicesFile": "./app/google-services.json"
     }
   }
 }
