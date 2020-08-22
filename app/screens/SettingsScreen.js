@@ -1,18 +1,11 @@
-import React, { useContext } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  Switch,
-  TouchableOpacity
-} from "react-native";
+import React, { useContext, useState, useEffect } from "react";
+import { StyleSheet, Text, View, FlatList, Switch } from "react-native";
 import commons from "../config/commonConstants";
 import SettingsComp from "../components/settings/SettingsComp";
 import AppThemeContext from "../context/AppThemeContext";
 import { useColorScheme } from "react-native-appearance";
 import colors from "../config/colors";
+import utils from "../helpers/utils";
 
 export default function Settings({ route, navigation }) {
   //Theme
@@ -21,6 +14,26 @@ export default function Settings({ route, navigation }) {
   const themeColor =
     appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
 
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = isNotificationEnabled => {
+    //Store the result in the async storage
+    utils.storeAsyncStorageData(
+      commons.IS_NOTIFICATION_ENABLED,
+      isNotificationEnabled ? commons.YES : "N"
+    );
+    setIsEnabled(isNotificationEnabled);
+  };
+
+  useEffect(() => {
+    (async function() {
+      //Enable/disable the notification switch based on the user's preference on screen load
+      const isNotificationEnabled = await utils.fetchAsyncStorageData(
+        commons.IS_NOTIFICATION_ENABLED
+      );
+      setIsEnabled(isNotificationEnabled.includes(commons.YES));
+    })();
+  }, []);
+
   return (
     <View
       style={[
@@ -28,24 +41,19 @@ export default function Settings({ route, navigation }) {
         themeColor === "light" && { backgroundColor: colors.white }
       ]}
     >
-      <TouchableOpacity>
-        <Image
-          style={{
-            alignSelf: "center",
-            margin: "5%",
-            padding: "10%"
-          }}
-          source={require("../assets/moon.png")}
-        />
-      </TouchableOpacity>
-      <Text
-        style={[
-          styles.username,
-          themeColor === "light" && { color: colors.black }
-        ]}
-      >
-        Test Name
-      </Text>
+      <View style={styles.profileContainer}>
+        <View style={styles.profileView}>
+          <Text style={styles.profileName}>LA</Text>
+        </View>
+        <Text
+          style={[
+            styles.username,
+            themeColor === "light" && { color: colors.black }
+          ]}
+        >
+          Lijosh Abraham
+        </Text>
+      </View>
       <View
         style={[
           styles.section,
@@ -62,11 +70,16 @@ export default function Settings({ route, navigation }) {
         </Text>
         <View
           style={[
-            styles.container,
+            styles.switch,
             themeColor === "light" && { backgroundColor: colors.white }
           ]}
         >
-          <Switch trackColor={{ false: colors.light, true: colors.yellow }} />
+          <Switch
+            trackColor={{ false: "#767577", true: colors.yellow }}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
         </View>
       </View>
       <FlatList
@@ -92,6 +105,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  profileContainer: {
+    alignItems: "center",
+    marginVertical: 30
+  },
+  profileView: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: "green",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10
+  },
+  profileName: {
+    fontSize: 45,
+    fontFamily: "ProximaNovaRegular",
+    color: colors.white
+  },
+  username: {
+    fontFamily: "ProximaNovaRegular",
+    fontSize: 27,
+    color: colors.white
+  },
   name: {
     fontWeight: "bold",
     alignSelf: "center",
@@ -101,10 +137,15 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   notification: {
+    fontFamily: "ProximaNovaRegular",
     color: colors.white,
     justifyContent: "center",
+    paddingLeft: 20,
     alignItems: "center",
     fontSize: 17
+  },
+  switch: {
+    paddingRight: 20
   },
   section: {
     backgroundColor: colors.black,

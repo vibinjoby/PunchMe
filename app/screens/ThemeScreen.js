@@ -4,8 +4,10 @@ import colors from "../config/colors";
 import AppThemeContext from "../context/AppThemeContext";
 import routes from "../navigation/routes";
 import { useColorScheme } from "react-native-appearance";
+import Divider from "../components/Divider";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function ThemeScreen({ navigation }) {
+export default function ThemeScreen() {
   // Theme based colors
   const appTheme = useContext(AppThemeContext);
   const systemTheme = useColorScheme();
@@ -21,30 +23,48 @@ export default function ThemeScreen({ navigation }) {
 
   const handleThemeSelection = item => {
     themeCtx.updateTheme(item);
-    navigation.navigate(routes.SETTINGS);
   };
+
   return (
     <View
       style={[
         styles.container,
-        themeColor === "light" && { backgroundColor: colors.lightBackground }
+        themeColor === "light" && { backgroundColor: "#EEEEEE" }
       ]}
     >
-      {data.map(item => (
-        <TouchableOpacity
-          onPress={() => handleThemeSelection(item.value)}
-          key={item.name}
-        >
-          <Text
-            style={[
-              styles.text,
-              themeColor === "light" && { color: colors.black }
-            ]}
-          >
-            {item.name}
-          </Text>
-        </TouchableOpacity>
-      ))}
+      <View
+        style={[
+          styles.themeContainer,
+          ,
+          themeColor === "dark" && { backgroundColor: "#1A1A1A" }
+        ]}
+      >
+        {data.map(item => (
+          <React.Fragment key={item.name}>
+            <TouchableOpacity onPress={() => handleThemeSelection(item.value)}>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={[
+                    styles.text,
+                    themeColor === "light" && { color: colors.black }
+                  ]}
+                >
+                  {item.name}
+                </Text>
+                {appTheme.theme === item.value && (
+                  <MaterialCommunityIcons
+                    style={styles.icon}
+                    name="check"
+                    size={30}
+                    color={themeColor === "light" ? colors.black : colors.white}
+                  />
+                )}
+              </View>
+            </TouchableOpacity>
+            <Divider />
+          </React.Fragment>
+        ))}
+      </View>
     </View>
   );
 }
@@ -53,7 +73,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  themeContainer: {
+    backgroundColor: colors.white,
+    marginTop: 20,
+    paddingLeft: 20
+  },
+  icon: { marginTop: 10, position: "absolute", right: 10 },
   text: {
+    fontFamily: "ProximaNovaRegular",
+    fontSize: 20,
+    height: 40,
+    marginTop: 20,
     color: colors.white
   }
 });

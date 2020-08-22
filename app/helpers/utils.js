@@ -72,8 +72,11 @@ const registerAndSendPushNotifications = async (title, body) => {
         token = await Notifications.getExpoPushTokenAsync();
         storeAsyncStorageData(commons.NOTIFICATION_TOKEN, token.data);
       }
-      // Temporarily disabling the notification TOGGLE the code below to enable it
-      //sendPushNotification(token, title, body);
+      // Only if the notification is enabled in settings page send the notification
+      fetchAsyncStorageData(commons.IS_NOTIFICATION_ENABLED).then(value => {
+        if (value.includes(commons.YES))
+          sendPushNotification(token, title, body);
+      });
     });
   } catch (error) {
     console.log(error);

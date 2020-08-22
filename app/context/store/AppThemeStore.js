@@ -9,8 +9,10 @@ export default function AppThemeStore({ children }) {
   useEffect(() => {
     (async function() {
       //when loading first time if no theme preference then  default to system theme
-      const preference = await utils.fetchAsyncStorageData("theme");
-      if (preference) updateTheme(preference);
+      let preference = await utils.fetchAsyncStorageData("theme");
+      //Remove the unwanted characters in the theme stored value from async storage
+      if (preference)
+        updateTheme(preference.replace(/['"]+/g, "").replace(/\\"/g, ""));
       else updateTheme("systemTheme");
     })();
   }, []);

@@ -17,6 +17,7 @@ import UserContext from "../context/UserContext";
 import utils from "../helpers/utils";
 import AppLoader from "../helpers/AppLoader";
 import GoogleSignInButton from "../components/login/GoogleSignInButton";
+import commons from "../config/commonConstants";
 
 export default function LoginScreen({ route, navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -70,6 +71,10 @@ export default function LoginScreen({ route, navigation }) {
 
   useEffect(() => {
     (async function() {
+      const value = await utils.fetchAsyncStorageData(commons.TOKEN_KEY);
+
+      if (value) navigation.navigate(routes.HOME);
+
       await GoogleSignIn.initAsync({
         // You may ommit the clientId when the firebase `googleServicesFile` is configured
         clientId:

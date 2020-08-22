@@ -167,11 +167,6 @@ export default function SettingsStackNavigator() {
           )
         })}
       />
-      <Stack.Screen
-        name="LoginStackNavigator"
-        component={LoginStackNavigator}
-        options={{ headerShown: false, title: "" }}
-      />
     </Stack.Navigator>
   );
 }

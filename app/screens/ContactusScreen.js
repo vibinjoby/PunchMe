@@ -3,6 +3,8 @@ import React, { useContext } from "react";
 import colors from "../config/colors";
 import AppThemeContext from "../context/AppThemeContext";
 import { useColorScheme } from "react-native-appearance";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Divider from "../components/Divider";
 
 export default function ContactUsScreen() {
   //Theme
@@ -10,58 +12,76 @@ export default function ContactUsScreen() {
   const systemTheme = useColorScheme();
   const themeColor =
     appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
+  const ContactContentComp = ({ title, subTitle, iconName }) => (
+    <View
+      style={[
+        styles.contentContainer,
+        themeColor === "dark" && { backgroundColor: "#1A1A1A" }
+      ]}
+    >
+      <View style={styles.content}>
+        <Text
+          style={[
+            styles.contentTitle,
+            themeColor === "dark" && { color: colors.white }
+          ]}
+        >
+          {title}
+        </Text>
+        <Text
+          style={[
+            styles.contentSubTitle,
+            themeColor === "dark" && { color: colors.white }
+          ]}
+        >
+          {subTitle}
+        </Text>
+      </View>
+      <View style={styles.iconImg}>
+        <MaterialCommunityIcons
+          name={iconName}
+          size={40}
+          color={themeColor === "dark" ? colors.white : colors.black}
+        />
+      </View>
+    </View>
+  );
+
   return (
     <View
       style={[
         styles.container,
-        themeColor === "light" && { backgroundColor: colors.white }
+        themeColor === "light" && { backgroundColor: "#EEEEEE" }
       ]}
     >
-      <Text
+      <View
         style={[
-          styles.header,
-          themeColor === "light" && { color: colors.black }
+          styles.contactContainer,
+          ,
+          themeColor === "dark" && { backgroundColor: "#1A1A1A" }
         ]}
       >
-        Get In Touch
-      </Text>
-      <Text
-        style={[
-          styles.subcontainer,
-          themeColor === "light" && { color: colors.black }
-        ]}
-      >
-        Venom Coders
-      </Text>
-      <View style={styles.details}>
-        <Text
-          style={{ color: themeColor === "dark" ? colors.white : colors.black }}
-        >
-          Email
-        </Text>
         <Text
           style={[
-            styles.content,
+            styles.header,
             themeColor === "dark" && { color: colors.white }
           ]}
         >
-          Punchme2020@gmail.com
+          Get in Touch
         </Text>
-      </View>
-      <View style={styles.details}>
-        <Text
-          style={{ color: themeColor === "dark" ? colors.white : colors.black }}
-        >
-          Mob
-        </Text>
-        <Text
-          style={[
-            styles.content,
-            themeColor === "dark" && { color: colors.white }
-          ]}
-        >
-          +16476753056
-        </Text>
+        <Text style={styles.subHeader}>Reach us your way 24/7</Text>
+        <ContactContentComp
+          title="Call us"
+          subTitle="+1 437 246 1995"
+          iconName="phone"
+        />
+        <Divider />
+        <ContactContentComp
+          title="Email us"
+          subTitle="punchme2020@gmail.com"
+          iconName="email"
+        />
       </View>
     </View>
   );
@@ -72,38 +92,42 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.black
   },
+  contactContainer: {
+    backgroundColor: colors.white,
+    marginTop: 20,
+    paddingLeft: 20,
+    paddingTop: 20
+  },
   header: {
-    alignItems: "center",
-    textAlignVertical: "center",
-    justifyContent: "center",
-    padding: 10,
-    marginTop: 10,
-    fontWeight: "bold",
-    fontSize: 25,
+    fontSize: 22,
+    fontFamily: "ProximaNovaBold",
     color: colors.black
   },
-  subcontainer: {
-    alignItems: "center",
-    textAlignVertical: "center",
-    justifyContent: "center",
-    padding: 10,
+  subHeader: {
+    color: "#666666",
+    fontFamily: "ProximaNovaRegular",
     fontSize: 18,
-    color: "white"
+    marginTop: 30
   },
-  details: {
+  contentTitle: {
+    fontFamily: "ProximaNovaAltLight",
+    fontSize: 22
+  },
+  contentSubTitle: {
+    marginTop: 10,
+    fontFamily: "ProximaNovaRegular",
+    fontSize: 20
+  },
+  contentContainer: {
+    marginTop: 20,
     flexDirection: "row",
-    textAlignVertical: "center",
-    margin: "2%",
-    padding: "5%",
-    fontSize: 15
+    marginBottom: 20
   },
-  content: {
-    marginLeft: "5%",
-    width: "70%",
-    color: colors.black,
-    fontSize: 15,
-    justifyContent: "space-around",
-    borderWidth: 0.5,
-    textAlign: "center"
+  iconImg: {
+    position: "absolute",
+    right: 0,
+    height: 50,
+    width: 50,
+    alignSelf: "flex-end"
   }
 });

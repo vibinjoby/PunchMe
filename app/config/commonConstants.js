@@ -95,5 +95,6 @@ export default Object.freeze({
   IS_TABLE_CREATED: "is_tables_created",
   YES: "Y",
   TOKEN_KEY: "token",
-  NOTIFICATION_TOKEN: "notification_token"
+  NOTIFICATION_TOKEN: "notification_token",
+  IS_NOTIFICATION_ENABLED: "isNotificationEnabled"
 });

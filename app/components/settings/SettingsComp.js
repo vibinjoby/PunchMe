@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.4,
     borderColor: "#969696"
   },
   iconBorder: {
@@ -70,6 +70,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   text: {
+    position: "absolute",
+    left: 90,
     textAlign: "left",
     fontFamily: "ProximaNovaRegular",
     fontSize: 17
