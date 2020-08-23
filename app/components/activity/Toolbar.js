@@ -11,6 +11,8 @@ export default function Toolbar(props) {
         text={props.title}
         fontFamily="Bold"
         fontSize={22}
+        noColorChange={true}
+        color="#ffffff"
       ></FlexiText>
     </FlexiView>
   );

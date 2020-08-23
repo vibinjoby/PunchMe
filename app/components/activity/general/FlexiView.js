@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View } from "react-native";
 import { useColorScheme } from "react-native-appearance";
+import AppThemeContext from "../../../context/AppThemeContext";
 
 const FlexiView = (props) => {
   return <View style={[props.style, getStyle(props)]}>{props.children}</View>;
 };
 
 const getStyle = (props) => {
-  const context = React.createContext();
+  const context = useContext(AppThemeContext);
   const systemTheme = useColorScheme();
   const themeColor =
     context.theme === "systemTheme" ? systemTheme : context.theme;
@@ -25,9 +26,10 @@ const getStyle = (props) => {
     backgroundColor.push("#EEEEEE");
   }
 
-  console.log("======== backgroundColor ===== " + backgroundColor);
+  console.log("======== Theme ===== " + themeColor);
   const color =
     themeColor === "light" ? backgroundColor[1] : backgroundColor[0];
+  console.log("======== Color ===== " + color);
   return {
     backgroundColor: color,
   };

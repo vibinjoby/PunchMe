@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text } from "react-native";
 import { useColorScheme } from "react-native-appearance";
+import AppThemeContext from "../../../context/AppThemeContext";
 
 const FlexiText = (props) => {
   return <Text style={[props.style, getStyle(props)]}>{props.text}</Text>;
 };
 
 const getStyle = (props) => {
-  const context = React.createContext();
+  const context = useContext(AppThemeContext);
   const systemTheme = useColorScheme();
   const themeColor =
     context.theme === "systemTheme" ? systemTheme : context.theme;
