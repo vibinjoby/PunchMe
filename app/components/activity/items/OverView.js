@@ -73,6 +73,10 @@ const OverView = (props) => {
             onAnimationComplete={() => console.log("onAnimationComplete")}
             backgroundColor="#2B2E33"
           />
+          <FlexiView style={styles.graphInfo} layoutType={2}>
+            <FlexiText text="08h 1m" fontFamily="Bold" fontSize={30} />
+            <FlexiText text="of 8h" fontFamily="light" fontSize={20} />
+          </FlexiView>
         </FlexiView>
         <FlexiView style={styles.fragment} layoutType={2}>
           <FlexiView style={styles.infoContainer}>
@@ -122,7 +126,6 @@ const OverView = (props) => {
 
 const styles = StyleSheet.create({
   overViewContainer: {
-    paddingTop: 30,
     paddingBottom: 30,
     paddingLeft: 0,
     paddingRight: 0,
@@ -139,13 +142,12 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-end",
     alignItems: "flex-end",
-    marginBottom: 15,
+    marginBottom: 30,
   },
   dropdown: {
     flex: 0.3,
     width: "30%",
     marginEnd: 15,
-
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
@@ -200,6 +202,11 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingTop: 16,
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  graphInfo: {
+    position: "absolute",
     justifyContent: "center",
     alignItems: "center",
   },
