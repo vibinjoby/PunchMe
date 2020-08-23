@@ -4,7 +4,6 @@ import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import * as Sentry from "sentry-expo";
 import * as Permissions from "expo-permissions";
 import { AppLoading } from "expo";
-import * as AppAuth from "expo-app-auth";
 
 import OnboardingComponent from "./app/components/onboarding/OnboardingComponent";
 import utils from "./app/helpers/utils";
@@ -16,11 +15,7 @@ import TodoStore from "./app/context/store/TodoStore";
 import AppThemeStore from "./app/context/store/AppThemeStore";
 import FontLoad from "./app/components/activity/FontLoad";
 import UserInfoStore from "./app/context/store/UserInfoStore";
-
-// When configured correctly, URLSchemes should contain your REVERSED_CLIENT_ID
-const { URLSchemes } = AppAuth;
-
-console.log(URLSchemes);
+import ParentNavigator from "./app/navigation/ParentNavigator";
 
 export default function App() {
   // Initializing sentry for logging
@@ -28,17 +23,16 @@ export default function App() {
     dsn:
       "https://9ef9497ed088461989e27795c6427065@o388140.ingest.sentry.io/5383811",
     enableInExpoDevelopment: true,
-    debug: true,
+    debug: true
   });
   const [showRealApp, setShowRealApp] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     _askForCalendarPermissions();
     _askForReminderPermissions();
     const key = commons.FIRST_TIME_APP_LOAD;
     //Check async storage to see if onboarding screen is to be shown or not
-    utils.fetchAsyncStorageData(key).then((value) => {
+    utils.fetchAsyncStorageData(key).then(value => {
       if (value) setShowRealApp(true);
       //Else store the async key with value so that the onboarding screen is not shown again
       else {
@@ -46,10 +40,6 @@ export default function App() {
         //Initialize Tables in the DB for first time app load
         db.init();
       }
-    });
-
-    utils.fetchAsyncStorageData(commons.TOKEN_KEY).then((value) => {
-      if (value) setLoggedIn(true);
     });
 
     //Disabling the warnings
@@ -94,7 +84,7 @@ export default function App() {
           <TodoStore>
             <UserInfoStore>
               <NavigationContainer theme={DarkTheme}>
-                {!loggedIn ? <LoginStackNavigator /> : <AppNavigator />}
+                <ParentNavigator />
               </NavigationContainer>
             </UserInfoStore>
           </TodoStore>

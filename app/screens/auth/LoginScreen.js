@@ -6,17 +6,18 @@ import { useColorScheme } from "react-native-appearance";
 import * as GoogleSignIn from "expo-google-sign-in";
 import jwtDecode from "jwt-decode";
 
-import colors from "../config/colors";
-import routes from "../navigation/routes";
-import CustomTextInput from "../components/login/CustomTextInput";
-import CustomButton from "../components/login/CustomButton";
-import loginService from "../services/loginService";
-import CustomErrorText from "../components/login/CustomErrorText";
-import AppThemeContext from "../context/AppThemeContext";
-import UserContext from "../context/UserContext";
-import utils from "../helpers/utils";
-import AppLoader from "../helpers/AppLoader";
-import GoogleSignInButton from "../components/login/GoogleSignInButton";
+import colors from "../../config/colors";
+import routes from "../../navigation/routes";
+import CustomTextInput from "../../components/login/CustomTextInput";
+import CustomButton from "../../components/login/CustomButton";
+import loginService from "../../services/loginService";
+import CustomErrorText from "../../components/login/CustomErrorText";
+import AppThemeContext from "../../context/AppThemeContext";
+import UserContext from "../../context/UserContext";
+import utils from "../../helpers/utils";
+import AppLoader from "../../helpers/AppLoader";
+import GoogleSignInButton from "../../components/login/GoogleSignInButton";
+import commons from "../../config/commonConstants";
 
 export default function LoginScreen({ route, navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,7 +43,7 @@ export default function LoginScreen({ route, navigation }) {
         setIsLoading(false);
         //Set the decoded token obj to the user context
         userInfoCtx.setUserInfo(jwtDecode(data));
-        return navigation.navigate(routes.HOME);
+        navigation.replace(routes.HOME);
       }
     } catch (error) {
       utils.showAlertPopupWithLoading(setIsLoading, error);
@@ -70,6 +71,11 @@ export default function LoginScreen({ route, navigation }) {
 
   useEffect(() => {
     (async function() {
+      const data = await utils.fetchAsyncStorageData(commons.TOKEN_KEY);
+      //Set the decoded token obj to the user context
+      userInfoCtx.setUserInfo(jwtDecode(data));
+      if (data) navigation.replace(routes.HOME);
+
       await GoogleSignIn.initAsync({
         // You may ommit the clientId when the firebase `googleServicesFile` is configured
         clientId:
@@ -91,7 +97,7 @@ export default function LoginScreen({ route, navigation }) {
         <View style={styles.loginHeader}>
           <Image
             style={styles.headerLogo}
-            source={require("../assets/punchMe_logo/punchme_logo_2x.png")}
+            source={require("../../assets/punchMe_logo/punchme_logo_2x.png")}
           />
           <Text style={styles.headerTxt}>PUNCH ME</Text>
         </View>

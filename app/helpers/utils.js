@@ -72,8 +72,11 @@ const registerAndSendPushNotifications = async (title, body) => {
         token = await Notifications.getExpoPushTokenAsync();
         storeAsyncStorageData(commons.NOTIFICATION_TOKEN, token.data);
       }
-      // Temporarily disabling the notification TOGGLE the code below to enable it
-      //sendPushNotification(token, title, body);
+      // Only if the notification is enabled in settings page send the notification
+      fetchAsyncStorageData(commons.IS_NOTIFICATION_ENABLED).then(value => {
+        if (value.includes(commons.YES))
+          sendPushNotification(token, title, body);
+      });
     });
   } catch (error) {
     console.log(error);
@@ -254,6 +257,18 @@ const convertDateTimeToFormat = (dateTime, currentFormat, expectedFormat) => {
   );
 };
 
+const getUserProfileName = username => {
+  if (!username) return;
+  const fName = username.split(" ")[0];
+  const lName = username.split(" ")[1];
+
+  return (
+    fName.charAt(0).toUpperCase() +
+    "" +
+    (lName ? lName.charAt(0).toUpperCase() : "")
+  );
+};
+
 export default {
   prefixZero,
   getCurrentTime,
@@ -272,5 +287,6 @@ export default {
   calculateTotalDifferenceInTime,
   validateStartTimeEndTime,
   showAlertPopupWithLoading,
-  convertDateTimeToFormat
+  convertDateTimeToFormat,
+  getUserProfileName
 };

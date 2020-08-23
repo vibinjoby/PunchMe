@@ -4,19 +4,16 @@ import {
   HeaderBackButton,
 } from "@react-navigation/stack";
 import { CardStyleInterpolators } from "@react-navigation/stack";
-import { Text } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { useColorScheme } from "react-native-appearance";
 
-import SettingsScreen from "../screens/SettingsScreen";
-import TermsConditionsScreen from "../screens/TermsConditionsScreen";
-import ContactUsScreen from "../screens/ContactusScreen";
-import AccountScreen from "../screens/AccountScreen";
+import SettingsScreen from "../screens/settings/SettingsScreen";
+import TermsConditionsScreen from "../screens/settings/TermsConditionsScreen";
+import ContactUsScreen from "../screens/settings/ContactUsScreen";
+import AccountScreen from "../screens/settings/AccountScreen";
 import colors from "../config/colors";
-import ReportScreen from "../screens/ReportScreen";
-import ThemeScreen from "../screens/ThemeScreen";
+import ReportScreen from "../screens/settings/ReportScreen";
+import ThemeScreen from "../screens/settings/ThemeScreen";
 import routes from "./routes";
-import LoginStackNavigator from "./LoginStackNavigator";
 import AppThemeContext from "../context/AppThemeContext";
 
 const Stack = createStackNavigator();
@@ -38,7 +35,9 @@ export default function SettingsStackNavigator() {
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black,
+              themeColor === "light"
+                ? colors.lightPrimary
+                : colors.darkSecondary,
           },
           headerTitleStyle: {
             color: colors.white,
@@ -106,24 +105,6 @@ export default function SettingsStackNavigator() {
           headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
           ),
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => {
-                handleAddJob(route, navigation);
-              }}
-            >
-              <Text
-                style={{
-                  color: colors.yellow,
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  paddingRight: 5,
-                }}
-              >
-                Done
-              </Text>
-            </TouchableOpacity>
-          ),
         })}
       />
       <Stack.Screen
@@ -166,11 +147,6 @@ export default function SettingsStackNavigator() {
             <HeaderBackButton {...props} tintColor={colors.yellow} />
           ),
         })}
-      />
-      <Stack.Screen
-        name="LoginStackNavigator"
-        component={LoginStackNavigator}
-        options={{ headerShown: false, title: "" }}
       />
     </Stack.Navigator>
   );

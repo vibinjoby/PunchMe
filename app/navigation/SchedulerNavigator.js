@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useColorScheme } from "react-native-appearance";
 
 import routes from "./routes";
-import ScheduleScreen from "../screens/ScheduleScreen";
+import ScheduleScreen from "../screens/schedule/ScheduleScreen";
 import AppThemeContext from "../context/AppThemeContext";
 import colors from "../config/colors";
 
@@ -27,7 +27,9 @@ export default function SchedulerNavigator() {
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light"
+                ? colors.lightPrimary
+                : colors.darkSecondary
           },
           headerTitleStyle: {
             color: colors.white

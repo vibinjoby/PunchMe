@@ -6,14 +6,14 @@ import {
 } from "@react-navigation/stack";
 import { useColorScheme } from "react-native-appearance";
 
-import LoginScreen from "../screens/LoginScreen";
+import LoginScreen from "../screens/auth/LoginScreen";
 import routes from "./routes";
-import RegisterScreen from "../screens/RegisterScreen";
-import ForgotPwdScreen from "../screens/ForgotPwdScreen";
+import RegisterScreen from "../screens/auth/RegisterScreen";
+import ForgotPwdScreen from "../screens/auth/ForgotPwdScreen";
 import colors from "../config/colors";
 import AppNavigator from "./AppNavigator";
-import TempPwdScreen from "../screens/TempPwdScreen";
-import ChangePwdScreen from "../screens/ChangePwdScreen";
+import TempPwdScreen from "../screens/auth/TempPwdScreen";
+import ChangePwdScreen from "../screens/auth/ChangePwdScreen";
 import AppThemeContext from "../context/AppThemeContext";
 
 const Stack = createStackNavigator();
@@ -28,10 +28,11 @@ export default function LoginStackNavigator() {
       navigationOptions={{ headerLayoutPreset: "center" }}
       screenOptions={{
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-
+        headerLeft: null,
+        gesturesEnabled: false,
         headerStyle: {
           backgroundColor:
-            themeColor === "light" ? colors.lightPrimary : colors.black,
+            themeColor === "light" ? colors.lightPrimary : colors.darkSecondary,
         },
         headerTitleAlign: "center",
         headerTitleStyle: {
@@ -136,7 +137,9 @@ export default function LoginStackNavigator() {
       <Stack.Screen
         name="Home"
         component={AppNavigator}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
     </Stack.Navigator>
   );
