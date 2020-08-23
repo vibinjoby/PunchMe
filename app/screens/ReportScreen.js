@@ -35,11 +35,41 @@ export default function ReportScreen({ navigation: { setParams } }) {
         themeColor === "light" && { backgroundColor: colors.lightBackground },
       ]}
     >
-      <Text style={styles.topcontent}>
+      <Text
+        style={
+          themeColor === "light"
+            ? {
+                color: colors.black,
+                margin: 20,
+                paddingLeft: "10%",
+                paddingRight: "10%",
+                textAlign: "center",
+              }
+            : {
+                color: colors.white,
+                margin: 20,
+                paddingLeft: "10%",
+                paddingRight: "10%",
+                textAlign: "center",
+              }
+        }
+      >
         Got a question? We’d love to hear from you. Send us a message and we’ll
         respond as soon as possible.
       </Text>
-      <Text style={styles.heading}>Name</Text>
+      <Text
+        style={
+          themeColor === "light"
+            ? { color: colors.black, marginLeft: 20, padding: 5 }
+            : {
+                color: colors.white,
+                marginLeft: 20,
+                padding: 5,
+              }
+        }
+      >
+        Name
+      </Text>
       <TextInput
         onChangeText={(text) => {
           if (!text) setIsTitleErr(true);
@@ -60,7 +90,19 @@ export default function ReportScreen({ navigation: { setParams } }) {
       {isTitleError && (
         <Text style={styles.error}>Please Enter First Name</Text>
       )}
-      <Text style={styles.heading}>Email Address</Text>
+      <Text
+        style={
+          themeColor === "light"
+            ? { color: colors.black, marginLeft: 20, padding: 5 }
+            : {
+                color: colors.white,
+                marginLeft: 20,
+                padding: 5,
+              }
+        }
+      >
+        Email Address
+      </Text>
       <TextInput
         onChangeText={(text) => {
           setHourlyPay(text);
@@ -81,7 +123,19 @@ export default function ReportScreen({ navigation: { setParams } }) {
       {isHourlyPayError && (
         <Text style={styles.error}>Please Valid Last Name</Text>
       )}
-      <Text style={styles.heading}>Message</Text>
+      <Text
+        style={
+          themeColor === "light"
+            ? { color: colors.black, marginLeft: 20, padding: 5 }
+            : {
+                color: colors.white,
+                marginLeft: 20,
+                padding: 5,
+              }
+        }
+      >
+        Message
+      </Text>
       <TextInput
         onChangeText={(text) => setNotes(text)}
         multiline={true}
@@ -94,7 +148,19 @@ export default function ReportScreen({ navigation: { setParams } }) {
         ]}
         placeholderTextColor="grey"
       />
-      <Text style={styles.heading}>Add Screenshots</Text>
+      <Text
+        style={
+          themeColor === "light"
+            ? { color: colors.black, marginLeft: 20, padding: 5 }
+            : {
+                color: colors.white,
+                marginLeft: 20,
+                padding: 5,
+              }
+        }
+      >
+        Add Screenshots
+      </Text>
       <View
         style={[
           styles.img,
@@ -154,6 +220,7 @@ const styles = StyleSheet.create({
   },
   img: {
     height: 150,
+    backgroundColor: "#1A1A1A",
     justifyContent: "center",
     marginBottom: 20,
     marginLeft: 20,

@@ -32,12 +32,22 @@ export default function AccountScreen({ navigation: { setParams } }) {
     <View
       style={[
         styles.container,
-        themeColor === "light" && { backgroundColor: colors.lightBackground }
+        themeColor === "light" && { backgroundColor: colors.lightBackground },
       ]}
     >
-      <Text style={styles.heading}>First Name</Text>
-      <TextInput
-        onChangeText={text => {
+      <Text
+        style={
+          themeColor === "light"
+            ? { color: colors.black }
+            : {
+                color: colors.white,
+              }
+        }
+      >
+        First Name
+      </Text>
+      <Text
+        onChangeText={(text) => {
           if (!text) setIsTitleErr(true);
           else setIsTitleErr(false);
           setTitle(text);
@@ -48,8 +58,8 @@ export default function AccountScreen({ navigation: { setParams } }) {
           isTitleError ? styles.errorInput : "",
           themeColor === "light" && {
             backgroundColor: colors.white,
-            color: colors.black
-          }
+            color: colors.black,
+          },
         ]}
         placeholderTextColor="grey"
       />
@@ -57,9 +67,19 @@ export default function AccountScreen({ navigation: { setParams } }) {
       {isTitleError && (
         <Text style={styles.error}>Please Enter First Name</Text>
       )}
-      <Text style={styles.heading}>Last Name</Text>
-      <TextInput
-        onChangeText={text => {
+      <Text
+        style={
+          themeColor === "light"
+            ? { color: colors.black }
+            : {
+                color: colors.white,
+              }
+        }
+      >
+        Last Name
+      </Text>
+      <Text
+        onChangeText={(text) => {
           setHourlyPay(text);
           if (!text) setIsHourlyPayErr(true);
           else setIsHourlyPayErr(false);
@@ -70,8 +90,8 @@ export default function AccountScreen({ navigation: { setParams } }) {
           isHourlyPayError ? styles.errorInput : "",
           themeColor === "light" && {
             backgroundColor: colors.white,
-            color: colors.black
-          }
+            color: colors.black,
+          },
         ]}
         placeholderTextColor="grey"
       />
@@ -79,16 +99,26 @@ export default function AccountScreen({ navigation: { setParams } }) {
       {isHourlyPayError && (
         <Text style={styles.error}>Please Valid SLast Name</Text>
       )}
-      <Text style={styles.heading}>Email Id</Text>
-      <TextInput
-        onChangeText={text => setNotes(text)}
+      <Text
+        style={
+          themeColor === "light"
+            ? { color: colors.black }
+            : {
+                color: colors.white,
+              }
+        }
+      >
+        Email Id
+      </Text>
+      <Text
+        onChangeText={(text) => setNotes(text)}
         placeholder="Email ID"
         style={[
           styles.textInput,
           themeColor === "light" && {
             backgroundColor: colors.white,
-            color: colors.black
-          }
+            color: colors.black,
+          },
         ]}
         placeholderTextColor="grey"
       />
@@ -99,13 +129,15 @@ export default function AccountScreen({ navigation: { setParams } }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20
+    paddingTop: 20,
+    paddingLeft: 5,
+    paddingLeft: 5,
   },
   error: {
     marginTop: -10,
     marginLeft: 20,
     marginBottom: 10,
-    color: "red"
+    color: "red",
   },
   textInput: {
     fontFamily: "ProximaNovaRegular",
@@ -113,14 +145,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: colors.white,
     marginBottom: 20,
-    padding: 20
+    padding: 20,
   },
   errorInput: {
     borderColor: "red",
-    borderWidth: 1
+    borderWidth: 1,
   },
   heading: {
     marginLeft: 10,
-    padding: 5
-  }
+    padding: 5,
+    color: colors.white,
+  },
 });
