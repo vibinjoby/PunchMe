@@ -1,10 +1,10 @@
 import { Text, StyleSheet, View } from "react-native";
 import React, { useContext } from "react";
-import colors from "../config/colors";
-import AppThemeContext from "../context/AppThemeContext";
+import colors from "../../config/colors";
+import AppThemeContext from "../../context/AppThemeContext";
 import { useColorScheme } from "react-native-appearance";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Divider from "../components/Divider";
+import Divider from "../../components/Divider";
 
 export default function ContactUsScreen() {
   //Theme

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { StyleSheet, TextInput, Text, View } from "react-native";
-import Screens from "../components/Screens";
-import colors from "../config/colors";
-import AppThemeContext from "../context/AppThemeContext";
+import Screens from "../../components/Screens";
+import colors from "../../config/colors";
+import AppThemeContext from "../../context/AppThemeContext";
 import { useColorScheme } from "react-native-appearance";
 
 export default function AddJobScreen({ navigation: { setParams } }) {

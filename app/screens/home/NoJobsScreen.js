@@ -5,7 +5,7 @@ export default function NoJobsScreen() {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../assets/NoJobs/NoJobs.png")}
+        source={require("../../assets/NoJobs/NoJobs.png")}
         style={styles.noJobsImg}
       />
       <Text style={styles.defaultTxt}>NO JOBS FOUND</Text>

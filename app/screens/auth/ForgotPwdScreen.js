@@ -1,18 +1,18 @@
-import React, { useContext, useState, useEffect } from "react";
-import { View, StyleSheet, Image, Text, Alert } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, StyleSheet, Image, Text } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { useColorScheme } from "react-native-appearance";
 
-import colors from "../config/colors";
-import CustomTextInput from "../components/login/CustomTextInput";
-import CustomButton from "../components/login/CustomButton";
-import loginService from "../services/loginService";
-import routes from "../navigation/routes";
-import CustomErrorText from "../components/login/CustomErrorText";
-import AppThemeContext from "../context/AppThemeContext";
-import AppLoader from "../helpers/AppLoader";
-import utils from "../helpers/utils";
+import colors from "../../config/colors";
+import CustomTextInput from "../../components/login/CustomTextInput";
+import CustomButton from "../../components/login/CustomButton";
+import loginService from "../../services/loginService";
+import routes from "../../navigation/routes";
+import CustomErrorText from "../../components/login/CustomErrorText";
+import AppThemeContext from "../../context/AppThemeContext";
+import AppLoader from "../../helpers/AppLoader";
+import utils from "../../helpers/utils";
 
 export default function ForgotPwdScreen({ navigation, route }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +46,7 @@ export default function ForgotPwdScreen({ navigation, route }) {
         <View style={styles.loginHeader}>
           <Image
             style={styles.headerLogo}
-            source={require("../assets/punchMe_logo/punchme_logo_2x.png")}
+            source={require("../../assets/punchMe_logo/punchme_logo_2x.png")}
           />
           <Text style={styles.headerTxt}>PUNCH ME</Text>
         </View>

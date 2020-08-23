@@ -4,7 +4,6 @@ import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import * as Sentry from "sentry-expo";
 import * as Permissions from "expo-permissions";
 import { AppLoading } from "expo";
-import * as AppAuth from "expo-app-auth";
 
 import OnboardingComponent from "./app/components/onboarding/OnboardingComponent";
 import utils from "./app/helpers/utils";
@@ -17,11 +16,6 @@ import AppThemeStore from "./app/context/store/AppThemeStore";
 import FontLoad from "./app/components/activity/FontLoad";
 import UserInfoStore from "./app/context/store/UserInfoStore";
 import ParentNavigator from "./app/navigation/ParentNavigator";
-
-// When configured correctly, URLSchemes should contain your REVERSED_CLIENT_ID
-const { URLSchemes } = AppAuth;
-
-console.log(URLSchemes);
 
 export default function App() {
   // Initializing sentry for logging

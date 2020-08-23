@@ -257,6 +257,18 @@ const convertDateTimeToFormat = (dateTime, currentFormat, expectedFormat) => {
   );
 };
 
+const getUserProfileName = username => {
+  if (!username) return;
+  const fName = username.split(" ")[0];
+  const lName = username.split(" ")[1];
+
+  return (
+    fName.charAt(0).toUpperCase() +
+    "" +
+    (lName ? lName.charAt(0).toUpperCase() : "")
+  );
+};
+
 export default {
   prefixZero,
   getCurrentTime,
@@ -275,5 +287,6 @@ export default {
   calculateTotalDifferenceInTime,
   validateStartTimeEndTime,
   showAlertPopupWithLoading,
-  convertDateTimeToFormat
+  convertDateTimeToFormat,
+  getUserProfileName
 };

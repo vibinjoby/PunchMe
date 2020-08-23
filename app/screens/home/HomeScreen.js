@@ -2,16 +2,16 @@ import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, View, Alert, AppState } from "react-native";
 import { useColorScheme } from "react-native-appearance";
 
-import TimerComponent from "../components/home/TimerComponent";
-import { MemoizedPunchInTimeComp } from "../components/home/PunchInComponent";
-import { MemoizedDetailsComponent } from "../components/home/DetailsComponent";
-import PunchButtonComponent from "../components/home/PunchButtonComponent";
-import JobContext from "../context/JobContext";
-import utils from "../helpers/utils";
-import db from "../helpers/db";
-import commons from "../config/commonConstants";
-import AppThemeContext from "../context/AppThemeContext";
-import colors from "../config/colors";
+import TimerComponent from "../../components/home/TimerComponent";
+import { MemoizedPunchInTimeComp } from "../../components/home/PunchInComponent";
+import { MemoizedDetailsComponent } from "../../components/home/DetailsComponent";
+import PunchButtonComponent from "../../components/home/PunchButtonComponent";
+import JobContext from "../../context/JobContext";
+import utils from "../../helpers/utils";
+import db from "../../helpers/db";
+import commons from "../../config/commonConstants";
+import AppThemeContext from "../../context/AppThemeContext";
+import colors from "../../config/colors";
 
 export default function HomeScreen({ route, navigation }) {
   let isMounted = false;

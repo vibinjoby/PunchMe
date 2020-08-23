@@ -2,10 +2,10 @@ import React, { useEffect, useState, useContext } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useColorScheme } from "react-native-appearance";
 
-import HomeScreen from "../screens/HomeScreen";
+import HomeScreen from "../screens/home/HomeScreen";
 import Screens from "../components/Screens";
 import HeaderComponent from "../components/home/HeaderComponent";
-import NoJobsScreen from "../screens/NoJobsScreen";
+import NoJobsScreen from "../screens/home/NoJobsScreen";
 import db from "../helpers/db";
 import colors from "../config/colors";
 import JobContext from "../context/JobContext";

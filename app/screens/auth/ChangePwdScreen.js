@@ -4,15 +4,15 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { useColorScheme } from "react-native-appearance";
 
-import CustomTextInput from "../components/login/CustomTextInput";
-import colors from "../config/colors";
-import CustomButton from "../components/login/CustomButton";
-import loginService from "../services/loginService";
-import routes from "../navigation/routes";
-import CustomErrorText from "../components/login/CustomErrorText";
-import AppThemeContext from "../context/AppThemeContext";
-import AppLoader from "../helpers/AppLoader";
-import utils from "../helpers/utils";
+import CustomTextInput from "../../components/login/CustomTextInput";
+import colors from "../../config/colors";
+import CustomButton from "../../components/login/CustomButton";
+import loginService from "../../services/loginService";
+import routes from "../../navigation/routes";
+import CustomErrorText from "../../components/login/CustomErrorText";
+import AppThemeContext from "../../context/AppThemeContext";
+import AppLoader from "../../helpers/AppLoader";
+import utils from "../../helpers/utils";
 
 export default function ChangePwdScreen({ route, navigation }) {
   const { username, tempPwd } = route.params;

@@ -13,11 +13,11 @@ import * as Calendar from "expo-calendar";
 import { useColorScheme } from "react-native-appearance";
 import CalendarStrip from "react-native-calendar-strip";
 
-import colors from "../config/colors";
-import CreateTaskModal from "../components/scheduler/CreateTaskModal";
-import ViewTaskComp from "../components/scheduler/ViewTaskComp";
-import AppThemeContext from "../context/AppThemeContext";
-import EmptyTaskComp from "../components/scheduler/EmptyTaskComp";
+import colors from "../../config/colors";
+import CreateTaskModal from "../../components/scheduler/CreateTaskModal";
+import ViewTaskComp from "../../components/scheduler/ViewTaskComp";
+import AppThemeContext from "../../context/AppThemeContext";
+import EmptyTaskComp from "../../components/scheduler/EmptyTaskComp";
 
 export default function ScheduleScreen({ route, navigation }) {
   // Theme based colors
@@ -167,8 +167,8 @@ export default function ScheduleScreen({ route, navigation }) {
           disabledDateNameStyle={{ color: "grey" }}
           disabledDateNumberStyle={{ color: "grey", paddingTop: 10 }}
           datesWhitelist={datesWhitelist}
-          iconLeft={require("../assets/left-arrow.png")}
-          iconRight={require("../assets/right-arrow.png")}
+          iconLeft={require("../../assets/left-arrow.png")}
+          iconRight={require("../../assets/right-arrow.png")}
           iconContainer={{ flex: 0.1 }}
           markedDates={markedDate}
           selectedDate={new moment().toDate()}

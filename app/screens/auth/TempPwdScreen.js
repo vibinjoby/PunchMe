@@ -4,14 +4,14 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { useColorScheme } from "react-native-appearance";
 
-import colors from "../config/colors";
-import CustomButton from "../components/login/CustomButton";
+import colors from "../../config/colors";
+import CustomButton from "../../components/login/CustomButton";
 import { TextInput } from "react-native-gesture-handler";
-import routes from "../navigation/routes";
-import loginService from "../services/loginService";
-import AppThemeContext from "../context/AppThemeContext";
-import utils from "../helpers/utils";
-import AppLoader from "../helpers/AppLoader";
+import routes from "../../navigation/routes";
+import loginService from "../../services/loginService";
+import AppThemeContext from "../../context/AppThemeContext";
+import utils from "../../helpers/utils";
+import AppLoader from "../../helpers/AppLoader";
 
 export default function TempPwdScreen({ route, navigation }) {
   const [isLoading, setIsLoading] = useState(false);

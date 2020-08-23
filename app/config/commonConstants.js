@@ -1,6 +1,7 @@
 import { Alert } from "react-native";
 import routes from "../navigation/routes";
-import { NavigationActions } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
+import utils from "../helpers/utils";
 
 export default Object.freeze({
   FIRST_TIME_APP_LOAD: "FIRST_TIME_APP_LOAD",
@@ -54,14 +55,8 @@ export default Object.freeze({
           {
             text: "Yes",
             onPress: () => {
-              const navigateAction = NavigationActions.navigate({
-                routeName: "LoginStackNavigator",
-                action: NavigationActions.navigate({
-                  routeName: routes.LOGIN,
-                  params: {}
-                })
-              });
-              navigation.dispatch(navigateAction);
+              utils.removeAsyncStorageData("token");
+              navigation.dispatch(StackActions.replace(routes.LOGIN));
             }
           },
           { text: "No", style: "cancel" }

@@ -1,6 +1,6 @@
 import { Text, SafeAreaView, StyleSheet, View } from "react-native";
 import React from "react";
-import Screens from "../components/Screens";
+import Screens from "../../components/Screens";
 
 export default function TermsConditionsScreen() {
   return (

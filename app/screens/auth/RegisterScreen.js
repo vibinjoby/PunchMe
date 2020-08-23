@@ -4,15 +4,15 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { useColorScheme } from "react-native-appearance";
 
-import CustomTextInput from "../components/login/CustomTextInput";
-import CustomButton from "../components/login/CustomButton";
-import registerService from "../services/registerService";
-import CustomErrorText from "../components/login/CustomErrorText";
-import routes from "../navigation/routes";
-import AppThemeContext from "../context/AppThemeContext";
-import colors from "../config/colors";
-import utils from "../helpers/utils";
-import AppLoader from "../helpers/AppLoader";
+import CustomTextInput from "../../components/login/CustomTextInput";
+import CustomButton from "../../components/login/CustomButton";
+import registerService from "../../services/registerService";
+import CustomErrorText from "../../components/login/CustomErrorText";
+import routes from "../../navigation/routes";
+import AppThemeContext from "../../context/AppThemeContext";
+import colors from "../../config/colors";
+import utils from "../../helpers/utils";
+import AppLoader from "../../helpers/AppLoader";
 
 export default function RegisterScreen({ navigation, route }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +53,7 @@ export default function RegisterScreen({ navigation, route }) {
         >
           <Image
             style={{ width: 50, height: 65 }}
-            source={require("../assets/profile_pic/profile_pic_2x.png")}
+            source={require("../../assets/profile_pic/profile_pic_2x.png")}
           />
         </View>
         <Formik

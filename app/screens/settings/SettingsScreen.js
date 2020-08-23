@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, Switch } from "react-native";
-import commons from "../config/commonConstants";
-import SettingsComp from "../components/settings/SettingsComp";
-import AppThemeContext from "../context/AppThemeContext";
+
+import commons from "../../config/commonConstants";
+import SettingsComp from "../../components/settings/SettingsComp";
+import AppThemeContext from "../../context/AppThemeContext";
 import { useColorScheme } from "react-native-appearance";
-import colors from "../config/colors";
-import utils from "../helpers/utils";
+import colors from "../../config/colors";
+import utils from "../../helpers/utils";
+import UserContext from "../../context/UserContext";
 
 export default function Settings({ route, navigation }) {
   //Theme
@@ -13,6 +15,8 @@ export default function Settings({ route, navigation }) {
   const systemTheme = useColorScheme();
   const themeColor =
     appTheme.theme === "systemTheme" ? systemTheme : appTheme.theme;
+
+  const userInfoCtx = useContext(UserContext);
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = isNotificationEnabled => {
@@ -43,7 +47,9 @@ export default function Settings({ route, navigation }) {
     >
       <View style={styles.profileContainer}>
         <View style={styles.profileView}>
-          <Text style={styles.profileName}>LA</Text>
+          <Text style={styles.profileName}>
+            {utils.getUserProfileName(userInfoCtx.userInfo.col_user_name)}
+          </Text>
         </View>
         <Text
           style={[
@@ -51,7 +57,7 @@ export default function Settings({ route, navigation }) {
             themeColor === "light" && { color: colors.black }
           ]}
         >
-          Lijosh Abraham
+          {userInfoCtx.userInfo.col_user_name}
         </Text>
       </View>
       <View

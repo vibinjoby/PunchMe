@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
-import colors from "../config/colors";
-import AppThemeContext from "../context/AppThemeContext";
-import routes from "../navigation/routes";
+import colors from "../../config/colors";
+import AppThemeContext from "../../context/AppThemeContext";
 import { useColorScheme } from "react-native-appearance";
-import Divider from "../components/Divider";
+import Divider from "../../components/Divider";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function ThemeScreen() {
@@ -16,9 +15,9 @@ export default function ThemeScreen() {
 
   const themeCtx = useContext(AppThemeContext);
   const data = [
-    { name: "Dark", value: "dark" },
-    { name: "Light", value: "light" },
-    { name: "System Preference", value: "systemTheme" }
+    { key: 1, name: "Dark", value: "dark" },
+    { key: 2, name: "Light", value: "light" },
+    { key: 3, name: "System Preference", value: "systemTheme" }
   ];
 
   const handleThemeSelection = item => {
@@ -35,8 +34,7 @@ export default function ThemeScreen() {
       <View
         style={[
           styles.themeContainer,
-          ,
-          themeColor === "dark" && { backgroundColor: "#1A1A1A" }
+          themeColor === "dark" && { backgroundColor: colors.darkSecondary }
         ]}
       >
         {data.map(item => (
@@ -61,7 +59,7 @@ export default function ThemeScreen() {
                 )}
               </View>
             </TouchableOpacity>
-            <Divider />
+            {item.key !== data.length && <Divider />}
           </React.Fragment>
         ))}
       </View>

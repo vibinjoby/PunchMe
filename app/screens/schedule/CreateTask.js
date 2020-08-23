@@ -20,7 +20,7 @@ import Constants from "expo-constants";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import uuid from "uuid";
 import { Context } from "../context/Context";
-import routes from "../navigation/routes";
+import routes from "../../navigation/routes";
 
 const styles = StyleSheet.create({
   createTaskButton: {

@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
-import { Button, Alert, Text } from "react-native";
+import { Alert, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import JobNavigator from "./JobNavigator";
-import AddJobScreen from "../screens/AddJobScreen";
 import { HeaderBackButton } from "@react-navigation/stack";
 import { useColorScheme } from "react-native-appearance";
-
-import colors from "../config/colors";
-import db from "../helpers/db";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { CardStyleInterpolators } from "@react-navigation/stack";
+
+import JobNavigator from "./JobNavigator";
+import AddJobScreen from "../screens/home/AddJobScreen";
+import colors from "../config/colors";
+import db from "../helpers/db";
 import AppThemeContext from "../context/AppThemeContext";
 
 const Stack = createStackNavigator();
@@ -63,7 +63,9 @@ export default function HomeStackNavigator() {
         options={({ route, navigation }) => ({
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light"
+                ? colors.lightPrimary
+                : colors.darkSecondary
           },
           cardStyleInterpolator:
             CardStyleInterpolators.forScaleFromCenterAndroid,
