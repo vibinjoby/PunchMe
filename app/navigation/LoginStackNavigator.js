@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import {
   createStackNavigator,
   HeaderBackButton,
-  CardStyleInterpolators
+  CardStyleInterpolators,
 } from "@react-navigation/stack";
 import { useColorScheme } from "react-native-appearance";
 
@@ -31,13 +31,13 @@ export default function LoginStackNavigator() {
 
         headerStyle: {
           backgroundColor:
-            themeColor === "light" ? colors.lightPrimary : colors.black
+            themeColor === "light" ? colors.lightPrimary : colors.black,
         },
         headerTitleAlign: "center",
         headerTitleStyle: {
           fontFamily: "ProximaNovaBold",
-          color: colors.white
-        }
+          color: colors.white,
+        },
       }}
     >
       <Stack.Screen
@@ -53,18 +53,18 @@ export default function LoginStackNavigator() {
           title: "Register",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black,
           },
           headerTitleAlign: "center",
           headerTitleStyle: {
             fontFamily: "ProximaNovaBold",
-            color: colors.white
+            color: colors.white,
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
-          headerLeft: props => (
+          headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
-          )
+          ),
         })}
       />
       <Stack.Screen
@@ -76,17 +76,17 @@ export default function LoginStackNavigator() {
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black,
           },
           headerTitleStyle: {
             fontFamily: "ProximaNovaBold",
-            color: colors.white
+            color: colors.white,
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
-          headerLeft: props => (
+          headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
-          )
+          ),
         })}
       />
       <Stack.Screen
@@ -97,18 +97,18 @@ export default function LoginStackNavigator() {
           title: "Temporary Password",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black,
           },
           headerTitleAlign: "center",
           headerTitleStyle: {
             fontFamily: "ProximaNovaBold",
-            color: colors.white
+            color: colors.white,
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
-          headerLeft: props => (
+          headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
-          )
+          ),
         })}
       />
       <Stack.Screen
@@ -119,18 +119,18 @@ export default function LoginStackNavigator() {
           title: "Change Password",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black,
           },
           headerTitleAlign: "center",
           headerTitleStyle: {
             fontFamily: "ProximaNovaBold",
-            color: colors.white
+            color: colors.white,
           },
           headerBackTitleStyle: { color: colors.yellow },
           headerBackTitle: "Back",
-          headerLeft: props => (
+          headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
-          )
+          ),
         })}
       />
       <Stack.Screen

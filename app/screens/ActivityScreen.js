@@ -26,7 +26,6 @@ export default function ActivityScreen() {
     getActivitiesFromDB((data) => {
       setTimeout(() => {
         setActivityLoaded(true);
-        console.log(" ========= ActivityScreen  ========= " + data);
         if (data) {
           let jsonLog = getFormattedData(data.rows);
           setData(jsonLog);
@@ -51,14 +50,14 @@ export default function ActivityScreen() {
   return (
     <SafeAreaView>
       <View>
-        <Toolbar title="All Activity"></Toolbar>
+        <Toolbar title="Logs"></Toolbar>
         <View style={styles.activityContainer}>{getBodyLayout(data)}</View>
       </View>
     </SafeAreaView>
   );
 
   function getBodyLayout(data) {
-    if (data && data.length > 0) {
+    if (!(data && data.length > 0)) {
       console.log("======== getBodyLayout if ====== " + data.length);
       return (
         <RecyclerView

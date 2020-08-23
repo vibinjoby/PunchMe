@@ -1,19 +1,27 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
+import FlexiText from "./general/FlexiText";
+import FlexiView from "./general/FlexiView";
 
 export default function Toolbar(props) {
   return (
-    <View style={styles.toolbar}>
-      <Text style={styles.title}>{props.title}</Text>
-    </View>
+    <FlexiView style={styles.toolbar} layoutType={1}>
+      <FlexiText
+        style={styles.title}
+        text={props.title}
+        fontFamily="Bold"
+        fontSize={22}
+      ></FlexiText>
+    </FlexiView>
   );
 }
 
 const styles = StyleSheet.create({
   toolbar: {
     width: "100%",
-    backgroundColor: "#1A1A1A"
+    backgroundColor: "#232F34",
   },
+
   title: {
     fontFamily: "ProximaNovaAltBold",
     fontSize: 20,
@@ -21,6 +29,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     color: "#FFFFFF",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });

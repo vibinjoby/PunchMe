@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import {
   createStackNavigator,
-  HeaderBackButton
+  HeaderBackButton,
 } from "@react-navigation/stack";
 import { CardStyleInterpolators } from "@react-navigation/stack";
 import { Text } from "react-native";
@@ -10,7 +10,7 @@ import { useColorScheme } from "react-native-appearance";
 
 import SettingsScreen from "../screens/SettingsScreen";
 import TermsConditionsScreen from "../screens/TermsConditionsScreen";
-import ContactUsScreen from "../screens/ContactUsScreen";
+import ContactUsScreen from "../screens/ContactusScreen";
 import AccountScreen from "../screens/AccountScreen";
 import colors from "../config/colors";
 import ReportScreen from "../screens/ReportScreen";
@@ -38,11 +38,11 @@ export default function SettingsStackNavigator() {
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black,
           },
           headerTitleStyle: {
-            color: colors.white
-          }
+            color: colors.white,
+          },
         }}
       />
       <Stack.Screen
@@ -56,14 +56,14 @@ export default function SettingsStackNavigator() {
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black,
           },
           headerTitleStyle: {
-            color: colors.white
+            color: colors.white,
           },
-          headerLeft: props => (
+          headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
-          )
+          ),
         })}
       />
       <Stack.Screen
@@ -77,14 +77,14 @@ export default function SettingsStackNavigator() {
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black,
           },
           headerTitleStyle: {
-            color: colors.white
+            color: colors.white,
           },
-          headerLeft: props => (
+          headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
-          )
+          ),
         })}
       />
       <Stack.Screen
@@ -98,12 +98,12 @@ export default function SettingsStackNavigator() {
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black,
           },
           headerTitleStyle: {
-            color: colors.white
+            color: colors.white,
           },
-          headerLeft: props => (
+          headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
           ),
           headerRight: () => (
@@ -117,13 +117,13 @@ export default function SettingsStackNavigator() {
                   color: colors.yellow,
                   fontSize: 16,
                   fontWeight: "bold",
-                  paddingRight: 5
+                  paddingRight: 5,
                 }}
               >
                 Done
               </Text>
             </TouchableOpacity>
-          )
+          ),
         })}
       />
       <Stack.Screen
@@ -137,14 +137,14 @@ export default function SettingsStackNavigator() {
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black,
           },
           headerTitleStyle: {
-            color: colors.white
+            color: colors.white,
           },
-          headerLeft: props => (
+          headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
-          )
+          ),
         })}
       />
       <Stack.Screen
@@ -157,14 +157,14 @@ export default function SettingsStackNavigator() {
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor:
-              themeColor === "light" ? colors.lightPrimary : colors.black
+              themeColor === "light" ? colors.lightPrimary : colors.black,
           },
           headerTitleStyle: {
-            color: colors.white
+            color: colors.white,
           },
-          headerLeft: props => (
+          headerLeft: (props) => (
             <HeaderBackButton {...props} tintColor={colors.yellow} />
-          )
+          ),
         })}
       />
       <Stack.Screen

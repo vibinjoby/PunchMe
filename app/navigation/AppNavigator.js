@@ -2,13 +2,13 @@ import React, { useContext } from "react";
 import { useColorScheme } from "react-native-appearance";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import colors from "../config/colors";
 import routes from "./routes";
 import HomeStackNavigator from "./HomeStackNavigator";
 import SettingsStackNavigator from "./SettingsStackNavigator";
 import SchedulerNavigator from "./SchedulerNavigator";
 import AppThemeContext from "../context/AppThemeContext";
+import ActivityScreen from "../screens/ActivityScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -24,10 +24,10 @@ export default AppNavigator = () => {
       tabBarOptions={{
         style: {
           backgroundColor:
-            themeColor === "dark" ? colors.black : colors.lightPrimary
+            themeColor === "dark" ? colors.black : colors.lightPrimary,
         },
         activeTintColor: colors.yellow,
-        inactiveTintColor: themeColor === "dark" ? "#eee" : colors.white
+        inactiveTintColor: themeColor === "dark" ? "#eee" : colors.white,
       }}
     >
       <Tab.Screen
@@ -36,16 +36,16 @@ export default AppNavigator = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" size={size} color={color} />
-          )
+          ),
         }}
       />
       <Tab.Screen
         name={routes.LOGS}
-        component={HomeStackNavigator}
+        component={ActivityScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="clock" size={size} color={color} />
-          )
+          ),
         }}
       />
       <Tab.Screen
@@ -58,7 +58,7 @@ export default AppNavigator = () => {
               size={size}
               color={color}
             />
-          )
+          ),
         }}
       />
       <Tab.Screen
@@ -67,7 +67,7 @@ export default AppNavigator = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="settings" size={size} color={color} />
-          )
+          ),
         }}
       />
     </Tab.Navigator>
