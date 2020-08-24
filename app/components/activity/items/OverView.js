@@ -6,10 +6,11 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 
-const OverView = (item) => {
-  const data = item.jobs;
-  const overView = item.overView;
-  const [overViewInfo, setOverViewInfo] = useState(overView[0]);
+const OverView = ({ item }) => {
+  let data = item.jobs;
+  let overView = item.overView;
+
+  let [overViewInfo, setOverViewInfo] = useState(overView[0]);
 
   const onDayClicked = () => {
     setOverViewInfo(overView[0]);
@@ -42,13 +43,13 @@ const OverView = (item) => {
               fontFamily="Bold"
               fontSize={18}
               noColorChange={true}
-              color="#FFAA20"
+              color={overViewInfo.type == 2 ? "#000000" : "#FFAA20"}
             ></FlexiText>
             <FlexiView
               style={styles.tabLine}
               noColorChange={true}
               color="#FFAA20"
-              isHidden={overViewInfo.type == 1 ? true : false}
+              isHidden={overViewInfo.type == 2 ? true : false}
             ></FlexiView>
           </TouchableOpacity>
           <TouchableOpacity onPress={onWeekClicked}>
@@ -57,12 +58,14 @@ const OverView = (item) => {
               text="WEEK TOTAL"
               fontFamily="Bold"
               fontSize={18}
+              noColorChange={true}
+              color={overViewInfo.type == 1 ? "#000000" : "#FFAA20"}
             ></FlexiText>
             <FlexiView
               style={styles.tabLine}
               noColorChange={true}
               color="#FFAA20"
-              isHidden={overViewInfo.type == 2 ? true : false}
+              isHidden={overViewInfo.type == 1 ? true : false}
             ></FlexiView>
           </TouchableOpacity>
         </FlexiView>
@@ -77,7 +80,11 @@ const OverView = (item) => {
             backgroundColor="#2B2E33"
           />
           <FlexiView style={styles.graphInfo} layoutType={2}>
-            <FlexiText text="08h 1m" fontFamily="Bold" fontSize={30} />
+            <FlexiText
+              text={overViewInfo.total_hours}
+              fontFamily="Bold"
+              fontSize={30}
+            />
             <FlexiText text="of 8h" fontFamily="light" fontSize={20} />
           </FlexiView>
         </FlexiView>

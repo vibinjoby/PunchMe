@@ -42,7 +42,7 @@ const createViewHolder = ({ item }) => {
   if (viewType == 0) {
     return ScheduleView(item);
   } else if (viewType == 1) {
-    return OverView(item);
+    return <OverView item={item} />;
   } else if (viewType == 2) {
     return HistoryHeadingView(item);
   } else {

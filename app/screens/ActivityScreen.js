@@ -1,11 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  ActivityIndicator,
-  Alert,
-} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, SafeAreaView, ActivityIndicator } from "react-native";
 import Toolbar from "../components/activity/Toolbar";
 import EmptyActivity from "../components/activity/EmptyActivity";
 import RecyclerView from "../components/activity/RecyclerView";

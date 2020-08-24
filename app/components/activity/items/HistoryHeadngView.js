@@ -12,14 +12,6 @@ const HistoryHeadingView = (props) => {
         fontFamily="Bold"
         fontSize={24}
       ></FlexiText>
-      <Image
-        style={styles.image}
-        source={require("../../../assets/icon_search.png")}
-      ></Image>
-      <Image
-        style={styles.image}
-        source={require("../../../assets/icon_sort.png")}
-      ></Image>
     </FlexiView>
   );
 };
