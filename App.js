@@ -23,7 +23,7 @@ export default function App() {
     dsn:
       "https://9ef9497ed088461989e27795c6427065@o388140.ingest.sentry.io/5383811",
     enableInExpoDevelopment: true,
-    debug: true
+    debug: true,
   });
   const [showRealApp, setShowRealApp] = useState(false);
 
@@ -32,7 +32,7 @@ export default function App() {
     _askForReminderPermissions();
     const key = commons.FIRST_TIME_APP_LOAD;
     //Check async storage to see if onboarding screen is to be shown or not
-    utils.fetchAsyncStorageData(key).then(value => {
+    utils.fetchAsyncStorageData(key).then((value) => {
       if (value) setShowRealApp(true);
       //Else store the async key with value so that the onboarding screen is not shown again
       else {

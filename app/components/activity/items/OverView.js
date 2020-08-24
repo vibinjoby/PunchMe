@@ -37,7 +37,7 @@ const OverView = (props) => {
           items={data}
           style={styles.dropdown}
           defaultValue={data[0].value}
-          containerStyle={{ height: 40 }}
+          containerStyle={{ height: 38 }}
           itemStyle={styles.dropdownItem}
           dropDownStyle={styles.dropDownItems}
           labelStyle={styles.dropDownLabel}
@@ -52,7 +52,14 @@ const OverView = (props) => {
               text="DAY TOTAL"
               fontFamily="Bold"
               fontSize={18}
+              noColorChange={true}
+              color="#FFAA20"
             ></FlexiText>
+            <FlexiView
+              style={styles.tabLine}
+              noColorChange={true}
+              color="#FFAA20"
+            ></FlexiView>
           </TouchableOpacity>
           <TouchableOpacity>
             <FlexiText
@@ -184,7 +191,6 @@ const styles = StyleSheet.create({
   tabContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
   },
   tabFirst: {
     paddingLeft: 8,
@@ -197,6 +203,11 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingBottom: 4,
     paddingTop: 4,
+  },
+  tabLine: {
+    marginTop: 6,
+    paddingBottom: 2,
+    paddingTop: 2,
   },
   graphContainer: {
     paddingBottom: 16,

@@ -25,9 +25,6 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontFamily: "ProximaNovaAltBold",
-    fontSize: 20,
-    fontWeight: "bold",
     paddingTop: 20,
     paddingBottom: 20,
     color: "#FFFFFF",

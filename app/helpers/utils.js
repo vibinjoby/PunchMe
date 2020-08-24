@@ -5,7 +5,7 @@ import * as Notifications from "expo-notifications";
 import commons from "../config/commonConstants";
 import { Alert } from "react-native";
 
-const prefixZero = number => {
+const prefixZero = (number) => {
   //If the input passed is not a string then stringify the input
   number = typeof number !== "string" ? JSON.stringify(number) : number;
   //If the length of the input is less than 2 then the number is prefixed with zero
@@ -30,7 +30,7 @@ const storeAsyncStorageData = async (key, value) => {
   }
 };
 
-const fetchAsyncStorageData = async key => {
+const fetchAsyncStorageData = async (key) => {
   try {
     return await AsyncStorage.getItem(key);
   } catch (error) {
@@ -39,7 +39,7 @@ const fetchAsyncStorageData = async key => {
   }
 };
 
-const removeAsyncStorageData = async key => {
+const removeAsyncStorageData = async (key) => {
   try {
     await AsyncStorage.removeItem(key);
   } catch (error) {
@@ -66,14 +66,14 @@ const registerAndSendPushNotifications = async (title, body) => {
 
     // Fetch the storage token from Async storage for notifications
     const storageToken = fetchAsyncStorageData(commons.NOTIFICATION_TOKEN);
-    storageToken.then(async token => {
+    storageToken.then(async (token) => {
       if (!token) {
         //If the token is not available get a new token and store it in Async storage
         token = await Notifications.getExpoPushTokenAsync();
         storeAsyncStorageData(commons.NOTIFICATION_TOKEN, token.data);
       }
       // Only if the notification is enabled in settings page send the notification
-      fetchAsyncStorageData(commons.IS_NOTIFICATION_ENABLED).then(value => {
+      fetchAsyncStorageData(commons.IS_NOTIFICATION_ENABLED).then((value) => {
         if (value.includes(commons.YES))
           sendPushNotification(token, title, body);
       });
@@ -90,7 +90,7 @@ function sendPushNotification(token, title, body) {
     sound: "default",
     title,
     body,
-    data: { _displayInForeground: true }
+    data: { _displayInForeground: true },
   };
 
   fetch("https://exp.host/--/api/v2/push/send", {
@@ -99,19 +99,36 @@ function sendPushNotification(token, title, body) {
       Accept: "application/json",
       "Content-Type": "application/json",
       "accept-encoding": "gzip, deflate",
-      host: "exp.host"
+      host: "exp.host",
     },
-    body: JSON.stringify(message)
+    body: JSON.stringify(message),
   });
 }
 
-const getFormattedDate = date => {
+const getFormattedDate = (date) => {
   console.log(date);
   let formattedDate = moment(date, "MMMM Do YYYY, h:mm:ss a").format(
     "DD/MM/yyyy"
   );
   formattedDate = moment(formattedDate, "DD/MM/yyyy").calendar();
   return formattedDate.split(" ")[0];
+};
+
+const getFormatedDateFromMillies = (date) => {
+  return moment(date).format("dddd, MMMM DD, YYYY");
+};
+
+const getOnlyTime = (date) => {
+  return moment(date).format("hh:mm a");
+};
+
+const getOnlyHours = (date) => {
+  return moment(date).format("hh mm");
+};
+
+const getDateDifference = (start, end) => {
+  let duration = moment.duration(moment(end).diff(start));
+  return duration.asHours();
 };
 
 const calculateEarnings = (hourlyPay, totalHours, totalMinutes) => {
@@ -143,11 +160,9 @@ const getBreakExcludedPunchTime = (punchDuration, punchObj) => {
   }
 };
 
-const getTotalBreakOnlyHours = punchObj => {
+const getTotalBreakOnlyHours = (punchObj) => {
   try {
-    let currentTime = moment(new Date())
-      .format("HH:mm:ss")
-      .toString();
+    let currentTime = moment(new Date()).format("HH:mm:ss").toString();
     let number = moment.duration(
       moment(
         punchObj.breakPunchOut ? punchObj.breakPunchOut : currentTime,
@@ -191,10 +206,8 @@ const getTotalBreakOnlyHours = punchObj => {
   }
 };
 
-const getDuration = inTime => {
-  let currentTime = moment(new Date())
-    .format("HH:mm:ss")
-    .toString();
+const getDuration = (inTime) => {
+  let currentTime = moment(new Date()).format("HH:mm:ss").toString();
   let number = moment.duration(
     moment(currentTime, "HH:mm:ss").diff(moment(inTime, "HH:mm:ss"))
   );
@@ -246,8 +259,8 @@ const showAlertPopupWithLoading = (setIsLoading, error) => {
     {
       text: "OK",
       onPress: () => setIsLoading(false),
-      style: "cancel"
-    }
+      style: "cancel",
+    },
   ]);
 };
 
@@ -257,7 +270,7 @@ const convertDateTimeToFormat = (dateTime, currentFormat, expectedFormat) => {
   );
 };
 
-const getUserProfileName = username => {
+const getUserProfileName = (username) => {
   if (!username) return;
   const fName = username.split(" ")[0];
   const lName = username.split(" ")[1];
@@ -277,6 +290,10 @@ export default {
   storeAsyncStorageData,
   removeAsyncStorageData,
   getFormattedDate,
+  getFormatedDateFromMillies,
+  getOnlyTime,
+  getOnlyHours,
+  getDateDifference,
   fetchAsyncStorageData,
   registerAndSendPushNotifications,
   calculateEarnings,
@@ -288,5 +305,5 @@ export default {
   validateStartTimeEndTime,
   showAlertPopupWithLoading,
   convertDateTimeToFormat,
-  getUserProfileName
+  getUserProfileName,
 };

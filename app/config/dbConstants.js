@@ -1,5 +1,6 @@
 export default {
   SELECT_ALL_JOBS: "SELECT * FROM jobs",
+  SELECT_ALL_SCHEDULES: "SELECT * FROM ",
   SELECT_ALL_ACTIVIES: "SELECT * FROM activities ORDER BY id DESC",
   SELECT_LAST_ACTIVITY_JOB:
     "SELECT * FROM activities where activity_title = ? ORDER BY id DESC LIMIT 1",

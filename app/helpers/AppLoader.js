@@ -4,7 +4,7 @@ import {
   View,
   Modal,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import colors from "../config/colors";
 
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-around",
     backgroundColor: "#rgba(0, 0, 0, 0.5)",
-    zIndex: 1000
+    zIndex: 1000,
   },
   activityIndicatorWrapper: {
     backgroundColor: colors.silver,
@@ -52,6 +52,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-around"
-  }
+    justifyContent: "space-around",
+  },
 });

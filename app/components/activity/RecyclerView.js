@@ -12,43 +12,7 @@ export default function RecyclerView(props) {
   const [fontLoaded, setFontLoaded] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-  const data = [
-    {
-      type: 0,
-      id: 1,
-      title: "nothing",
-    },
-    {
-      type: 1,
-      id: 2,
-      title: "nothing",
-    },
-    {
-      type: 2,
-      id: 3,
-      title: "nothing",
-    },
-    {
-      type: 3,
-      id: 4,
-      title: "nothing",
-    },
-    {
-      type: 3,
-      id: 5,
-      title: "nothing",
-    },
-    {
-      type: 3,
-      id: 6,
-      title: "nothing",
-    },
-    {
-      type: 3,
-      id: 7,
-      title: "nothing",
-    },
-  ];
+  const data = props.data;
 
   if (!fontLoaded) {
     return (
@@ -82,7 +46,7 @@ const createViewHolder = ({ item }) => {
   } else if (viewType == 2) {
     return HistoryHeadingView(item);
   } else {
-    return LogView();
+    return LogView(item);
   }
 };
 

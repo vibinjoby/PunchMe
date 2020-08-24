@@ -15,7 +15,7 @@ export default Object.freeze({
       targetScreenName: routes.THEME,
       iconColor: "#373737",
       onPress: (targetScreenName, navigation) =>
-        navigation.navigate(targetScreenName)
+        navigation.navigate(targetScreenName),
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ export default Object.freeze({
       targetScreenName: routes.MY_ACCOUNT,
       iconColor: "#4B4BF9",
       onPress: (targetScreenName, navigation) =>
-        navigation.navigate(targetScreenName)
+        navigation.navigate(targetScreenName),
     },
     {
       id: 3,
@@ -33,7 +33,7 @@ export default Object.freeze({
       targetScreenName: routes.REPORT,
       iconColor: "#E74C3C",
       onPress: (targetScreenName, navigation) =>
-        navigation.navigate(targetScreenName)
+        navigation.navigate(targetScreenName),
     },
     {
       id: 4,
@@ -42,7 +42,7 @@ export default Object.freeze({
       targetScreenName: routes.CONTACT_US,
       iconColor: "#2ECC71",
       onPress: (targetScreenName, navigation) =>
-        navigation.navigate(targetScreenName)
+        navigation.navigate(targetScreenName),
     },
     {
       id: 5,
@@ -57,39 +57,38 @@ export default Object.freeze({
             onPress: () => {
               utils.removeAsyncStorageData("token");
               navigation.dispatch(StackActions.replace(routes.LOGIN));
-            }
+            },
           },
-          { text: "No", style: "cancel" }
+          { text: "No", style: "cancel" },
         ]);
-      }
-    }
+      },
+    },
   ],
   ONBOARDING_DATA: [
     {
       id: 1,
       header: "Easy To Use!",
-      subHeader:
-        "Get all the updates instantly without missing Experience a rich UI for your comfort",
-      imageUri: require("../assets/onboardingScreen.png"),
-      buttonTxt: "Next"
+      imageUri: require("../assets/on_boarding_one.png"),
     },
     {
       id: 2,
       header: "Calculate your Payment!",
-      subHeader:
-        "Get all the updates instantly without missing Experience a rich UI for your comfort",
-      imageUri: require("../assets/onboardingScreen2.png"),
-      buttonTxt: "Start"
-    }
+      imageUri: require("../assets/on_boarding_two.png"),
+    },
+    {
+      id: 3,
+      header: "Calculate your Payment!",
+      imageUri: require("../assets/on_boarding_three.png"),
+    },
   ],
   DEFAULT_TIMER: {
     hour: "00",
     minute: "00",
-    seconds: "00"
+    seconds: "00",
   },
   IS_TABLE_CREATED: "is_tables_created",
   YES: "Y",
   TOKEN_KEY: "token",
   NOTIFICATION_TOKEN: "notification_token",
-  IS_NOTIFICATION_ENABLED: "isNotificationEnabled"
+  IS_NOTIFICATION_ENABLED: "isNotificationEnabled",
 });

@@ -9,55 +9,73 @@ import {
 import Toolbar from "../components/activity/Toolbar";
 import EmptyActivity from "../components/activity/EmptyActivity";
 import RecyclerView from "../components/activity/RecyclerView";
-import db from "../helpers/db";
 import util from "../helpers/utils";
+import logService from "../services/logService";
+import FlexiView from "../components/activity/general/FlexiView";
+import db from "../helpers/db";
 
-function getActivitiesFromDB(callback) {
-  db.fetchActivities().then((data) => {
-    callback(data);
-  });
-}
+const getActivitiesFromDB = async (callback) => {
+  const result = await logService.getLogs();
+  callback(result);
+};
+
+const getJobsFromDB = () => {
+  return db.fetchJobs();
+};
+
+const getSchedules = (callback) => {
+  // const schedules =
+};
 
 export default function ActivityScreen() {
   const [data, setData] = useState();
   const [activityLoaded, setActivityLoaded] = useState(false);
 
   if (!activityLoaded || !data) {
-    getActivitiesFromDB((data) => {
-      setTimeout(() => {
+    setTimeout(() => {
+      getFormattedJobs(getJobsFromDB());
+      getActivitiesFromDB((jsonRes) => {
         setActivityLoaded(true);
-        if (data) {
-          let jsonLog = getFormattedData(data.rows);
-          setData(jsonLog);
+        if (jsonRes) {
+          console.log("============ DATA => " + JSON.stringify(jsonRes.data));
+          const success = jsonRes.data.success;
+          if (success) {
+            let jsonLog = getFormattedData(jsonRes.data.logs);
+            setData(jsonLog);
+          } else {
+            setData(null);
+          }
         }
-      }, 1000);
-    });
+      });
+    }, 1000);
 
     return (
       <SafeAreaView>
-        <View>
-          <Toolbar title="All Activity"></Toolbar>
+        <FlexiView>
+          <Toolbar title="Logs"></Toolbar>
           <ActivityIndicator
             style={styles.loader}
             size="small"
             color="#FFAA20"
           />
-        </View>
+        </FlexiView>
       </SafeAreaView>
     );
   }
 
   return (
     <SafeAreaView>
-      <View>
+      <FlexiView>
         <Toolbar title="Logs"></Toolbar>
-        <View style={styles.activityContainer}>{getBodyLayout(data)}</View>
-      </View>
+        <FlexiView style={styles.activityContainer}>
+          {getBodyLayout(data)}
+        </FlexiView>
+      </FlexiView>
     </SafeAreaView>
   );
 
   function getBodyLayout(data) {
-    if (!(data && data.length > 0)) {
+    if (data && data.length > 0) {
       console.log("======== getBodyLayout if ====== " + data.length);
       return (
         <RecyclerView
@@ -70,7 +88,7 @@ export default function ActivityScreen() {
     } else {
       console.log("======== getBodyLayout else ====== ");
       return (
-        <View style={styles.emptyContainer}>
+        <FlexiView style={styles.emptyContainer}>
           <EmptyActivity
             style={styles.emptyContainer}
             message="NO ACTIVITY FOUND"
@@ -78,51 +96,70 @@ export default function ActivityScreen() {
               setActivityLoaded(false);
             }}
           />
-        </View>
+        </FlexiView>
       );
     }
   }
 }
 
+function getFormattedJobs(jobs) {
+  console.log("======= JOBS ========= " + JSON.stringify(jobs));
+}
+
 function getFormattedData(data) {
   console.log(" =========== getFormattedData ========== " + data);
-  let logs = new Map();
+
+  let listViewItems = [];
+
   for (let i = 0; i < data.length; i++) {
-    let row = data.item(i);
-    let key = row.created_timestamp;
-    key = util.getFormattedDate(key);
-    if (logs.has(key)) {
-      let logsArray = logs.get(key);
-      logsArray.push(row);
-    } else {
-      let logsArray = [row];
-      logs.set(key, logsArray);
-    }
-  }
-
-  let jsonLogs = [];
-  for (const [key, value] of logs) {
-    let row = {
-      title: key,
-      data: value,
+    let log = data[i];
+    let key = log.log_start;
+    key = util.getFormatedDateFromMillies(key);
+    const start = util.getOnlyTime(log.log_start);
+    const end = util.getOnlyTime(log.log_end);
+    let hours = util.getDateDifference(log.log_start, log.log_end);
+    let breakHours = "0h";
+    let pay = 14 * hours;
+    const logItem = {
+      type: 3,
+      log_date: key,
+      log_hours: hours + "h",
+      log_start: start,
+      log_end: end,
+      log_break: breakHours,
+      log_pay: "$" + pay,
     };
-    jsonLogs.push(row);
+
+    listViewItems.push(logItem);
   }
 
-  console.log("====== getFormattedData ========= " + jsonLogs);
-  return jsonLogs;
+  if (listViewItems.length > 0) {
+    const logHeading = {
+      type: 2,
+    };
+    listViewItems.unshift(logHeading);
+    const logOverView = {
+      type: 1,
+    };
+    listViewItems.unshift(logOverView);
+    const logSchedule = {
+      type: 0,
+    };
+    listViewItems.unshift(logSchedule);
+  }
+  return listViewItems;
 }
 
 const styles = StyleSheet.create({
   emptyContainer: {
     width: "100%",
-    height: "90%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
   activityContainer: {
     width: "100%",
-    height: "90%",
+    height: "100%",
   },
   loader: {
     flex: 2,

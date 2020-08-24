@@ -3,20 +3,20 @@ import { StyleSheet } from "react-native";
 import FlexiView from "../general/FlexiView";
 import FlexiText from "../general/FlexiText";
 
-const LogView = (props) => {
+const LogView = (item) => {
   return (
     <FlexiView style={styles.logContainer} layoutType={3}>
       <FlexiView style={styles.logHolder} layoutType={2}>
         <FlexiView style={styles.logRow} layoutType={2}>
           <FlexiText
             style={styles.logHeaderLeft}
-            text="Sunday, July 26, 2020"
+            text={item.log_date}
             fontFamily="light"
             fontSize={16}
           />
           <FlexiText
             style={styles.logHeaderRight}
-            text="11h 00m"
+            text={item.log_hours}
             fontFamily="light"
             fontSize={16}
           />
@@ -33,7 +33,7 @@ const LogView = (props) => {
               style={styles.logTextValue}
               noColorChange={true}
               color="#9E9E9E"
-              text="10:00 AM"
+              text={item.log_start}
               fontFamily="light"
               fontSize={16}
             />
@@ -49,7 +49,7 @@ const LogView = (props) => {
               style={styles.logTextValue}
               noColorChange={true}
               color="#9E9E9E"
-              text="11:00 PM"
+              text={item.log_end}
               fontFamily="light"
               fontSize={16}
             />
@@ -68,7 +68,7 @@ const LogView = (props) => {
               style={styles.logTextValue}
               noColorChange={true}
               color="#9E9E9E"
-              text="0h 30m"
+              text={item.log_break}
               fontFamily="light"
               fontSize={16}
             />
@@ -82,7 +82,7 @@ const LogView = (props) => {
             />
             <FlexiText
               style={styles.logTextValue}
-              text="$154"
+              text={item.log_pay}
               fontFamily="light"
               fontSize={16}
               noColorChange={true}

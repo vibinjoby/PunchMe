@@ -4,6 +4,9 @@ import { useColorScheme } from "react-native-appearance";
 import AppThemeContext from "../../../context/AppThemeContext";
 
 const FlexiView = (props) => {
+  if (props.isHidden) {
+    return null;
+  }
   return <View style={[props.style, getStyle(props)]}>{props.children}</View>;
 };
 
@@ -26,10 +29,12 @@ const getStyle = (props) => {
     backgroundColor.push("#EEEEEE");
   }
 
-  console.log("======== Theme ===== " + themeColor);
-  const color =
-    themeColor === "light" ? backgroundColor[1] : backgroundColor[0];
-  console.log("======== Color ===== " + color);
+  let color = themeColor === "light" ? backgroundColor[1] : backgroundColor[0];
+
+  if (props.noColorChange) {
+    color = props.color;
+  }
+
   return {
     backgroundColor: color,
   };

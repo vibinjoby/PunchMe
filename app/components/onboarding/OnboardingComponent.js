@@ -11,7 +11,14 @@ export default function OnboardingComponent({ handleStart }) {
   let pagerRef = useRef();
 
   const handleNext = () => {
-    pagerRef.setPage(pageNumber + 1);
+    if (pageNumber == 2) {
+      handleSignIn();
+    } else {
+      pagerRef.setPage(pageNumber + 1);
+    }
+  };
+  const handlePrevious = () => {
+    pagerRef.setPage(pageNumber - 1);
   };
   return (
     <View style={{ flex: 1, backgroundColor: "#1A1A1A" }}>
@@ -22,18 +29,18 @@ export default function OnboardingComponent({ handleStart }) {
         style={styles.viewPager}
         initialPage={pageNumber}
         showPageIndicator
-        transitionStyle="curl"
+        transitionStyle="scroll"
         onPageSelected={(e) => (pageNumber = e.nativeEvent.position)}
       >
         {onboardingData.map((item) => (
           <View key={item.id}>
             <OnboardingScreen
               headerTxt={item.header}
-              subHeaderTxt={item.subHeader}
               imageUri={item.imageUri}
+              position={item.id}
               onNext={handleNext}
-              onStart={handleStart}
-              buttonTxt={item.buttonTxt}
+              onPrev={handlePrevious}
+              onSignIn={handleStart}
             />
           </View>
         ))}
@@ -44,6 +51,6 @@ export default function OnboardingComponent({ handleStart }) {
 const styles = StyleSheet.create({
   viewPager: {
     flex: 1,
-    marginBottom: 70,
+    marginBottom: 30,
   },
 });
