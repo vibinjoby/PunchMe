@@ -44,8 +44,9 @@ export default function JobNavigator({ route, navigation }) {
   //re-render the component only if a new job is added
   useEffect(() => {
     //Fetch jobs from database
-    db.fetchJobs()
-      .then(data => {
+    (async function() {
+      const data = await db.fetchJobs();
+      try {
         handleDataFromDB(data);
         if (route.params && route.params.jobName) {
           data.rows._array.length > 1 &&
@@ -53,8 +54,12 @@ export default function JobNavigator({ route, navigation }) {
               data.rows._array[data.rows._array.length - 1].job_name
             );
         }
-      })
-      .catch(err => console.log(err));
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+
+    return () => {};
   }, [route.params]);
 
   if (!fontLoaded) {

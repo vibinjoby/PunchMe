@@ -4,7 +4,7 @@ import {
   View,
   SafeAreaView,
   ActivityIndicator,
-  Alert,
+  Alert
 } from "react-native";
 import Toolbar from "../components/activity/Toolbar";
 import EmptyActivity from "../components/activity/EmptyActivity";
@@ -13,7 +13,7 @@ import db from "../helpers/db";
 import util from "../helpers/utils";
 
 function getActivitiesFromDB(callback) {
-  db.fetchActivities().then((data) => {
+  db.fetchActivities().then(data => {
     callback(data);
   });
 }
@@ -23,7 +23,7 @@ export default function ActivityScreen() {
   const [activityLoaded, setActivityLoaded] = useState(false);
 
   if (!activityLoaded || !data) {
-    getActivitiesFromDB((data) => {
+    getActivitiesFromDB(data => {
       setTimeout(() => {
         setActivityLoaded(true);
         if (data) {
@@ -104,7 +104,7 @@ function getFormattedData(data) {
   for (const [key, value] of logs) {
     let row = {
       title: key,
-      data: value,
+      data: value
     };
     jsonLogs.push(row);
   }
@@ -118,15 +118,15 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "90%",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   activityContainer: {
     width: "100%",
-    height: "90%",
+    height: "90%"
   },
   loader: {
     flex: 2,
     margin: 20,
-    alignSelf: "center",
-  },
+    alignSelf: "center"
+  }
 });

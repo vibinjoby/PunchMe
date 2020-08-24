@@ -34,6 +34,7 @@ export default function HomeScreen({ route, navigation }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const [punchInTime, setPunchInTime] = useState();
+  const [punchOutTime, setPunchOutTime] = useState();
   const [punchDetails, setPunchDetails] = useState([]);
   const [timerTime, setTimerTime] = useState({
     hour: commons.CLOCK_INITIAL_ZERO,
@@ -59,6 +60,11 @@ export default function HomeScreen({ route, navigation }) {
       AppState.addEventListener("change", handleStateChanges);
     }
     isMounted = true;
+
+    //Remove the listener on cleanup function
+    return () => {
+      AppState.removeEventListener("change");
+    };
   }, [punchTimerObj, breakTimerObj]);
 
   function handleStateChanges(nextAppState) {
@@ -169,9 +175,10 @@ export default function HomeScreen({ route, navigation }) {
         try {
           // When the app reloads set the last punch details if there is no active timer running
           if (data.rows._array && data.rows._array.length) {
-            const { punch_in, punch_details } = data.rows._array[0];
+            const { punch_in, punch_out, punch_details } = data.rows._array[0];
             setPunchDetails(JSON.parse(punch_details));
             setPunchInTime(punch_in);
+            setPunchOutTime(punch_out);
           }
         } catch (error) {
           console.log(error);
@@ -236,6 +243,8 @@ export default function HomeScreen({ route, navigation }) {
         "You have already started a job, End the active job to start a new one"
       );
     !isResuming && setPunchInTime(utils.getCurrentTime());
+    //Reset the punch out time to empty when a new punch is registered
+    setPunchOutTime();
     jobContext.onJobStart(true);
 
     //Populate with values in the punch model object
@@ -270,6 +279,7 @@ export default function HomeScreen({ route, navigation }) {
     //Reset the punchintime to empty
     setPunchInTime();
     const punchOutTime = utils.getCurrentTime();
+    setPunchOutTime(punchOutTime);
     // Remove the flag in the context when the job ends
     jobContext.onJobStart(false);
 
@@ -481,7 +491,11 @@ export default function HomeScreen({ route, navigation }) {
         />
       </View>
       <View style={styles.componentSpacing}>
-        <MemoizedPunchInTimeComp theme={themeColor} data={punchInTime} />
+        <MemoizedPunchInTimeComp
+          theme={themeColor}
+          punchInTime={punchInTime}
+          punchOutTime={punchOutTime}
+        />
       </View>
       <View style={styles.componentSpacing}>
         <MemoizedDetailsComponent theme={themeColor} data={punchDetails} />
