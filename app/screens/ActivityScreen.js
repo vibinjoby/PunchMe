@@ -175,13 +175,13 @@ function getFormattedData(data) {
 const styles = StyleSheet.create({
   emptyContainer: {
     width: "100%",
-    height: "100%",
+    height: "co%",
     justifyContent: "center",
     alignItems: "center",
   },
   activityContainer: {
     width: "100%",
-    height: "95%",
+    height: "92%",
   },
   loader: {
     flex: 2,
