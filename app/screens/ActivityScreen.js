@@ -12,19 +12,10 @@ import RecyclerView from "../components/activity/RecyclerView";
 import util from "../helpers/utils";
 import logService from "../services/logService";
 import FlexiView from "../components/activity/general/FlexiView";
-import db from "../helpers/db";
 
 const getActivitiesFromDB = async (callback) => {
   const result = await logService.getLogs();
   callback(result);
-};
-
-const getJobsFromDB = () => {
-  return db.fetchJobs();
-};
-
-const getSchedules = (callback) => {
-  // const schedules =
 };
 
 export default function ActivityScreen() {
@@ -33,7 +24,6 @@ export default function ActivityScreen() {
 
   if (!activityLoaded || !data) {
     setTimeout(() => {
-      getFormattedJobs(getJobsFromDB());
       getActivitiesFromDB((jsonRes) => {
         setActivityLoaded(true);
         if (jsonRes) {
@@ -102,10 +92,6 @@ export default function ActivityScreen() {
   }
 }
 
-function getFormattedJobs(jobs) {
-  console.log("======= JOBS ========= " + JSON.stringify(jobs));
-}
-
 function getFormattedData(data) {
   console.log(" =========== getFormattedData ========== " + data);
 
@@ -140,6 +126,48 @@ function getFormattedData(data) {
     listViewItems.unshift(logHeading);
     const logOverView = {
       type: 1,
+      jobs: [
+        {
+          id: 1,
+          label: "Amecan",
+          value: "Amecan",
+        },
+        {
+          id: 2,
+          label: "Security",
+          value: "Security",
+        },
+        {
+          id: 3,
+          label: "Sobeys",
+          value: "Sobeys",
+        },
+        {
+          id: 4,
+          label: "FoodLand",
+          value: "FoodLand",
+        },
+      ],
+      overView: [
+        {
+          type: 1,
+          percentage: 80,
+          total_hours: "6h 0m",
+          start_header: "START TIME",
+          start_time: "8:40 AM",
+          end_header: "END TIME",
+          end_time: "2:40 PM",
+        },
+        {
+          type: 2,
+          percentage: 60,
+          total_hours: "16h 0m",
+          start_header: "START WEEK",
+          start_time: "08/17",
+          end_header: "END WEEK",
+          end_time: "08/22",
+        },
+      ],
     };
     listViewItems.unshift(logOverView);
     const logSchedule = {

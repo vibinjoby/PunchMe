@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import FlexiView from "../general/FlexiView";
 import FlexiText from "../general/FlexiText";
@@ -6,29 +6,18 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 
-const OverView = (props) => {
-  const data = [
-    {
-      id: 1,
-      label: "Amecan",
-      value: "Amecan",
-    },
-    {
-      id: 2,
-      label: "Security",
-      value: "Security",
-    },
-    {
-      id: 3,
-      label: "Sobeys",
-      value: "Sobeys",
-    },
-    {
-      id: 4,
-      label: "FoodLand",
-      value: "FoodLand",
-    },
-  ];
+const OverView = (item) => {
+  const data = item.jobs;
+  const overView = item.overView;
+  const [overViewInfo, setOverViewInfo] = useState(overView[0]);
+
+  const onDayClicked = () => {
+    setOverViewInfo(overView[0]);
+  };
+
+  const onWeekClicked = () => {
+    setOverViewInfo(overView[1]);
+  };
 
   return (
     <FlexiView style={styles.overViewContainer}>
@@ -46,7 +35,7 @@ const OverView = (props) => {
 
       <FlexiView style={styles.overViewHolder} layoutType={2}>
         <FlexiView style={styles.tabContainer} layoutType={2}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onDayClicked}>
             <FlexiText
               style={styles.tabFirst}
               text="DAY TOTAL"
@@ -59,22 +48,29 @@ const OverView = (props) => {
               style={styles.tabLine}
               noColorChange={true}
               color="#FFAA20"
+              isHidden={overViewInfo.type == 1 ? true : false}
             ></FlexiView>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onWeekClicked}>
             <FlexiText
               style={styles.tabSecond}
               text="WEEK TOTAL"
               fontFamily="Bold"
               fontSize={18}
             ></FlexiText>
+            <FlexiView
+              style={styles.tabLine}
+              noColorChange={true}
+              color="#FFAA20"
+              isHidden={overViewInfo.type == 2 ? true : false}
+            ></FlexiView>
           </TouchableOpacity>
         </FlexiView>
         <FlexiView style={styles.graphContainer} layoutType={2}>
           <AnimatedCircularProgress
             size={200}
             width={10}
-            fill={35}
+            fill={overViewInfo.percentage}
             rotation={360}
             tintColor="#4B4BF9"
             onAnimationComplete={() => console.log("onAnimationComplete")}
@@ -90,13 +86,13 @@ const OverView = (props) => {
             <FlexiView style={styles.halfSpace} layoutType={2}>
               <FlexiText
                 style={styles.infoKey}
-                text="START TIME"
+                text={overViewInfo.start_header}
                 fontFamily="light"
                 fontSize={14}
               />
               <FlexiText
                 style={styles.infoValue}
-                text="7:13 AM"
+                text={overViewInfo.start_time}
                 fontFamily="light"
                 fontSize={12}
                 noColorChange={true}
@@ -111,13 +107,13 @@ const OverView = (props) => {
             <FlexiView style={styles.halfSpace} layoutType={2}>
               <FlexiText
                 style={styles.infoKey}
-                text="END TIME"
+                text={overViewInfo.end_header}
                 fontFamily="light"
                 fontSize={14}
               />
               <FlexiText
                 style={styles.infoValue}
-                text="7:13 PM"
+                text={overViewInfo.end_time}
                 fontFamily="light"
                 fontSize={12}
                 noColorChange={true}
