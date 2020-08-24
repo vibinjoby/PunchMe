@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import colors from "../../config/colors";
 
-export function PunchInComponent({ data, theme }) {
+export function PunchInComponent({ punchInTime, punchOutTime, theme }) {
   return (
     <View style={styles.container}>
       <View
@@ -24,7 +24,7 @@ export function PunchInComponent({ data, theme }) {
         <Text
           style={[styles.punchData, theme === "light" && { color: "#2E2E2E" }]}
         >
-          {data}
+          {punchInTime}
         </Text>
       </View>
       <View
@@ -46,7 +46,7 @@ export function PunchInComponent({ data, theme }) {
         <Text
           style={[styles.punchData, theme === "light" && { color: "#2E2E2E" }]}
         >
-          {data}{" "}
+          {punchOutTime}
         </Text>
       </View>
     </View>

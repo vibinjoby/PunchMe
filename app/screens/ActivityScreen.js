@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   },
   activityContainer: {
     width: "100%",
-    height: "100%",
+    height: "95%",
   },
   loader: {
     flex: 2,
